@@ -1,0 +1,6 @@
+# Ignores OS generate files #
+.DS_Store
+.DS_Store?
+
+# Ignores drake log #
+drake.log
