@@ -1,0 +1,108 @@
+__NOTOC__ __NOEDITSECTION__<includeonly>
+<div class="">
+    <div class="container">
+        <div class="content_block right-sidebar">
+            <div class="fl-container span9">
+                <div class="">
+                    <div class="contentarea">
+                        <div class="row-fluid">
+                            <div class="span12">
+={{{name|}}}= 
+[[ParkName::{{{name}}}| ]]
+{{{streetAddress}}}, [[Resource/Borough/{{{borough|}}}|{{{borough|}}}]], [[Resource/PostalCode/{{{postalCode|}}}|{{{postalCode|}}}]]
+{{EntityMap|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+</div>
+</div>
+<!-- start of details part -->
+<div class="row-fluid">
+                              	<div class="span12 module_cont module_tabs">
+                                    	<div class="shortcode_tabs">
+                                        	<div class="all_heads_cont">
+                                            	<div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Overview</div>
+                                        	<div class="shortcode_tab_item_title it2 head2" data-open="body2">Related Articles</div>
+                                               	<div class="shortcode_tab_item_title it3 head3 " data-open="body3">Dataset</div> 
+                                        	</div>
+                                        	<div class="all_body_cont">
+                                            	<div class="shortcode_tab_item_body body1 it1">
+<div class="ip">
+{| class="table table-striped"
+|-
+| '''Name''' ||  {{{name|}}} 
+|-
+| '''Prop_ID''' ||  {{{Prop_ID}}}
+|-
+| '''Location''' ||  [[StreetAddress::{{{streetAddress|}}}]], [[Borough::{{{borough|}}}]], [[PostalCode::{{{postalCode|}}}]]
+|-
+| '''Playground_ID''' ||  {{{Playground_ID}}}
+|-
+| '''Level''' ||  {{{Level}}}
+|-
+| '''Adaptive Swing''' ||  {{{Adaptive_Swing}}}
+|-
+| '''Accessible''' ||  {{{Accessible}}}
+|-
+| '''Status''' ||  {{{Status}}}
+|-
+| '''School ID''' ||  {{{School_ID}}}
+|}
+</div>        
+                                            	</div>
+       
+<div class="shortcode_tab_item_body body2 it2">
+                            {{#get_web_data:
+                            url=http://en.wikipedia.org/w/api.php?action=query&list=geosearch&format=json&&gslimit=10&gsradius=10000&gscoord={{{latitude}}}%7C{{{longitude}}}
+                            |format=JSON
+                            |data=ArticleName=title,PageID=pageid
+                            |cache seconds=1209600
+                            }}
+                            {| class="table table-striped" style="margin-top:0.2cm"
+                            |-
+                            ! style="background-position: left;padding-left: 21px;"  | More Information{{#for_external_table:<nowiki/>
+                            {{!}}-
+                            {{!}} [http://en.wikipedia.org/wiki?curid={{{PageID}}} {{{ArticleName}}}]
+                            }}
+                            |}
+                        </div><!-- .shortcode_tab_item_body -->
+
+                          <!--                  	<div class="shortcode_tab_item_body body3 it3">
+{| class="table table-striped"
+|-
+| Restaurant Inspection Results
+|-
+| Neighborhood Names
+|-
+| NYC Parking Facilities
+|-
+| Wifi Hotspot Locations
+|}
+                                            	</div> -->
+       </div><!-- .all_body_cont -->
+                                </div><!-- .shortcode_tabs -->                       	 
+                            </div><!-- .module_cont -->
+                        </div><!-- .row-fluid -->
+                    </div><!-- .contentarea -->
+                </div>
+                <div class="clear"><!-- ClearFix --></div>
+            </div><!-- .fl-container -->
+
+            <div class="right-sidebar-block span3">
+                {{PostalCodeSideBar
+                | postalCode = {{{postalCode|}}}
+                | latitude={{{latitude}}}
+                | longitude={{{longitude}}}
+                }}
+            </div><!-- .right-sidebar -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div>
+    </div><!-- .container -->
+</div><!-- .content_wrapper -->
+
+[[Category:Playground]]
+[[Category:Park]]
+{{#widget:Jsonld|context={{{@context}}}|id={{{@id}}}|type={{{@type}}}|name={{{name}}}|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+{{#seo:
+|title={{{name}}}
+|titlemode=replace
+|description={{{name}}} is a Playground at {{{streetAddress|}}}, {{{borough|}}} {{{postalCode|}}}
+}}
+</includeonly>

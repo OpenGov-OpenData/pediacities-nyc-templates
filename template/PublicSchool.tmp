@@ -1,0 +1,279 @@
+__NOTOC__ __NOEDITSECTION__<includeonly>
+<div class="">
+    <div class="container">
+        <div class="content_block right-sidebar">
+            <div class="fl-container span9">
+                <div class="">
+                    <div class="contentarea">
+                        <div class="row-fluid">
+                            <div class="span12">
+={{{title|}}}= 
+[[SchoolName::{{{title}}}|]]{{{streetAddress|}}}, [[Resource/Borough/{{{borough|}}}|{{{borough|}}}]], [[New_York_City|New York]], [[Resource/PostalCode/{{{postalCode|}}}|{{{postalCode|}}}]]  
+ {{EntityMap
+|latitude={{{latitude}}}
+|longitude={{{longitude}}}
+}} {{#get_web_data:
+url=http://api.greatschools.org/search/schools?key=GREAT_SCHOOLS&state=NY&q={{{title}}}&limit=1
+|format=XML
+|data=GreatschoolRating=gsRating,ParentRating=parentRating,ReviewsLink=reviewsLink,SchoolStatsLink=schoolStatsLink,SchoolType=type,Enrollment=enrollment,Website=website,OverviewLink=overviewLink,DistrictId=districtId
+|limit=1
+}}
+</div>
+</div>
+<!-- start of details part -->
+<div class="row-fluid">
+                              	<div class="span12 module_cont module_tabs">
+                                    	<div class="shortcode_tabs">
+                                        	<div class="all_heads_cont">
+                                            	<div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Overview</div>
+                                                <div class="shortcode_tab_item_title it2 head2" data-open="body2">Details</div>
+                                                <div class="shortcode_tab_item_title it3 head3" data-open="body3">Safety Report</div>
+                                                <div class="shortcode_tab_item_title it4 head4" data-open="body4">Progress Report</div>
+                                        	<div class="shortcode_tab_item_title it5 head5" data-open="body5">Related Articles</div>
+                                               	<div class="shortcode_tab_item_title it6 head6" data-open="body6">Dataset</div> 
+                            </div><!-- .all_heads_cont -->
+                            <div class="all_body_cont"><div class="shortcode_tab_item_body body1 it1">
+<div class="ip">
+{| class="table table-striped"
+|-
+| '''Location''' [[SchoolZipcode::{{{postalCode|}}}|]] [[SchoolName::{{{Location Name|}}}|]] [[SchoolType::{{{Location Category Description|}}}|]] || [[StreetAddress::{{{streetAddress|}}}]], [[Borough::{{{borough|}}}]], New York [[PostalCode::{{{postalCode|}}}]] 
+|-
+| '''Neighborhood'''   || {{#if: {{{neighborhood|}}}| [[Resource/Neighborhood/{{#replace:{{#replace:{{#replace:{{#replace:{{{neighborhood|}}}|-|_}}|.|_}}|'|_}}|,|_}}|{{{neighborhood|}}}]] |N/A}}
+|-
+| '''Precinct'''   || {{#if: {{{precinct|}}}| [[Resource/PolicePrecinct/{{{precinct|}}}|{{{precinct|}}}]] |N/A}}
+|-
+| '''Community District'''   || {{#if: {{{communityDistrictNumber|}}}| [[Resource/CommunityDistrict/{{#explode:{{{communityDistrictNumber|}}}|.|0}}|{{#explode:{{{communityDistrictNumber|}}}|.|0}}]] |N/A}}
+|-
+| '''School District'''   || {{#if: {{{school_district|}}}| {{#explode:{{{school_district|}}}|.|0}} |N/A}}
+|-
+|'''ATS System Code''' || {{{ATS System Code}}}
+|-
+|'''Grades''' || {{{Grades}}}
+|-
+|'''Open Date''' || {{{Open Date}}}
+|-
+|'''Principal Name''' || {{{Principal Name}}}
+|-
+| '''Greatschool Rating:'''  || {{#if: {{#external_value: GreatschoolRating}} | [[GreatSchoolRating ::{{#external_value: GreatschoolRating}}|]] [[Special:SearchByProperty/GreatSchoolRating/{{#replace:{{#external_value: GreatschoolRating}}||-20}}|{{#external_value: GreatschoolRating}} out of 10]]| N/A}}
+|-
+| '''Community Ratings:'''  || {{#if: {{#external_value: ParentRating}} | [[SchoolParentRating  ::{{#external_value: ParentRating}}|]] [[Special:SearchByProperty/SchoolParentRating/{{#replace:{{#external_value: ParentRating}}||-20}}|{{#external_value: ParentRating}}]] | N/A}}
+|-
+| '''Website:'''  || {{#if: {{#external_value: Website}} | [{{#external_value: Website}} {{{title}}}] | N/A}}
+|-
+| '''Reviews:'''  || {{#if: {{#external_value: ReviewsLink}} | [{{#external_value: ReviewsLink}} More Information] | N/A}}
+|-
+| '''School Overview:'''  || {{#if: {{#external_value: OverviewLink}} | [{{#external_value: OverviewLink}} More Information] | N/A}}
+|-
+| Some of the data retrieved from [[File:GreatSchools_100x25.png|link=http://www.greatschools.org/|greatschools]]
+|}
+</div>        
+</div>
+     
+<div class="shortcode_tab_item_body body2 it2">
+<div class="ip">
+{| class="table table-striped"
+|-
+|'''Location Code''' || {{{Location Code}}}
+|-
+|'''Location Name''' || {{{Location Name}}}
+|-
+|'''BEDS Number''' || {{{BEDS Number}}}
+|-
+|'''Managed By Name''' || {{{Managed By Name}}}
+|-
+|'''Location Type Description''' || {{{Location Type Description}}}
+|-
+|'''Location Category Description''' || {{{Location Category Description}}}
+|-
+|'''Grades Final''' || {{{Grades Final}}}
+|-
+|'''Status Description''' || {{{Status Description}}}
+|-
+|'''Building Code''' || {{{Building Code}}}
+|-
+|'''Primary Address''' || {{{Primary Address}}}
+|-
+|'''City''' || {{{City}}}
+|-
+|'''State Code''' || {{{State Code}}}
+|-
+|'''Zip''' || {{{Zip}}}
+|-
+|'''Principal Title''' || {{{Principal Title}}}
+|-
+|'''Principal Phone Number''' || {{{Principal Phone Number}}}
+|-
+|'''Fax Number''' || {{{Fax Number}}}
+|-
+|'''Geographical District Code''' || {{{Geographical District Code}}}
+|-
+|'''Administrative District Code''' || {{{Administrative District Code}}}
+|-
+|'''Administrative District Location Code''' || {{{Administrative District Location Code}}}
+|-
+|'''Administrative District Name''' || {{{Administrative District Name}}}
+|-
+|'''Superintendent''' || {{{Superintendent}}}
+|-
+|'''Community School Sup Name''' || {{{Community School Sup Name}}}
+|-
+|'''Cluster Name''' || {{{Cluster Name}}}
+|-
+|'''Cluster Location Code''' || {{{Cluster Location Code}}}
+|-
+|'''Cluster Leader Name''' || {{{Cluster Leader Name}}}
+|-
+|'''Cluster Leader Title''' || {{{Cluster Leader Title}}}
+|-
+|'''Cluster Leader Phone''' || {{{Cluster Leader Phone}}}
+|-
+|'''Network Location Code''' || {{{Network Location Code}}}
+|-
+|'''Network Name''' || {{{Network Name}}}
+|-
+|'''Network Leader''' || {{{Network Leader}}}
+|-
+|'''Network Leader Phone''' || {{{Network Leader Phone}}}
+|-
+|'''SATIF Code''' || {{{SATIF Code}}}
+|-
+|'''SATIF Superintendent''' || {{{SATIF Superintendent}}}
+|-
+|'''HighSchool Network Location Code''' || {{{HighSchool Network Location Code}}}
+|-
+|'''HighSchool Network Name''' || {{{HighSchool Network Name}}}
+|-
+|'''HighSchool Network Superintendent''' || {{{HighSchool Network Superintendent}}}
+|-
+|'''Operational Network Location Code''' || {{{Operational Network Location Code}}}
+|-
+|'''Operational Network Name''' || {{{Operational Network Name}}}
+|-
+|'''Operational Network Manager Name''' || {{{Operational Network Manager Name}}}
+|-
+|'''Operational Network Manager Phone''' || {{{Operational Network Manager Phone}}}
+|}
+</div>        
+</div>
+
+<div class="shortcode_tab_item_body body3 it3">
+<div class="ip"> 
+{{#get_db_data: db=mongo-prod
+                                            |from=school_safety_report
+                                            |find query={"DBN": "{{{ATS System Code}}}" }
+                                            |limit=1
+                                            |data=MajorN=Major N,OthN=Oth N,NoCrimN=NoCrim N,PropN=Prop N,VioN=Vio N,ENGroupA=ENGroupA,RangeA=RangeA,AvgOfMajorN=AvgOfMajor N,AvgOfOthN=AvgOfOth N,AvgOfNoCrimN=AvgOfNoCrim N,AvgOfPropN=AvgOfProp N,AvgOfVioN=AvgOfVio N
+}} 
+{{#if: {{#external_value:MajorN}} | {{{!}} class="table table-striped"
+{{!}}-
+{{!}}'''Major Crimes Number''' {{!}}{{!}} {{#external_value:MajorN}}
+{{!}}-
+{{!}}'''Other Crimes Number''' {{!}}{{!}} {{#external_value:OthN}}
+{{!}}-
+{{!}}'''Non-Criminal Incidents Number''' {{!}}{{!}} {{#external_value:NoCrimN}}
+{{!}}-
+{{!}}'''Property Crimes Number''' {{!}}{{!}} {{#external_value:PropN}}
+{{!}}-
+{{!}}'''Violent and Disruptive Incidents Number''' {{!}}{{!}} {{#external_value:VioN}}
+{{!}}-
+{{!}}'''EN Group A''' {{!}}{{!}} {{#external_value:ENGroupA}}
+{{!}}-
+{{!}}'''Range A''' {{!}}{{!}} {{#external_value:RangeA}}
+{{!}}-
+{{!}}'''Avg Of Major Crimes Number''' {{!}}{{!}} {{#external_value:AvgOfMajorN}}
+{{!}}-
+{{!}}'''Avg Of Other Crimes Number''' {{!}}{{!}} {{#external_value:AvgOfOthN}}
+{{!}}-
+{{!}}'''Avg Of Non-Criminal Incidents Number''' {{!}}{{!}} {{#external_value:AvgOfNoCrimN}}
+{{!}}-
+{{!}}'''Avg Of Property Crimes Number''' {{!}}{{!}} {{#external_value:AvgOfPropN}}
+{{!}}-
+{{!}}'''Avg Of Violent and Disruptive Incidents Number''' {{!}}{{!}} {{#external_value:AvgOfVioN}}
+{{!}}} | {{{!}} class="table table-striped"
+{{!}}-
+{{!}} '''There is no safety report for this school currently.'''
+{{!}}} }}
+</div>        
+</div>
+
+                                        <div class="shortcode_tab_item_body body4 it4">
+                                            {{#get_db_data:
+                                            db=mongo-prod
+                                            |from=school_progress_reports_all_schools_2011_multiyear_summary
+                                            |find query={"BN": "{{{Location Code}}}" }
+                                            |limit=2
+                                            |data=ProgressReportType=PROGRESS REPORT TYPE,ProgressReportGrade2006=2006-07 PROGRESS REPORT GRADE,ProgressReportGrade2007=2007-08 PROGRESS REPORT GRADE,ProgressReportGrade2008=2008-09 PROGRESS REPORT GRADE,ProgressReportGrade2009=2009-10 PROGRESS REPORT GRADE
+                                            }} 
+                                            {| class="table table-striped" style="margin-top:0.2cm"
+                                            |-
+                                            ! style="background-position: left;padding-left: 21px;"  |  {{#if: {{#external_value:ProgressReportType}}  | Progress Report Type | No Progress Report of this school}}
+                                            ! style="background-position: left;padding-left: 21px;"  |  {{#if: {{#external_value:ProgressReportType}}  | Grade 2006 | }}
+                                            ! style="background-position: left;padding-left: 21px;"  |  {{#if: {{#external_value:ProgressReportType}}  | Grade 2007 | }}
+                                            ! style="background-position: left;padding-left: 21px;"  |  {{#if: {{#external_value:ProgressReportType}}  | Grade 2008 | }}
+                                            ! style="background-position: left;padding-left: 21px;"  |  {{#if: {{#external_value:ProgressReportType}}  | Grade 2009 | }}{{#for_external_table:<nowiki/>
+                                            {{!}}-
+                                            {{!}} {{{ProgressReportType}}}
+                                            {{!}} {{{ProgressReportGrade2006}}}
+                                            {{!}} {{{ProgressReportGrade2007}}}
+                                            {{!}} {{{ProgressReportGrade2008}}}
+                                            {{!}} {{{ProgressReportGrade2009}}}
+                                            }}
+                                            |}
+                                        </div><!-- .shortcode_tab_item_body -->
+
+                                <div class="shortcode_tab_item_body body5 it5">
+                                    {{#get_web_data:
+                                        url=http://en.wikipedia.org/w/api.php?action=query&list=geosearch&format=json&&gslimit=10&gsradius=10000&gscoord={{{latitude}}}%7C{{{longitude}}}
+                                    |format=JSON
+                                    |data=ArticleName=title,PageID=pageid
+                                    |cache seconds=1209600
+                                    }}
+                                    {| class="table table-striped" style="margin-top:0.2cm"
+                                    |-
+                                    ! style="background-position: left;padding-left: 21px;"  | More Information{{#for_external_table:<nowiki/>
+                                        {{!}}-
+                                        {{!}} [http://en.wikipedia.org/wiki?curid={{{PageID}}} {{{ArticleName}}}]
+                                    }}
+                                    |}
+                                </div><!-- .shortcode_tab_item_body -->
+
+                                 <div class="shortcode_tab_item_body body6 it6">
+                        {| class="table table-striped"
+                        |-
+                        | '''Datasets Information'''|| [http://nycdata.pediacities.com/dataset/doe-school-list Visit it on Datawrangler]
+                        |-
+                        | '''Online API'''|| [http://nycdata.pediacities.com/dataset/doe-school-list/resource/467762ad-324f-4445-8e07-dd89fc310b7b API Preview]
+                        |-
+                        | '''Download Link'''|| [https://nycdatastables.s3.amazonaws.com/2013-07-26T20:02:40.604Z/doe-public-school-results.csv Download now]
+                        |}
+                                </div>
+                                        	     </div><!-- .all_body_cont -->
+                                </div><!-- .shortcode_tabs -->                       	 
+                            </div><!-- .module_cont -->
+                        </div><!-- .row-fluid -->
+                    </div><!-- .contentarea -->
+                </div>
+                <div class="clear"><!-- ClearFix --></div>
+            </div><!-- .fl-container -->
+
+            <div class="right-sidebar-block span3">
+                {{PostalCodeSideBar
+                | postalCode = {{{postalCode|}}}
+                | latitude={{{latitude}}}
+                | longitude={{{longitude}}}
+                }}
+            </div><!-- .right-sidebar -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div>
+    </div><!-- .container -->
+</div><!-- .content_wrapper -->
+
+[[Category:PublicSchool]]
+[[Category:School]]
+{{#widget:Jsonld|context={{{@context}}}|id={{{@id}}}|type={{{@type}}}|name={{{title}}}|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+{{#seo:
+|title={{{title|}}}
+|titlemode=replace
+|description={{{title|}}} is a public school at {{{streetAddress|}}}, {{{borough|}}}, {{#if: {{{addressLocality|}}} | {{{addressLocality|}}} | }} {{{postalCode|}}}
+}}
+</includeonly>

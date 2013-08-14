@@ -1,0 +1,46 @@
+<noinclude>This is the "Flickr" template.
+
+It is created by Shuchang. Contact AZ or Shuchang if you find any bug or have any improvement. 
+
+It should be called in the following format: (it can be written in single line.)
+
+<pre>
+{{Flickr
+| latitude={{{latitude}}}
+| longitude ={{{longitude}}}
+}}
+</pre></noinclude><includeonly>{{#get_web_data:
+url=http://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=flickr.photos.search&tags=ny&tag_mode=all&safe_search=1&content_type=1&has_geo=1&radius=0.5&sort=interestingness-desc&lat={{{latitude}}}&lon={{{longitude}}}&per_page=9&api_key=FLICKR
+|format=JSON
+|cache seconds=604800
+|data=farm=farm,server=server,id=id,secret=secret,owner=owner,totalNum=total,rspStat=stat
+}}{{#ifeq: {{#external_value:rspStat}} | ok | {{#ifexpr: {{#external_value:totalNum}}>=9 | <div class="sidepanel widget_recent_entries" style="border-bottom:0px; padding:20px 0px 20px 23px; background-color:#EEEEEE; margin-bottom:10px" align="left">
+<div class="widget_flickr" style="width:100%; line-height:78px;">{{#for_external_table:<nowiki /><span style="padding:0 3px 0 0">[http://www.flickr.com/photos/{{{owner}}}/{{{id}}} http://farm{{{farm}}}.static.flickr.com/{{{server}}}/{{{id}}}_{{{secret}}}_s.jpg]</span>}}</div></div>|{{#ifexpr: {{#external_value:totalNum}}>=6 |  {{#get_web_data:
+             url=http://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=flickr.photos.search&tags=ny&tag_mode=all&safe_search=1&content_type=1&has_geo=1&radius=0.5&sort=interestingness-desc&lat={{{latitude}}}&lon={{{longitude}}}&per_page=6&api_key=FLICKR
+             |format=JSON
+             |cache seconds=604800
+             |data=farm=farm,server=server,id=id,secret=secret,owner=owner
+          }}<div class="sidepanel widget_recent_entries" style="border-bottom:0px; padding:20px 0px 20px 23px; background-color:#EEEEEE; margin-bottom:10px" align="left">
+<div class="widget_flickr" style="width:100%; line-height:78px;">{{#for_external_table:<nowiki /><span style="padding:0 3px 0 0">[http://www.flickr.com/photos/{{{owner}}}/{{{id}}} http://farm{{{farm}}}.static.flickr.com/{{{server}}}/{{{id}}}_{{{secret}}}_s.jpg]</span>}}</div></div>|{{#ifexpr: {{#external_value:totalNum}}>=3 |  {{#get_web_data:
+                 url=http://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=flickr.photos.search&tags=ny&tag_mode=all&safe_search=1&content_type=1&has_geo=1&radius=0.5&sort=interestingness-desc&lat={{{latitude}}}&lon={{{longitude}}}&per_page=3&api_key=FLICKR
+                 |format=JSON
+                 |cache seconds=604800
+                 |data=farm=farm,server=server,id=id,secret=secret,owner=owner
+              }}<div class="sidepanel widget_recent_entries" style="border-bottom:0px; padding:20px 0px 20px 23px; background-color:#EEEEEE; margin-bottom:10px" align="left">
+<div class="widget_flickr" style="width:100%; line-height:78px;">{{#for_external_table:<nowiki /><span style="padding:0 3px 0 0">[http://www.flickr.com/photos/{{{owner}}}/{{{id}}} http://farm{{{farm}}}.static.flickr.com/{{{server}}}/{{{id}}}_{{{secret}}}_s.jpg]</span>}}</div></div>|{{#ifexpr: {{#external_value:totalNum}}>=1 |  {{#get_web_data:
+                     url=http://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=flickr.photos.search&tags=ny&tag_mode=all&safe_search=1&content_type=1&has_geo=1&radius=0.5&sort=interestingness-desc&lat={{{latitude}}}&lon={{{longitude}}}&per_page=1&api_key=FLICKR
+                     |format=JSON
+                     |cache seconds=604800
+                     |data=farm=farm,server=server,id=id,secret=secret,owner=owner
+                  }}<div class="sidepanel widget_recent_entries" style="border-bottom:0px; padding:30px; background-color:#EEEEEE; margin-bottom:10px" align="center">
+<div class="widget_flickr" style="width:100%; line-height:78px;">{{#for_external_table:<nowiki /><span style="padding:0 3px 0 0">[http://www.flickr.com/photos/{{{owner}}}/{{{id}}} http://farm{{{farm}}}.static.flickr.com/{{{server}}}/{{{id}}}_{{{secret}}}_m.jpg]</span>}}</div></div>|{{#widget:Google Street View v3
+                |lat={{#if: {{{latitude|}}} | {{{latitude|}}} | 40.758153}}  
+                |lng={{#if: {{{longitude|}}} | {{{longitude|}}} | -73.985355}}  
+                |width=100%
+                |height=360
+                }}}}}}}}}}| {{#widget:Google Street View v3
+|lat={{#if: {{{latitude|}}} | {{{latitude|}}} | 40.758153}}  
+|lng={{#if: {{{longitude|}}} | {{{longitude|}}} | -73.985355}}  
+|width=100%
+|height=360
+}}}}<!-- .widget_recent_entries --></includeonly>

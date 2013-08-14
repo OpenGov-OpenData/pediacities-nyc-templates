@@ -1,0 +1,132 @@
+__NOTOC__ __NOEDITSECTION__<includeonly>
+<div class="">
+    <div class="container">
+        <div class="content_block right-sidebar">
+            <div class="fl-container span9">
+                <div class="">
+                    <div class="contentarea">
+                        <div class="row-fluid">
+                            <div class="span12">
+={{{SITE NAME}}}= 
+[[Special:SearchByProperty/StreetAddress/{{#replace:{{{streetAddress}}}||-20}}| {{{streetAddress}}}]] , [[Resource/Borough/{{#replace:{{{borough}}}|New York|Manhattan}}|{{#replace:{{{borough}}}|New York|Manhattan}}]], [[New_York_City|{{{addressRegion}}}]], [[Resource/PostalCode/{{{postalCode}}}|{{{postalCode}}}]]
+{{EntityMap|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+                </div>             
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 module_cont module_tabs">
+                        <div class="shortcode_tabs">
+                            <div class="all_heads_cont">
+                                <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Overview</div>
+                                <div class="shortcode_tab_item_title it2 head2" data-open="body2">Related Articles</div>
+                                <div class="shortcode_tab_item_title it3 head3 " data-open="body3">Dataset</div> 
+                            </div><!-- .all_heads_cont -->
+                            <div class="all_body_cont">
+                                <div class="shortcode_tab_item_body body1 it1">
+                                    <div class="ip">
+                                        {| class="table table-striped"
+                                        |-
+                                        | '''Program Type'''  [[DYCDProgramType::{{{PROGRAM TYPE}}}| ]] ||   [[Special:SearchByProperty/DYCDProgramType/{{#replace:{{{PROGRAM TYPE}}}||-20}}|{{{PROGRAM TYPE}}}]]
+                                        |-
+                                        | '''Program'''  [[DYCDProgram::{{{PROGRAM}}}| ]] ||   [[Special:SearchByProperty/DYCDProgram/{{#replace:{{{PROGRAM}}}||-20}}|{{{PROGRAM}}}]]
+                                        |-
+                                        | '''Agency'''  [[DYCDAgency::{{{AGENCY}}}| ]] ||   [[Special:SearchByProperty/DYCDAgency/{{#replace:{{{AGENCY}}}||-20}}|{{{AGENCY}}}]]
+                                        |-
+                                        | '''Location''' || [[StreetAddress::{{{streetAddress|}}}]] , [[Borough::{{{borough|}}}]], [[AddressRegion::{{{addressRegion|}}}]]-[[PostalCode::{{{postalCode|}}}]]
+                                        |-
+                                        | '''ZIP Code'''  [[DYCDZipcode::{{{postalCode}}}| ]] || [[Special:SearchByProperty/DYCDZipcode/{{#replace:{{{postalCode}}} ||-20}}|{{{postalCode}}}]]
+                                        |-
+                                        | '''Coordinates'''   || {{coord|{{{latitude}}}|{{{longitude}}}}}
+                                        |-
+                                        | '''Telephone''' || [[Telephone::{{{telephone|}}}]]  
+                                        |-
+                                        | '''Grade Level / Age Group''' ||  {{{Grade Level / Age Group}}}
+                                        |}
+                                    </div><!-- .ip -->  
+                                </div><!-- .shortcode_tab_item_body -->
+
+                                <div class="shortcode_tab_item_body body2 it2">
+                                    {{#get_web_data:
+                                        url=http://en.wikipedia.org/w/api.php?action=query&list=geosearch&format=json&&gslimit=10&gsradius=10000&gscoord={{{latitude}}}%7C{{{longitude}}}
+                                    |format=JSON
+                                    |data=ArticleName=title,PageID=pageid
+                                    |cache seconds=1209600
+                                    }}
+                                    {| class="table table-striped" style="margin-top:0.2cm"
+                                    |-
+                                    ! style="background-position: left;padding-left: 21px;"  | More Information{{#for_external_table:<nowiki/>
+                                        {{!}}-
+                                        {{!}} [http://en.wikipedia.org/wiki?curid={{{PageID}}} {{{ArticleName}}}]
+                                    }}
+                                    |}
+                                </div><!-- .shortcode_tab_item_body -->
+
+                                                <div class="shortcode_tab_item_body body3 it3">
+                                                       {| class="table table-striped"
+                                                       ! align="left" | Dataset
+                                                       ! Online API
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs Adolescent Literacy| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-adolescent-literacy DYCD after-school programs Adolescent Literacy]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-adolescent-literacy/resource/c8820619-c43b-4045-8cf7-5905c1eb4845 API Preview]
+                                                        |-
+                                                       | [[DatasetName::DYCD after-school programs Beacon Programs| ]] [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-beacon-programs DYCD after-school programs Beacon Programs]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-beacon-programs/resource/d319dc31-dabe-48a2-b864-6393cc0775ea API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs Beacon Satellite At NYCHA Programs| ]] [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-beacon-satellite-at-nycha-programs DYCD after-school programs Beacon Satellite At NYCHA Programs]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-beacon-satellite-at-nycha-programs/resource/80698615-fc95-4030-8ca5-102582d329de API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs Fatherhood| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-fatherhood DYCD after-school programs Fatherhood]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-fatherhood/resource/df227de9-d09c-4e79-a441-29eee3b27211 API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs Health Stat| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-health-stat DYCD after-school programs Health Stat]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-health-stat/resource/4267697f-4637-4f58-a191-efa6e8a77fc5 API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs Healthy Families| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-healthy-families DYCD after-school programs Healthy Families]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-healthy-families/resource/36e0d92a-32f2-470e-bc18-b2532efb0a60 API Preview]
+                                                       |-
+                                                       | [[DatasetName:DYCD after-school-programs Housing| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-housing DYCD after-school-programs Housing]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-housing/resource/29920e3d-793e-4b1a-8f8d-8118f41f6042 API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs ISY In-School Youth Employment Programs| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-isy-in-school-youth-employment-programs DYCD after-school programs ISY In-School Youth Employment Programs]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-isy-in-school-youth-employment-programs/resource/571a5841-9495-4f37-ba83-8c73bf21f6fe API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs NDA Adult Literacy Programs| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-nda-adult-literacy-programs DYCD after-school programs NDA Adult Literacy Programs]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-nda-adult-literacy-programs/resource/03605bf1-a467-4114-9b5d-c5bbaa0487bf API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs NDA Educational High School Progams| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-nda-educational-high-school-progams DYCD after-school programs NDA Educational High School Progams]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-nda-educational-high-school-progams/resource/f7a97029-6707-43fd-afac-fc5f86a5f938 API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs NDA Educational Middle School Programs| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-nda-educational-middle-school-programs DYCD after-school programs NDA Educational Middle School Programs]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-nda-educational-middle-school-programs/resource/01031780-e3f8-40d0-8623-434c8cca4745 API Preview]
+                                                       |-
+                                                       | [[DatasetName::DYCD after-school programs NDA Family Literacy| ]]  [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-nda-family-literacy DYCD after-school programs NDA Family Literacy]
+                                                       | [http://nycdata.pediacities.com/dataset/dycd-after-school-programs-nda-family-literacy/resource/33daa9eb-5295-4011-b047-308c445c9056 API Preview]
+                                                       |}                     	 
+                                                 </div>  
+                                      </div><!-- .all_body_cont -->
+                                </div><!-- .shortcode_tabs -->                       	 
+                            </div><!-- .module_cont -->
+                        </div><!-- .row-fluid -->
+                    </div><!-- .contentarea -->
+                </div>
+                <div class="clear"><!-- ClearFix --></div>
+            </div><!-- .fl-container -->
+
+            <div class="right-sidebar-block span3">
+                {{PostalCodeSideBar
+                | postalCode = {{{postalCode|}}}
+                | latitude={{{latitude}}}
+                | longitude={{{longitude}}}
+                }}
+            </div><!-- .right-sidebar -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div>
+    </div><!-- .container -->
+</div><!-- .content_wrapper -->
+                [[Category:EducationEvent]]
+{{#widget:Jsonld|context={{{@context}}}|id={{{@id}}}|type={{{@type}}}|name={{{SITE NAME}}}|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+{{#seo:
+|title={{{SITE NAME}}}
+|titlemode=replace
+|description={{{SITE NAME}}} is a DYCD {{#replace:{{{PROGRAM TYPE}}}|Programs|}} program at {{{streetAddress|}}}, {{{borough|}}}, {{{addressRegion|}}} {{{postalCode|}}}
+}}
+            </includeonly>

@@ -1,0 +1,36 @@
+<noinclude>This is the "EntityMap" template.
+
+It is created by Shuchang. Contact me if you find any bug or have any improvement. 
+
+It should be called in the following format: (it can be written in single line.)
+
+<pre>
+{{EntityMap
+|latitude={{{latitude}}}
+|longitude={{{longitude}}}
+|zoom=17  // Optional. Set this parameter ONLY when you want a different zoom level. Default value is 17  
+|minzoom=17 // Optional. This should be the same as parameter 'zoom'. Default value is 17
+|maxzoom=17 // Optional. This should be the same as parameter 'zoom'. Default value is 17
+|service=googlemaps // Optional. Default value is Google Maps.
+}}</pre>
+
+In most of entity pages, it should be called simply as
+<pre>
+{{EntityMap|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+</pre>
+or
+<pre>
+{{EntityMap
+|latitude={{{latitude}}}
+|longitude={{{longitude}}}
+|zoom=12  
+|minzoom=12 
+|maxzoom=12 
+}}
+</pre>
+</noinclude>
+<includeonly>{{#display_map: {{#if: {{{latitude|}}} | {{{latitude|}}} | 40.758153}}, {{#if: {{{longitude|}}} | {{{longitude|}}} | -73.985355}}  
+|zoom={{#if: {{{zoom|}}} | {{{zoom|}}} | 17}}  
+
+|service={{#if: {{{service|}}} | {{{service|}}} | googlemaps}} 
+}}</includeonly>

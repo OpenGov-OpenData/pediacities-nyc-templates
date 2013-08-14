@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <!-- Styles -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"/> 
+<style>
+a { color: #4B58A6; }
+
+#map_canvas  {
+  max-width: 800px;
+  max-height: 685px;
+}
+
+#map_canvas img {
+  max-width: none;
+}
+
+.filter-box { 
+  height: 15px; 
+  width: 15px;  
+  display: inline-block;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box; 
+}
+
+.filter-yellow { background-color: #FBF358; }
+.filter-green { background-color: #00E13C; }
+.filter-blue { background-color: #5781FC; }
+.filter-purple { background-color: #7C54FB; }
+.filter-red { background-color: #FB6353; }
+
+canvas {-ms-touch-action: double-tap-zoom;}
+</style>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- <div class='navbar'>
+      <div class='navbar-inner'>
+        <div class='container'>
+          <a class='brand' href='/'>Searchable Map Template</a>
+        </div>
+      </div>
+    </div> -->
+    <div class=''>
+      <div class='row-fluid'>
+        <div class='span4'>
+          <div class='well'>
+            <h4>
+              NYC Crime Stats <br/><small>For 2013 as of Jul 14<br/>(<a id='find_me' href='#'><img src="/skins/pcnyc/assets/img/icon_locate_black.png" width=18px height=18px >&nbsp;&nbsp;find me</a>)</small>
+            </h4>
+            <input class='input-block-level' id='search_address' placeholder='Enter an address or an intersection' type='text' />
+            <label>
+             <div style="padding-top:5px; padding-bottom:10px; font-size:16px"> within </div>
+             <div style="padding-top:5px; padding-bottom:10px">
+             <select class='input-small' id='search_radius'>
+                <option value='400'>2 blocks</option>
+                <option value='805'>1/2 mile</option>
+                <option value='1610'>1 mile</option>
+                <option value='3220'>2 miles</option>
+              </select>
+            </div>
+            </label>
+            <input class='btn btn-primary' id='search' type='button' value='Search' />
+            <button class='btn' id='reset'>Reset</button>
+          </div>
+          <div class='well'>
+           
+<h4>
+  Crime Type Filter
+</h4>
+<ul class='inputs-list unstyled' style="padding-left:18px">
+  <li>
+    <label class='checkbox inline'>
+      <input type='checkbox' id='cbType1' />
+      Total Major Felonies
+    </label>
+  </li>
+  <li>
+    <label class='checkbox inline'>
+      <input type='checkbox' id='cbType2' />
+      Burglary
+    </label>
+  </li>
+  <li>
+    <label class='checkbox inline'>
+      <input type='checkbox' id='cbType3' />
+      Felony Assault
+    </label>
+  </li>
+   <li>
+    <label class='checkbox inline'>
+      <input type='checkbox' id='cbType4' />
+      Grand Larceny
+    </label>
+  </li>
+  <li>
+    <label class='checkbox inline'>
+      <input type='checkbox' id='cbType5' />
+      Grand Larceny Auto
+    </label>
+  </li>
+  <li>
+    <label class='checkbox inline'>
+      <input type='checkbox' id='cbType6' />
+      Murder
+    </label>
+  </li>
+   <li>
+    <label class='checkbox inline'>
+      <input type='checkbox' id='cbType7' />
+      Rape
+    </label>
+  </li>
+     <li>
+    <label class='checkbox inline'>
+      <input type='checkbox' id='cbType8' />
+      Robbery
+    </label>
+  </li>
+</ul>
+
+
+
+
+<div id = 'slider1'>
+<div class='row-fluid'>
+              <div class='span6'><h4 style="white-space:nowrap;">
+  Total Major Felonies  <br/><small>
+    <span id='slider1-selected-start'>30</span>
+    -
+    <span id='slider1-selected-end'>855</span>
+  </small>
+</h4>
+<div id='Total-Major-Felonies-slider'></div>
+<span class='pull-left'>30</span>
+<span class='pull-right'>855</span></div></div></div>
+
+<div id = 'slider2'>
+<div class='row-fluid'>
+              <div class='span6'><h4  style="white-space:nowrap;">
+  Burglary<br/><small>
+    <span id='slider2-selected-start'>0</span>
+    -
+    <span id='slider2-selected-end'>154</span>
+  </small>
+
+</h4>
+<div id='Burglary-slider'></div>
+<span class='pull-left'>0</span>
+<span class='pull-right'>154</span></div></div></div>
+
+<div id = 'slider3'>
+<div class='row-fluid'>
+              <div class='span6'><h4  style="white-space:nowrap;">
+  Felony Assault<br/><small>
+    <span id='slider3-selected-start'>0</span>
+    -
+    <span id='slider3-selected-end'>284</span>
+  </small>
+</h4>
+<div id='Felony-Assault-slider'></div>
+<span class='pull-left'>0</span>
+<span class='pull-right'>284</span></div></div></div>
+
+<div id = 'slider4'>
+<div class='row-fluid'>
+              <div class='span6'><h4 style="white-space:nowrap;">
+  Grand Larceny<br/><small>
+    <span id='slider4-selected-start'>0</span>
+    -
+    <span id='slider4-selected-end'>404</span>
+  </small>
+</h4>
+<div id='Grand-Larceny-slider'></div>
+<span class='pull-left'>0</span>
+<span class='pull-right'>404</span></div></div></div>
+
+<div id = 'slider5'>
+<div class='row-fluid'>
+              <div class='span6'><h4 style="white-space:nowrap;">
+  Grand Larceny Auto<br/><small>
+    <span id='slider5-selected-start'>0</span>
+    -
+    <span id='slider5-selected-end'>71</span>
+  </small>
+</h4>
+<div id='Grand-Larceny-Auto-slider'></div>
+<span class='pull-left'>0</span>
+<span class='pull-right'>71</span></div></div></div>
+
+<div id = 'slider6'>
+<div class='row-fluid'>
+              <div class='span6'><h4 style="white-space:nowrap;">
+  Murder<br/><small>
+    <span id='slider6-selected-start'>0</span>
+    -
+    <span id='slider6-selected-end'>4</span>
+  </small>
+</h4>
+<div id='Murder-slider'></div>
+<span class='pull-left'>0</span>
+<span class='pull-right'>4</span></div></div></div>
+
+<div id = 'slider7'>
+<div class='row-fluid'>
+              <div class='span6'><h4>
+  Rape<br/><small>
+    <span id='slider7-selected-start'>0</span>
+    -
+    <span id='slider7-selected-end'>29</span>
+  </small>
+</h4>
+<div id='Rape-slider'></div>
+<span class='pull-left'>0</span>
+<span class='pull-right'>29</span></div></div></div>
+
+<div id = 'slider8'>
+<div class='row-fluid'>
+              <div class='span6'><h4>
+  Robbery<br/><small>
+    <span id='slider8-selected-start'>0</span>
+    -
+    <span id='slider8-selected-end'>207</span>
+  </small>
+</h4>
+<div id='Robbery-slider'></div>
+<span class='pull-left'>0</span>
+<span class='pull-right'>207</span></div></div></div>
+
+       
+          </div> 
+          <p class='alert alert-info lead' id='result_count'></p>
+        </div>
+        <div class='span8'>
+          <noscript>
+            <div class='alert alert-info'>
+              <h4>Your JavaScript is disabled</h4>
+              <p>Please enable JavaScript to view the map.</p>
+            </div>
+          </noscript>
+          <div id='map_canvas'></div>
+          <p class='pull-right'>
+   
+        </p>
+        </div>
+      </div>
+    </div>
+
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../skins/pcnyc/assets/jquery.geocomplete.min.js"></script>
+    <script type="text/javascript" src="../skins/pcnyc/assets/jquery.address.min.js"></script>
+    <script type='text/javascript'>
+      //<![CDATA[
+        $(window).resize(function () {
+          var h = $(window).height(),
+            offsetTop = 45; // Calculate the top offset
+        
+          $('#map_canvas').css('height', (h - offsetTop));
+        }).resize();
+        
+        $(function() {
+          MapsLib.initialize();
+          $("#search_address").geocomplete();
+
+          $(':checkbox').click(function(){
+            MapsLib.doSearch();
+          });
+
+          $(':radio').click(function(){
+            MapsLib.doSearch();
+          });
+          
+          $('#search_radius').change(function(){
+            MapsLib.doSearch();
+          });
+          
+          $('#search').click(function(){
+            MapsLib.doSearch();
+          });
+          
+          $('#find_me').click(function(){
+            MapsLib.findMe(); 
+            return false;
+          });
+          
+          $('#reset').click(function(){
+            $.address.parameter('address','');
+            MapsLib.initialize(); 
+            return false;
+          });
+          
+          $(":text").keydown(function(e){
+              var key =  e.keyCode ? e.keyCode : e.which;
+              if(key == 13) {
+                  $('#search').click();
+                  return false;
+              }
+          });
+        });
+      //]]>
+    </script>
+    <script type='text/javascript'>
+/*!
+ * Searchable Map Template with Google Fusion Tables
+ * http://derekeder.com/searchable_map_template/
+ *
+ * Copyright 2012, Derek Eder
+ * Licensed under the MIT license.
+ * https://github.com/derekeder/FusionTable-Map-Template/wiki/License
+ *
+ * Date: 12/10/2012
+ *
+ */
+
+// Enable the visual refresh
+google.maps.visualRefresh = true;
+
+var MapsLib = MapsLib || {};
+var MapsLib = {
+
+  //Setup section - put your Fusion Table details here
+  //Using the v1 Fusion Tables API. See https://developers.google.com/fusiontables/docs/v1/migration_guide for more info
+
+  //the encrypted Table ID of your Fusion Table (found under File => About)
+  //NOTE: numeric IDs will be depricated soon
+  //fusionTableId:      "1m4Ez9xyTGfY2CU6O-UgEcPzlS0rnzLU93e4Faa0",
+  fusionTableId: "184mdfnYNsiXt8Nx5-B_yt3cG2j_sWvK5s8WVFdE",
+
+  //*New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/
+  //*Important* this key is for demonstration purposes. please register your own.
+  googleApiKey:       "AIzaSyDT1y8L6QLnm8c0AvyZe59qiEHn9P6pv_w",
+
+  //name of the location column in your Fusion Table.
+  //NOTE: if your location column name has spaces in it, surround it with single quotes
+  //example: locationColumn:     "'my location'",
+  locationColumn:     "loc",
+
+  map_centroid:       new google.maps.LatLng(40.6974881, -73.979681), //center that your map defaults to
+  locationScope:      "new york",      //geographical area appended to all address searches
+  recordName:         "result",       //for showing number of results
+  recordNamePlural:   "results",
+
+  searchRadius:       805,            //in meters ~ 1/2 mile
+  defaultZoom:        10,             //zoom level when map is loaded (bigger is more zoomed in)
+  addrMarkerImage: 'http://derekeder.com/images/icons/blue-pushpin.png',
+  currentPinpoint: null,
+
+  initialize: function() {
+    $( "#result_count" ).html("");
+
+    geocoder = new google.maps.Geocoder();
+    var myOptions = {
+      zoom: MapsLib.defaultZoom,
+      center: MapsLib.map_centroid,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map($("#map_canvas")[0],myOptions);
+
+    // maintains map centerpoint for responsive design
+    google.maps.event.addDomListener(map, 'idle', function() {
+        MapsLib.calculateCenter();
+    });
+
+    google.maps.event.addDomListener(window, 'resize', function() {
+        map.setCenter(MapsLib.map_centroid);
+    });
+
+    MapsLib.searchrecords = null;
+
+    //reset filters
+    $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
+    var loadRadius = MapsLib.convertToPlainString($.address.parameter('radius'));
+    if (loadRadius != "") $("#search_radius").val(loadRadius);
+    else $("#search_radius").val(MapsLib.searchRadius);
+    //$(":checkbox").attr("checked", "checked");
+    $(":checkbox").prop('checked', false);
+    $("div[id^='slider']").css('display','none');
+    $("#result_count").hide();
+    
+    //-----custom initializers-------
+    $("div[id='Total-Major-Felonies-slider']").slider({
+    orientation: "horizontal",
+    range: true,
+    min: 30,
+    max: 855,
+    values: [30, 855],
+    step: 50,
+    slide: function (event, ui) {
+        $("#slider1-selected-start").html(ui.values[0]);
+        $("#slider1-selected-end").html(ui.values[1]);
+    },
+    stop: function(event, ui) {
+      MapsLib.doSearch();
+    }
+    });
+
+    $("div[id='Burglary-slider']").slider({
+    orientation: "horizontal",
+    range: true,
+    min: 0,
+    max: 154,
+    values: [0, 154],
+    step: 5,
+    slide: function (event, ui) {
+        $("#slider2-selected-start").html(ui.values[0]);
+        $("#slider2-selected-end").html(ui.values[1]);
+    },
+    stop: function(event, ui) {
+      MapsLib.doSearch();
+    }
+    });
+
+    $("div[id='Felony-Assault-slider']").slider({
+    orientation: "horizontal",
+    range: true,
+    min: 0,
+    max: 284,
+    values: [0, 284],
+    step: 5,
+    slide: function (event, ui) {
+        $("#slider3-selected-start").html(ui.values[0]);
+        $("#slider3-selected-end").html(ui.values[1]);
+    },
+    stop: function(event, ui) {
+      MapsLib.doSearch();
+    }
+    });
+
+    $("div[id='Grand-Larceny-slider']").slider({
+    orientation: "horizontal",
+    range: true,
+    min: 0,
+    max: 404,
+    values: [0, 404],
+    step: 10,
+    slide: function (event, ui) {
+        $("#slider4-selected-start").html(ui.values[0]);
+        $("#slider4-selected-end").html(ui.values[1]);
+    },
+    stop: function(event, ui) {
+      MapsLib.doSearch();
+    }
+    });
+
+    $("div[id='Grand-Larceny-Auto-slider']").slider({
+    orientation: "horizontal",
+    range: true,
+    min: 0,
+    max: 71,
+    values: [0, 71],
+    step: 5,
+    slide: function (event, ui) {
+        $("#slider5-selected-start").html(ui.values[0]);
+        $("#slider5-selected-end").html(ui.values[1]);
+    },
+    stop: function(event, ui) {
+      MapsLib.doSearch();
+    }
+    });
+
+    $("div[id='Murder-slider']").slider({
+    orientation: "horizontal",
+    range: true,
+    min: 0,
+    max: 4,
+    values: [0, 4],
+    step: 1,
+    slide: function (event, ui) {
+        $("#slider6-selected-start").html(ui.values[0]);
+        $("#slider6-selected-end").html(ui.values[1]);
+    },
+    stop: function(event, ui) {
+      MapsLib.doSearch();
+    }
+    });
+
+    $("div[id='Rape-slider']").slider({
+    orientation: "horizontal",
+    range: true,
+    min: 0,
+    max: 29,
+    values: [0, 29],
+    step: 3,
+    slide: function (event, ui) {
+        $("#slider7-selected-start").html(ui.values[0]);
+        $("#slider7-selected-end").html(ui.values[1]);
+    },
+    stop: function(event, ui) {
+      MapsLib.doSearch();
+    }
+    });
+
+    $("div[id='Robbery-slider']").slider({
+    orientation: "horizontal",
+    range: true,
+    min: 0,
+    max: 207,
+    values: [0, 207],
+    step: 10,
+    slide: function (event, ui) {
+        $("#slider8-selected-start").html(ui.values[0]);
+        $("#slider8-selected-end").html(ui.values[1]);
+    },
+    stop: function(event, ui) {
+      MapsLib.doSearch();
+    }
+    });
+
+    $("#cbType1").change(function() {
+        if ( $("#cbType1").is(':checked')){
+            $("#slider1").show('fast');
+        } else {
+            $("#slider1").hide('fast');
+        }
+        MapsLib.doSearch(); 
+    });
+    $("#cbType2").change(function() {
+        if ( $("#cbType2").is(':checked')){
+            $("#slider2").show('fast');
+        } else {
+            $("#slider2").hide('fast');
+        }
+        MapsLib.doSearch(); 
+    });
+    $("#cbType3").change(function() {
+        if ( $("#cbType3").is(':checked')){
+            $("#slider3").show('fast');
+        } else {
+            $("#slider3").hide('fast');
+        }
+        MapsLib.doSearch(); 
+    });
+    $("#cbType4").change(function() {
+        if ( $("#cbType4").is(':checked')){
+            $("#slider4").show('fast');
+        } else {
+            $("#slider4").hide('fast');
+        }
+        MapsLib.doSearch(); 
+    });
+    $("#cbType5").change(function() {
+        if ( $("#cbType5").is(':checked')){
+            $("#slider5").show('fast');
+        } else {
+            $("#slider5").hide('fast');
+        }
+        MapsLib.doSearch(); 
+    });
+    $("#cbType6").change(function() {
+        if ( $("#cbType6").is(':checked')){
+            $("#slider6").show('fast');
+        } else {
+            $("#slider6").hide('fast');
+        }
+        MapsLib.doSearch(); 
+    });
+    $("#cbType7").change(function() {
+        if ( $("#cbType7").is(':checked')){
+            $("#slider7").show('fast');
+        } else {
+            $("#slider7").hide('fast');
+        }
+        MapsLib.doSearch(); 
+    });
+    $("#cbType8").change(function() {
+        if ( $("#cbType8").is(':checked')){
+            $("#slider8").show('fast');
+        } else {
+            $("#slider8").hide('fast');
+        }
+        MapsLib.doSearch(); 
+    });
+    //-----end of custom initializers-------
+
+    //run the default search
+    MapsLib.doSearch();
+  },
+
+  doSearch: function(location) {
+    MapsLib.clearSearch();
+    var address = $("#search_address").val();
+    MapsLib.searchRadius = $("#search_radius").val();
+
+    var whereClause = MapsLib.locationColumn + " not equal to ''";
+
+    //-----custom filters-------
+    if ( $("#cbType1").is(':checked')){
+    	whereClause += " AND 'Total Major Felonies' >= '" + $("#slider1-selected-start").html() + "'";
+        whereClause += " AND 'Total Major Felonies' <= '" + $("#slider1-selected-end").html() + "'"
+    }
+    if ( $("#cbType2").is(':checked')){
+    	whereClause += " AND 'Burglary' >= '" + $("#slider2-selected-start").html() + "'";
+        whereClause += " AND 'Burglary' <= '" + $("#slider2-selected-end").html() + "'"
+    }
+    if ( $("#cbType3").is(':checked')){
+    	whereClause += " AND 'Felony Assault' >= '" + $("#slider3-selected-start").html() + "'";
+        whereClause += " AND 'Felony Assault' <= '" + $("#slider3-selected-end").html() + "'"
+    }
+    if ( $("#cbType4").is(':checked')){
+    	whereClause += " AND 'Grand Larceny' >= '" + $("#slider4-selected-start").html() + "'";
+        whereClause += " AND 'Grand Larceny' <= '" + $("#slider4-selected-end").html() + "'"
+    }
+    if ( $("#cbType5").is(':checked')){
+    	whereClause += " AND 'Grand Larceny Auto' >= '" + $("#slider5-selected-start").html() + "'";
+        whereClause += " AND 'Grand Larceny Auto' <= '" + $("#slider5-selected-end").html() + "'"
+    }
+    if ( $("#cbType6").is(':checked')){
+    	whereClause += " AND 'Murder' >= '" + $("#slider6-selected-start").html() + "'";
+        whereClause += " AND 'Murder' <= '" + $("#slider6-selected-end").html() + "'"
+    }
+    if ( $("#cbType7").is(':checked')){
+    	whereClause += " AND 'Rape' >= '" + $("#slider7-selected-start").html() + "'";
+        whereClause += " AND 'Rape' <= '" + $("#slider7-selected-end").html() + "'"
+    }
+    if ( $("#cbType8").is(':checked')){
+    	whereClause += " AND 'Robbery' >= '" + $("#slider8-selected-start").html() + "'";
+        whereClause += " AND 'Robbery' <= '" + $("#slider8-selected-end").html() + "'"
+    }
+    //-------end of custom filters--------
+
+    if (address != "") {
+      if (address.toLowerCase().indexOf(MapsLib.locationScope) == -1)
+        address = address + " " + MapsLib.locationScope;
+
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          MapsLib.currentPinpoint = results[0].geometry.location;
+
+          $.address.parameter('address', encodeURIComponent(address));
+          $.address.parameter('radius', encodeURIComponent(MapsLib.searchRadius));
+          map.setCenter(MapsLib.currentPinpoint);
+          map.setZoom(14);
+
+          MapsLib.addrMarker = new google.maps.Marker({
+            position: MapsLib.currentPinpoint,
+            map: map,
+            icon: MapsLib.addrMarkerImage,
+            animation: google.maps.Animation.DROP,
+            title:address
+          });
+
+          whereClause += " AND ST_INTERSECTS(" + MapsLib.locationColumn + ", CIRCLE(LATLNG" + MapsLib.currentPinpoint.toString() + "," + MapsLib.searchRadius + "))";
+
+          MapsLib.drawSearchRadiusCircle(MapsLib.currentPinpoint);
+          MapsLib.submitSearch(whereClause, map, MapsLib.currentPinpoint);
+        }
+        else {
+          alert("We could not find your address: " + status);
+        }
+      });
+    }
+    else { //search without geocoding callback
+      MapsLib.submitSearch(whereClause, map);
+    }
+  },
+
+  submitSearch: function(whereClause, map, location) {
+    //get using all filters
+    //NOTE: styleId and templateId are recently added attributes to load custom marker styles and info windows
+    //you can find your Ids inside the link generated by the 'Publish' option in Fusion Tables
+    //for more details, see https://developers.google.com/fusiontables/docs/v1/using#WorkingStyles
+
+    MapsLib.searchrecords = new google.maps.FusionTablesLayer({
+      query: {
+        from:   MapsLib.fusionTableId,
+        select: MapsLib.locationColumn,
+        where:  whereClause
+      },
+      styleId: 2,
+      templateId: 2
+    });
+    MapsLib.searchrecords.setMap(map);
+    MapsLib.getCount(whereClause);
+  },
+
+  clearSearch: function() {
+    if (MapsLib.searchrecords != null)
+      MapsLib.searchrecords.setMap(null);
+    if (MapsLib.addrMarker != null)
+      MapsLib.addrMarker.setMap(null);
+    if (MapsLib.searchRadiusCircle != null)
+      MapsLib.searchRadiusCircle.setMap(null);
+  },
+
+  findMe: function() {
+    // Try W3C Geolocation (Preferred)
+    var foundLocation;
+
+    if(navigator.geolocation) {
+      navigator.geolocation.watchPosition(function(position) {
+        foundLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+        MapsLib.addrFromLatLng(foundLocation);
+      }, null,{enableHighAccuracy: true});
+    }
+    else {
+      alert("Sorry, we could not find your location.");
+    }
+  },
+
+  addrFromLatLng: function(latLngPoint) {
+    geocoder.geocode({'latLng': latLngPoint}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+          $('#search_address').val(results[1].formatted_address);
+          $('.hint').focus();
+          MapsLib.doSearch();
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
+  },
+
+  drawSearchRadiusCircle: function(point) {
+      var circleOptions = {
+        strokeColor: "#4b58a6",
+        strokeOpacity: 0.3,
+        strokeWeight: 1,
+        fillColor: "#4b58a6",
+        fillOpacity: 0.05,
+        map: map,
+        center: point,
+        clickable: false,
+        zIndex: -1,
+        radius: parseInt(MapsLib.searchRadius)
+      };
+      MapsLib.searchRadiusCircle = new google.maps.Circle(circleOptions);
+  },
+
+  query: function(selectColumns, whereClause, callback) {
+    var queryStr = [];
+    queryStr.push("SELECT " + selectColumns);
+    queryStr.push(" FROM " + MapsLib.fusionTableId);
+    queryStr.push(" WHERE " + whereClause);
+
+    var sql = encodeURIComponent(queryStr.join(" "));
+    $.ajax({url: "https://www.googleapis.com/fusiontables/v1/query?sql="+sql+"&callback="+callback+"&key="+MapsLib.googleApiKey, dataType: "jsonp"});
+  },
+
+  handleError: function(json) {
+    if (json["error"] != undefined) {
+      var error = json["error"]["errors"]
+      console.log("Error in Fusion Table call!");
+      for (var row in error) {
+        console.log(" Domain: " + error[row]["domain"]);
+        console.log(" Reason: " + error[row]["reason"]);
+        console.log(" Message: " + error[row]["message"]);
+      }
+    }
+  },
+
+  getCount: function(whereClause) {
+    var selectColumns = "Count()";
+    MapsLib.query(selectColumns, whereClause,"MapsLib.displaySearchCount");
+  },
+
+  displaySearchCount: function(json) {
+    MapsLib.handleError(json);
+    var numRows = 0;
+    if (json["rows"] != null)
+      numRows = json["rows"][0];
+
+    var name = MapsLib.recordNamePlural;
+    if (numRows == 1)
+    name = MapsLib.recordName;
+    $( "#result_count" ).fadeOut(function() {
+        $( "#result_count" ).html(MapsLib.addCommas(numRows) + " " + name + " found");
+      });
+    $( "#result_count" ).fadeIn();
+  },
+
+  addCommas: function(nStr) {
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+      x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+  },
+
+  // maintains map centerpoint for responsive design
+  calculateCenter: function() {
+    center = map.getCenter();
+  },
+
+  //converts a slug or query string in to readable text
+  convertToPlainString: function(text) {
+    if (text == undefined) return '';
+  	return decodeURIComponent(text);
+  }
+  
+  //-----custom functions-------
+  // NOTE: if you add custom functions, make sure to append each one with a comma, except for the last one.
+  // This also applies to the convertToPlainString function above
+  
+  //-----end of custom functions-------
+}
+
+    </script>
+<script type="text/javascript">
+      $(document).ready(function() {
+        document.title = 'NYC Crime Stats';
+      });
+    </script>
+  </body>
+</html>

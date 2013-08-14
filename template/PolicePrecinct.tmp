@@ -1,0 +1,137 @@
+__NOTOC__ __NOEDITSECTION__
+<div class="">
+    <div class="container">
+        <div class="content_block right-sidebar">
+            <div class="fl-container span9">
+                <div class="">
+                    <div class="contentarea">
+                        <div class="row-fluid">
+                            <div class="span12">
+={{{borough}}} {{{precinct}}} = 
+<!-- [[Special:SearchByProperty/StreetAddress/{{#replace:{{{streetAddress}}}||-20}}| {{{streetAddress}}}]], [[Resource/Borough/{{{borough}}}|{{{borough}}}]], NY, [[Resource/PostalCode/{{{postalCode}}}|{{{postalCode}}}]]  [[Has_coordinates:: {{{latitude}}},{{{longitude}}}|]]  -->
+<!--         {{#if: {{{DESCRIPTION|}}} | {{DESCRIPTION|}}} | {{#display_point: {{{latitude|}}}, {{{longitude|}}} }} }} -->
+{{#get_db_data:db=mongo-prod
+|from=police_precincts_polygon
+|data=precinct=properties.Precinct,geometry=geometry
+|find query={"properties.Precinct": "{{{precinctNum}}}", "geometry.type": "Polygon"}
+|limit=1000}}
+{{#multimaps: 
+|polygons={{#sub:{{#display_external_table:template=PrecinctDetailPolygonMapper|data=geometry=geometry,precinct=precinct}}|0|-1}}~{{{borough}}} {{{precinct}}}
+}} 
+                </div>             
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 module_cont module_tabs">
+                        <div class="shortcode_tabs">
+                            <div class="all_heads_cont">
+                                <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Overview</div>
+                                <div class="shortcode_tab_item_title it2 head2" data-open="body2">Crime Stats</div>
+                                <div class="shortcode_tab_item_title it3 head3" data-open="body3">Dataset</div> 
+                            </div><!-- .all_heads_cont -->
+                            <div class="all_body_cont">
+                                <div class="shortcode_tab_item_body body1 it1">
+                                    <div class="ip"> {{#arraydefine:a|{{{postalCodes}}} }}{{#arraydefine:b|{{#replace:{{{neighborhood}}}|Soho|SoHo}} }}{{#arraydefine:c|{{{BoroCD}}} }}
+                                        {| class="table table-striped"
+                                        |-
+                                        | '''Name''' ||  {{{name}}} 
+                                        |-
+                                        | '''Picture''' ||  {{#ifeq: {{{picture|}}} | None | N/A | <div style=max-width:200px>{{{picture}}}</div> }}
+                                        |-
+                                        | '''Location''' ||  [[StreetAddress::{{{streetAddress|}}}]] , [[Borough::{{{borough|}}}]], NY [[PostalCode::{{{postalCode|}}}]]
+                                        |-
+                                        | '''Telephone''' ||  [[Telephone::{{{telephone|}}}]]  
+                       <!--                 |-
+                                        | <span style=white-space:nowrap>'''Crime Statistics'''</span> ||  {{#ifeq: {{{Crime Statistics|}}} | None | N/A |  [{{{Crime Statistics|}}} {{{Crime Statistics|}}}]  }} -->
+                                        |-
+                                        | '''Description''' ||  {{{description}}}
+                                        |-
+                                        | <span style=white-space:nowrap>'''Contact Information'''</span> ||  {{{Contact Information}}}
+                                        |-
+                                        | '''President''' ||  {{{President}}}
+                                        |-
+                                        | '''Meetings''' ||  {{{Meetings}}}
+                                        |-
+                                        | <span style=white-space:nowrap>'''Precinct Website'''</span> ||   [{{{url|}}} {{{url|}}}]
+                                        |-
+                                        | <span style=white-space:nowrap>'''Community Districts'''</span> || {{#arrayunique:c}}{{#arrayprint:c | | @@@@ | [[Resource/CommunityDistrict/@@@@|@@@@]] | print=pretty }}
+                                        |-
+                                        | '''ZIP codes''' ||   {{#arrayunique:a}}{{#arrayprint:a | | @@@@ | [[Resource/PostalCode/@@@@|@@@@]] | print=pretty }}
+                                        |-
+                                        | '''Neighborhoods''' ||   {{#arrayunique:b}}{{#arrayprint:b | |@@@@ |[[Neighborhood ::@@@@| ]] }} {{#arrayprint:b | | @@@@ | [[Resource/Neighborhood/@@@@|@@@@]] | print=pretty }}
+                                        |}
+                                    </div><!-- .ip -->  
+                                </div><!-- .shortcode_tab_item_body -->
+                                
+                                 <div class="shortcode_tab_item_body body2 it2">
+                                                        <div class="span12">
+                                                                 {{#get_db_data:db=mongo-prod
+                                                                 |from=nyc_crime_data_by_precinct_aggregations
+                                                                 |find query={"precinct": "{{#explode:{{{@id}}}|/|-1}}" }
+                                                                 |order by=total2013 DESC                                                                 
+                                                                 |data=crime=crimeType,crimetotal13=total2013,crimetotal12=total2012,crimetotal11=total2011,crimetotal10=total2010
+                                                                 }}
+                                                                 {| class="table table-striped sortable" style="margin-top:0cm"
+                                                                 |-
+                                                                 ! colspan="2" class="unsortable" style="background-color:#999999; color:#FFFFFF;background-position: left;padding-left: 21px;" | Crime Statistics for Police Precinct # {{#explode:{{{@id}}}|/|-1}}
+                                                                 ! colspan="3"  class="unsortable" style="background-color:#999999; color:#FFFFFF;" | Number of Crimes by Year
+                                                                 |-
+                                                                 ! style="background-position: left;padding-left: 21px;" | Crime Type
+                                                                 ! style="background-position: left;padding-left: 21px;" | 2013
+                                                                 ! style="background-position: left;padding-left: 21px;" | 2012 
+                                                                 ! style="background-position: left;padding-left: 21px;" | 2011 
+                                                                 ! style="background-position: left;padding-left: 21px;" | 2010 
+                                                                 |-{{#for_external_table:<nowiki/>
+                                                                 {{!}}-
+                                                                 {{!}} {{{crime}}}
+                                                                 {{!}} {{{crimetotal13}}}
+                                                                 {{!}} {{{crimetotal12}}}
+                                                                 {{!}} {{{crimetotal11}}}
+                                                                 {{!}} {{{crimetotal10}}}
+                                                                 }}
+                                                                 |}
+                                                        </div>
+                                                </div>         
+
+                    <div class="shortcode_tab_item_body body3 it3">
+                        {| class="table table-striped"
+                        |-
+                        | '''Datasets Information'''|| [http://nycdata.pediacities.com/dataset/new-york-city-crime-statistics Visit it on Datawrangler]
+                        |-
+                        | '''Online API'''|| [http://nycdata.pediacities.com/dataset/new-york-city-crime-statistics/resource/8edcbac2-5f30-45e5-a918-b590905ce3d0 API Preview]
+                        |-
+                        | '''Download Link'''|| [https://nycdatastables.s3.amazonaws.com/2013-05-13T20:37:28.132Z/nyc-crime-data-results.csv Download now]
+                        |}
+                    </div><!-- .shortcode_tab_item_body -->
+                                   </div><!-- .all_body_cont -->
+                                </div><!-- .shortcode_tabs -->                       	 
+                            </div><!-- .module_cont -->
+                        </div><!-- .row-fluid -->
+                    </div><!-- .contentarea -->
+                </div>
+                <div class="clear"><!-- ClearFix --></div>
+            </div><!-- .fl-container -->
+
+                <!-- left part end -->
+                <div class   = "right-sidebar-block span3">
+           <!--         {{PostalCodeSideBar 
+                    | postalCode = {{{postalCode|}}}
+                    | latitude   = {{{latitude}}}
+                    | longitude  = {{{longitude}}}
+                    }} -->
+                    {{PrecinctSideBar 
+                    | postalCode = {{{postalCode|}}}
+                    | latitude   = {{{latitude}}}
+                    | longitude  = {{{longitude}}}
+                    }}
+                </div><!-- .right-sidebar -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div>
+    </div><!-- .container -->
+</div><!-- .content_wrapper -->
+                [[Category:PolicePrecinct]]
+{{#widget:Jsonld|context={{{@context}}}|id={{{@id}}}|type={{{@type}}}|name={{{borough}}} {{{precinct}}} |latitude={{{latitude}}}|longitude={{{longitude}}}}}
+{{#seo:
+|title={{{borough}}} {{{precinct}}} 
+|titlemode=replace
+|description={{{borough}}} {{#replace: {{{precinct}}}|Precinct|police precinct}} office located at {{{streetAddress|}}} , {{{borough|}}}, NY {{{postalCode|}}}
+}}
