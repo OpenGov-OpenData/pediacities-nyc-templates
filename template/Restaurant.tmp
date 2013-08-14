@@ -1,0 +1,192 @@
+__NOTOC__ __NOEDITSECTION__ <includeonly>
+<div class="">
+    <div class="container">
+        <div class="content_block right-sidebar">
+            <div class="fl-container span9">
+                <div class="">
+                    <div class="contentarea">
+                        <div class="row-fluid">
+                            <div class="span12">
+=[[name::{{{name}}}]]=
+  <!--  <div class="row-fluid"> -->
+            {{#display_point: {{{latitude|}}}, {{{longitude|}}} |zoom=16|minzoom=16|maxzoom=16 }}
+{{#clear_external_data:}}
+{{#get_db_data:db=mongo-prod
+|from=restaurant_inspection
+|find query={"business_id": {{{business_id}}}}
+|order by=date DESC
+|limit=1
+|data=RestaurantScore=score,RestaurantInspectdate=date
+}}
+{{#get_db_data:db=mongo-prod
+|from=restaurant_violation
+|find query={"business_id": {{{business_id}}}}
+|limit=100
+|order by=date DESC
+|data=RestaurantDescription=description,RestaurantViocode=code,RestaurantDate=date
+}}
+        <div class="row-fluid">
+            <div class="span12" style='background:#F4F4F4; border-top:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD'>
+                <div class="infobox span6">
+                    {| class="table table-condensed"
+                    |-
+                    | <span class="grade grade-{{lc: {{{CURRENTGRADE|}}} }}">[[CURRENTGRADE::{{{CURRENTGRADE|}}}]]</span> || Score<br/> {{#if: {{#external_value:RestaurantScore}} | [[RestaurantRating ::{{#external_value: RestaurantScore}}|]] {{#external_value:RestaurantScore}} | N/A }}   ||  Violcode<br/> {{#if:{{#external_value:RestaurantViocode}} | {{#external_value:RestaurantViocode}}| N/A}}
+                    |}
+                </div>
+                <div class="infobox span6">
+                    {| class="table table-condensed"
+                    |-
+                    | Insp Date<br/> {{#if: {{#time: Y-m-d | {{#external_value:RestaurantInspectdate}} }} | {{#time: Y-m-d | {{#external_value:RestaurantInspectdate}} }}  | N/A}}  || Rating <br/>  {{#if: {{#external_value:RestaurantScore}} | {{#ifexpr:{{#external_value:RestaurantScore}} > 87 | [[File:GradingA.png]]  |  {{#ifexpr: {{#external_value:RestaurantScore}} > 73 | [[File:GradingB.png]] | [[File:GradingB.png]] }} }} | Grade Pending}}
+                    |}
+                </div>
+            </div>
+        </div>
+{{#get_web_data:
+url=https://api.foursquare.com/v2/venues/search?intent=match&ll={{{latitude|}}}, {{{longitude|}}}&query={{{name}}}&oauth_token=5RFISKIUTTESMRKX1ANRODUL3BGZWZGFZVOS1VNY3IMBE1BB&v=20130603
+|format=JSON
+|data=CheckinCounts=checkinsCount,UsersCounts=usersCount,TipCount=tipCount,MoreDetail=canonicalUrl,MenuUrl=mobileUrl,Categories=categories,Website=url,CategoryName=pluralName
+}}
+    </div>
+<div class="row-fluid">
+    <div class="span12">
+        <div  class="shortcode_tabs">
+            <div class="all_heads_cont">
+                <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Overview</div>
+                <div class="shortcode_tab_item_title it2 head2" data-open="body2">Violations</div>
+                <div class="shortcode_tab_item_title it3 head3" data-open="body3">Detail</div>
+                <div class="shortcode_tab_item_title it4 head4" data-open="body4">Dataset</div>
+            </div>
+            <div class="all_body_cont">
+                <div class="shortcode_tab_item_body body1 it1">
+                  <div class="span6">
+                    {| class="table table-striped"
+                    |-
+                    | '''Restaurant Name''' [[RestaurantName::{{{name}}}| ]] || [[Special:SearchByProperty/RestaurantName/{{#replace:{{{name}}}||-20}}|{{{name}}}]]
+                    |-
+                    | '''Location''' || {{#if: {{{streetAddress|}}} | [[StreetAddress::{{{streetAddress}}}| ]] [[Special:SearchByProperty/StreetAddress/{{#replace:{{{streetAddress}}}||-20}}|{{{streetAddress}}}]],<nowiki> </nowiki>|}}{{#if: {{{addressLocality|}}} | [[AddressLocality::{{{addressLocality}}}| ]] [[Special:SearchByProperty/AddressLocality/{{#replace:{{{addressLocality}}}||-20}}|{{{addressLocality}}}]],<nowiki> </nowiki>|}}{{#if: {{{addressRegion|}}} | {{{addressRegion|}}},<nowiki> </nowiki>|}}{{#if: {{{postalCode|}}} | [[Resource/PostalCode/{{{postalCode}}} | {{{postalCode}}}]]|}}
+                    |-
+                    | '''Neighborhood''' [[Neighborhood :: {{{neighborhood|}}}| ]] || [[Resource/Neighborhood/{{{neighborhood}}} | {{{neighborhood}}}]]
+                    |-
+                    | '''Telephone''' || {{#if: {{{telephone|}}} | {{{telephone|}}} | N/A}}
+                    |-
+                    | '''ZIP Code''' [[PostalCode::{{{postalCode}}}| ]] || [[Resource/PostalCode/{{{postalCode}}} | {{{postalCode}}}]]
+                    |-
+                    | '''Coordinates''' || {{coord|{{{latitude}}}|{{{longitude}}}}}
+                    |-
+                    | '''Cuisine Description''' [[RestaurantCuisine::{{#if: {{{CuisineDesc|}}} | {{{CuisineDesc|}}} | {{#if: {{{servesCuisine|}}} | {{{servesCuisine|}}} |}}}}| ]] || [[Special:SearchByProperty/RestaurantCuisine/{{#replace:{{#if: {{{CuisineDesc|}}} | {{{CuisineDesc|}}} | {{#if: {{{servesCuisine|}}} | {{{servesCuisine|}}} |}}}}||-20}}|{{#if: {{{CuisineDesc|}}} | {{{CuisineDesc|}}} | {{#if: {{{servesCuisine|}}} | {{{servesCuisine|}}} |}}}}]]
+                    |}
+                  </div>
+                  <div class="span6">
+                      {| class="table table-striped"
+                      |-
+                      | '''Data retrieved from Foursquare [[File:PoweredByFoursquare.png|link=http://foursquare.com/|foursquare]] ''' ||
+                      |-
+                      | '''Category''' || {{#if: {{#external_value: CategoryName}} | {{#external_value: CategoryName}} | N/A}}
+                      |-
+                      | '''Total Check-ins''' || {{#if: {{#external_value: CheckinCounts}} | [[RestaurantCheckinCounts::{{#external_value: CheckinCounts}}|]] {{#external_value: CheckinCounts }} | N/A}}
+                      |-
+                      | '''Total Visitors''' || {{#if: {{#external_value: UsersCounts}} | [[RestaurantUsersCounts::{{#external_value: UsersCounts}}|]] {{#external_value: UsersCounts}} | N/A}}
+                      |-
+                      | '''Reviews''' || {{#if: {{#external_value: TipCount}} | [{{#external_value: MoreDetail}} {{#external_value: TipCount }}] | N/A}}
+                      |-
+                      | '''Menu''' || {{#if: {{#external_value: MenuUrl}} | [{{#external_value: MenuUrl }} More details]| N/A}}
+                      |-
+                      | '''Website''' || {{#if: {{#external_value: Website}} | [{{#external_value: Website }} {{{name}}}]| N/A}}
+                     |}
+                  </div>
+                </div>
+                <div class="shortcode_tab_item_body body2 it2">
+                    {| class="table table-striped sortable" style="margin-top:0cm"
+                    |-
+                    ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantViocode}} | Code | No violation code for this restaurant. }}
+                    ! style="background-position: left;padding-left: 21px; width:12%"  | {{#if: {{#external_value:RestaurantDate}} | Date |}}
+                    ! style="background-position: left;padding-left: 21px;" | {{#if: {{#external_value:RestaurantDescription}} | Description |}}
+                    |-{{#for_external_table:<nowiki/>
+                    {{!}}-
+                    {{!}} {{{RestaurantViocode}}}
+                    {{!}} {{{RestaurantDate}}}
+                    {{!}} {{{RestaurantDescription}}}
+                    }}
+                    |}
+                </div>
+                <div class="shortcode_tab_item_body body3 it3">
+                    <div class="span6">
+                      {| class="table table-striped"
+                      |-
+                      | '''Takes Reservations''' || {{#if: {{{RESERVATIONS|}}} | {{{RESERVATIONS|}}} | N/A}}
+                      |-
+                      | '''Delivery''' || {{#if: {{{MEAL_DELIVER|}}} | {{{MEAL_DELIVER|}}} | N/A}}
+                      |-
+                      | '''Take-out''' || {{#if: {{{MEAL_TAKEOUT|}}} | {{{MEAL_TAKEOUT|}}} | N/A}}
+                      |-
+                      | '''Caters''': || {{#if: {{{MEAL_CATER|}}} | {{{MEAL_CATER|}}} | N/A}}
+                      |-
+                      | '''Breakfast''' || {{#if: {{{MEAL_BREAKFAST|}}} | {{{MEAL_BREAKFAST|}}} | N/A}}
+                      |-
+                      | '''Lunch''' || {{#if: {{{MEAL_LUNCH|}}} | {{{MEAL_LUNCH|}}} | N/A}}
+                      |-
+                      | '''Dinner''' || {{#if: {{{MEAL_DINNER|}}} | {{{MEAL_DINNER|}}} | N/A}}
+                      |}
+                    </div>
+                    <div class="span6">
+                      {| class="table table-striped"
+                      |-
+                      | '''Wi-Fi''' || {{#if: {{{WIFI|}}} | {{{WIFI|}}} | N/A}}
+                      |-
+                      | '''Alcohol''' || {{#if: {{{ALCOHOL|}}} | {{{ALCOHOL|}}} | N/A}} {{#if: {{{ALCOHOL_BYOB|}}} | {{{ALCOHOL_BYOB|}}} | }}
+                      |-
+                      | '''Vegetarian''' || {{#if: {{{OPTIONS_VEGETARIAN|}}} | {{{OPTIONS_VEGETARIAN|}}} | N/A}}
+                      |-
+                      | '''Vegan''' || {{#if: {{{OPTIONS_VEGAN|}}} | {{{OPTIONS_VEGAN|}}} | N/A}}
+                      |-
+                      | '''Gluten Free''' || {{#if: {{{OPTIONS_GLUTENFREE|}}} | {{{OPTIONS_GLUTENFREE|}}} | N/A}}
+                      |-
+                      | '''Vegan''' || {{#if: {{{OPTIONS_VEGAN|}}} | {{{OPTIONS_VEGAN|}}} | N/A}}
+                      |-
+                      | '''Lowfat''' || {{#if: {{{OPTIONS_LOWFAT|}}} | {{{OPTIONS_LOWFAT|}}} | N/A}}
+                      |-
+                      | '''Organic''' || {{#if: {{{OPTIONS_ORGANIC|}}} | {{{OPTIONS_ORGANIC|}}} | N/A}}
+                      |}
+                    </div>
+                </div>
+                <div class="shortcode_tab_item_body body4 it4">
+                    <div class="ip">
+                        {| class="table table-striped"
+                        |-
+                        | '''Datasets Information''' || [https://data.cityofnewyork.us/Health/Restaurant-Inspection-Results/4vkw-7nck Restaurant Inspection Results] [[DatasetName::Restaurant Inspection Results]]
+                        |-
+                        | '''Online API''' || [https://data.cityofnewyork.us/Health/Restaurant-Inspection-Results/4vkw-7nck API Preview]
+                        |-
+                        | '''Download Link''' || [https://data.cityofnewyork.us/Health/Restaurant-Inspection-Results/4vkw-7nck Download now]
+                        |}
+                    </div>
+</div></div>
+                 </div><!-- .all_body_cont -->
+                                </div><!-- .shortcode_tabs -->                       	 
+                            </div><!-- .module_cont -->
+                        </div><!-- .row-fluid -->
+                    </div><!-- .contentarea -->
+                </div>
+                <div class="clear"><!-- ClearFix --></div>
+            </div><!-- .fl-container -->
+
+            <div class="right-sidebar-block span3">
+                {{PostalCodeSideBar
+                | postalCode = {{{postalCode|}}}
+                | latitude={{{latitude}}}
+                | longitude={{{longitude}}}
+                }}
+            </div><!-- .right-sidebar -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div>
+    </div><!-- .container -->
+</div><!-- .content_wrapper -->
+[[Category:Restaurant]]
+{{#widget:Jsonld|context={{{@context}}}|id={{{@id}}}|type={{{@type}}}|name={{{name}}}|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+
+{{#seo:
+| title={{{name}}}
+| titlemode=replace
+| description={{{name}}} is a {{#if: {{{CuisineDesc|}}} | {{{CuisineDesc|}}} | {{#if: {{{servesCuisine|}}} | {{{servesCuisine|}}} |}} |}} restaurant located at {{{streetAddress}}}, {{{addressLocality|}}}, {{{addressRegion}}}, {{{postalCode|}}}
+}}
+</includeonly>
