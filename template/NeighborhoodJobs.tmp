@@ -1,0 +1,36 @@
+__NOTOC__ __NOEDITSECTION__
+<div class="container">
+    <div class="contentarea">
+        <div class="row-fluid">
+            <div class="span12">
+=Indeed Jobs in [[Resource/Neighborhood/{{#replace:{{#replace:{{#replace:{{#replace:{{#urldecode:{{#urlget:neighborhood}}}}|-|_}}|.|_}}|'|_}}|,|_}} | {{#urldecode:{{#urlget:neighborhood}}}}]]= {{NeighborhoodMap
+|neighborhood={{#urldecode:{{#urlget:neighborhood}}}}
+|zoom=-1
+|height=400
+}}
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12"> {{#get_web_data:
+                url=http://api.indeed.com/ads/apisearch?publisher=INDEED&v=2&format=json&l={{#urlget:neighborhood}},NY&sort=date&radius=0&limit=10
+                |format=JSON
+                |cache seconds=20160
+                |data=JobTitle=jobtitle,JobDate=date,JobUrl=url,JobDescription=snippet
+                }} {{#if: {{#external_value:JobTitle}} | <div style="text-align:center;">retrieved from [[File:indeedLogo.png|link=http://www.indeed.com/jobs?&v=2&format=json&l={{#urlget:neighborhood}},NY&sort=date&radius=0|indeed]]</div>
+                | {{#clear_external_data:}} {{#get_web_data: url=http://api.indeed.com/ads/apisearch?publisher=INDEED&v=2&format=json&l={{#urlget:postalCode}}&sort=date&radius=0&limit=10
+                |format=JSON
+                |cache seconds=20160
+                |data=JobTitle=jobtitle,JobDate=date,JobUrl=url,JobDescription=snippet}}
+                <div style="text-align:center;">retrieved from [[File:indeedLogo.png|link=http://www.indeed.com/jobs?&v=2&format=json&l={{#urlget:postalCode}}&sort=date&radius=0|indeed]]</div>
+                }}
+                {| class="table table-striped" style="margin-top:0.2cm"
+                {{#if: {{#external_value:JobTitle}}||! style="background-position: left;padding-left: 21px;" {{!}} Currently no jobs in this neighborhood}}
+                {{#for_external_table: <nowiki/>
+                {{!}}-
+                {{!}}'''Job Title''': [{{{JobUrl}}} {{{JobTitle}}} ] <br/>'''Post Date''':{{{JobDate}}}<br/>'''Description''': {{{JobDescription}}} [{{{JobUrl}}} more...] <br/>
+                }}
+                |}
+            </div>
+        </div><!-- .row-fluid -->
+    </div><!-- .contentarea -->
+</div><!-- .container -->

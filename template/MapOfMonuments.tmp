@@ -1,0 +1,82 @@
+__NOTOC__ __NOEDITSECTION__<includeonly>
+<div class="container">
+    <div class="content_block right-sidebar">
+        <div class="fl-container span9">
+            <div class="contentarea">
+                <div class="row-fluid">
+                    <div class="span12">
+=[[Name::{{{name}}}|]]{{{name}}}=
+{{#if: {{{addressRegion|}}} | {{{addressRegion|}}} | NY }} {{#if: {{{postalCode|}}} | [[PostalCode::{{{postalCode}}}|]][[Resource/PostalCode/{{{postalCode}}}|{{{postalCode}}}]] |}}
+{{#display_point: {{{latitude|}}}, {{{longitude|}}}|zoom=16}}
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 module_cont module_tabs">
+                        <div class="shortcode_tabs">
+                            <div class="all_heads_cont">
+                                <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Overview</div>
+                                <div class="shortcode_tab_item_title it2 head2" data-open="body2">Related Articles</div>
+                                <div class="shortcode_tab_item_title it3 head3" data-open="body3">Datasets</div>
+                            </div>
+                            <div class="all_body_cont">
+                                <div class="shortcode_tab_item_body body1 it1">
+                                    {| class="table table-striped"
+                                    |-
+                                    | '''Name''' || {{{name}}}
+                                    |-
+                                    | '''PropID'''|| {{#if: {{{OMP_PropID|}}} | {{{OMP_PropID|}}} | N/A}}
+                                    |-
+                                    | '''ZIP Code''' || [[Resource/PostalCode/{{{postalCode}}}|{{{postalCode}}}]]
+                                    |-
+                                    | '''Location'''|| {{#if: {{{addressRegion|}}} | {{{addressRegion|}}} | NY }} {{#if: {{{postalCode|}}} | {{{postalCode|}}} |}}
+                                    |-
+                                    | '''Coordinates''' || {{coord|{{{latitude}}}|{{{longitude}}}}}
+                                    |}
+                                </div>
+                                <div class="shortcode_tab_item_body body2 it2">
+                                    {{#get_web_data:
+                                    url=http://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srlimit=10&srsearch={{urlencode:{{{name}}} }}
+                                    |format=JSON
+                                    |data=ArticleTitle=title
+                                    }}
+                                    {| class="table table-striped" style="margin-top:0.2cm"
+                                    |-
+                                    ! style="background-position: left;padding-left: 21px;"  | More Information{{#for_external_table:<nowiki/>
+                                    {{!}}-
+                                    {{!}} [[wikipedia:{{{ArticleTitle}}}|{{{ArticleTitle}}}]]<nowiki />
+                                    }}
+                                    |}
+                                </div>
+                                <div class="shortcode_tab_item_body body3 it3">
+                                    {| class="table table-striped"
+                                    |-
+                                    | '''Datasets Information''': [http://nycdata.pediacities.com/dataset/map-of-monuments Visit it on Datawrangler] [[DatasetName::Map of Monuments|]]
+                                    |-
+                                    | '''Online API''': [http://nycdata.pediacities.com/dataset/map-of-monuments/resource/be8c44ab-3038-41d1-9a43-de4f0ca0c303 API Preview]
+                                    |}
+                                </div>
+                            </div><!-- .all_body_cont -->
+                        </div><!-- .shortcode_tabs -->                       	 
+                    </div><!-- .module_cont -->
+                </div><!-- .row-fluid -->
+            </div><!-- .contentarea -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div><!-- .fl-container -->
+        <div class="right-sidebar-block span3">
+{{PostalCodeSideBar
+| postalCode = {{{postalCode|}}}
+| latitude={{{latitude}}}
+| longitude={{{longitude}}}
+}}
+        </div><!-- .right-sidebar -->
+        <div class="clear"><!-- ClearFix --></div>
+    </div><!-- .content_wrapper -->
+</div><!-- .container -->
+[[Category:TouristAttraction]][[Category:Monument]]
+{{#widget:Jsonld|context={{{@context}}}|id={{{@id}}}|type={{{@type}}}|name={{{name}}}|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+{{#seo:
+|title={{{name}}}
+|titlemode=replace
+|description={{{name}}} is a monument in ZIP Code {{{postalCode}}}
+}}
+</includeonly>

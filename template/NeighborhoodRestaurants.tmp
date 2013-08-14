@@ -1,0 +1,142 @@
+__NOTOC__ __NOEDITSECTION__
+<div class="container">
+    <div class="contentarea">
+        <div class="row-fluid">
+            <div class="span12">
+=Restaurants in [[Resource/Neighborhood/{{#replace:{{#replace:{{#replace:{{#replace:{{#urldecode:{{#urlget:neighborhood}}}}|-|_}}|.|_}}|'|_}}|,|_}} | {{#urldecode:{{#urlget:neighborhood}}}}]]= {{NeighborhoodMap
+|neighborhood={{#urldecode:{{#urlget:neighborhood}}}}
+|zoom=-1
+|height=400
+}}
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12 module_cont module_tabs">
+                <div class="shortcode_tabs">
+                    <div class="all_heads_cont">
+                        <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">A Grade</div>
+                        <div class="shortcode_tab_item_title it2 head2" data-open="body2">B Grade</div>
+                        <div class="shortcode_tab_item_title it3 head3" data-open="body3">C Grade</div>
+                    </div><!-- .all_heads_cont -->
+                    <div class="all_body_cont">
+                        <div class="shortcode_tab_item_body body1 it1">{{#get_db_data:db=mongo-prod
+|from=restaurant_information
+|find query={ "$and": [ { "neighborhood": "{{#urldecode:{{#urlget:neighborhood}}}}" } , { "score": { "$gt": 86 } } ] }
+|order by=name,CusineDesc ASC
+|cache seconds=2419200
+|data=RestaurantName=name,RestaurantStreetAddress=streetAddress,RestaurantAddressLocality=addressLocality,RestaurantAddressRegion=addressRegion,Cuisine=CuisineDesc,Telephone=telephone,RestaurantEntityTitle=entityTitle
+}}{{#if: {{#external_value:RestaurantName}} || {{#clear_external_data:}} {{#get_db_data:db=mongo-prod
+|from=restaurant_information
+|aggregate= [ {
+                    "$geoNear": {
+                                    "near": [ {{#urlget:longitude}}, {{#urlget:latitude}} ],
+                                    "maxDistance": 0.001,
+                                    "spherical": 1,
+                                    "distanceMultiplier": 3959,
+                                    "query": { "score": { "$gt": 86 } },
+                                    "distanceField": "dist.calculated"
+                                }
+            } ]
+|data=RestaurantName=name,RestaurantStreetAddress=streetAddress,RestaurantAddressLocality=addressLocality,RestaurantAddressRegion=addressRegion,Cuisine=CuisineDesc,Telephone=telephone,RestaurantEntityTitle=entityTitle
+|order by=dist.calculated
+|limit=25
+|cache seconds=2419200
+}} }}
+                            {| class="table table-striped sortable" style="margin-top:0.2cm"
+                            |-
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantName}} | Restaurant | There are no A grade restaurants in this neighborhood}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantName}} | Cuisine |}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantName}} | Telephone |}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantName}} | Location |}}
+                            |-{{#for_external_table:<nowiki/>
+                            {{!}}-
+                            {{!}} [[Resource/Restaurant/{{{RestaurantEntityTitle}}} | {{{RestaurantName}}}]]
+                            {{!}} {{{Cuisine}}}
+                            {{!}} {{{Telephone}}}
+                            {{!}} {{{RestaurantStreetAddress}}}, {{{RestaurantAddressLocality}}}, {{{RestaurantAddressRegion}}}
+                            }}
+                            |}
+                        </div><!-- .shortcode_tab_item_body -->
+                        <div class="shortcode_tab_item_body body2 it2">{{#get_db_data:db=mongo-prod
+|from=restaurant_information
+|find query={ "$and": [ { "neighborhood": "{{#urldecode:{{#urlget:neighborhood}}}}" } , { "score": { "$in": [73, 86] } } ] }
+|order by=name,CusineDesc ASC
+|cache seconds=2419200
+|data=RestaurantNameB=name,RestaurantStreetAddressB=streetAddress,RestaurantAddressLocalityB=addressLocality,RestaurantAddressRegionB=addressRegion,CuisineB=CuisineDesc,TelephoneB=telephone,RestaurantEntityTitleB=entityTitle
+}} {{#if: {{#external_value:RestaurantNameB}} ||{{#clear_external_data:}} {{#get_db_data:db=mongo-prod
+|from=restaurant_information
+|aggregate= [ {
+                    "$geoNear": {
+                                    "near": [ {{#urlget:longitude}}, {{#urlget:latitude}} ],
+                                    "maxDistance": 0.001,
+                                    "spherical": 1,
+                                    "distanceMultiplier": 3959,
+                                    "query": { "score": { "$in": [73, 86] } },
+                                    "distanceField": "dist.calculated"
+                                }
+            } ]
+|data=RestaurantNameB=name,RestaurantStreetAddressB=streetAddress,RestaurantAddressLocalityB=addressLocality,RestaurantAddressRegionB=addressRegion,CuisineB=CuisineDesc,TelephoneB=telephone,RestaurantEntityTitleB=entityTitle
+|order by=dist.calculated
+|limit=25
+|cache seconds=2419200
+}} }}
+                            {| class="table table-striped sortable" style="margin-top:0.2cm"
+                            |-
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantNameB}} | Restaurant | There are no B grade restaurants in this neighborhood}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantNameB}} | Cuisine |}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantNameB}} | Telephone |}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantNameB}} | Location |}}
+                            |-{{#for_external_table:<nowiki/>
+                            {{!}}-
+                            {{!}} [[Resource/Restaurant/{{{RestaurantEntityTitleB}}} | {{{RestaurantNameB}}}]]
+                            {{!}} {{{CuisineB}}}
+                            {{!}} {{{TelephoneB}}}
+                            {{!}} {{{RestaurantStreetAddressB}}}, {{{RestaurantAddressLocalityB}}}, {{{RestaurantAddressRegionB}}}
+                            }}
+                            |}
+                        </div><!-- .shortcode_tab_item_body -->
+                        <div class="shortcode_tab_item_body body3 it3">{{#get_db_data:db=mongo-prod
+|from=restaurant_information
+|find query={ "$and": [ { "neighborhood": "{{#urldecode:{{#urlget:neighborhood}}}}" } , { "score": { "$lt": 73 } } ] }
+|order by=name,CusineDesc ASC
+|cache seconds=2419200
+|data=RestaurantNameC=name,RestaurantStreetAddressC=streetAddress,RestaurantAddressLocalityC=addressLocality,RestaurantAddressRegionC=addressRegion,CuisineC=CuisineDesc,TelephoneC=telephone,RestaurantEntityTitleC=entityTitle
+}} {{#if: {{#external_value:RestaurantNameC}} ||{{#clear_external_data:}} {{#get_db_data:db=mongo-prod
+|from=restaurant_information
+|aggregate= [ {
+                        "$geoNear": {
+                                    "near": [ {{#urlget:longitude}}, {{#urlget:latitude}} ],
+                                    "maxDistance": 0.001,
+                                    "spherical": 1,
+                                    "distanceMultiplier": 3959,
+                                    "query": { "score": { "$lt": 73 } },
+                                    "distanceField": "dist.calculated"
+                                  }
+                      } ]
+|data=RestaurantNameC=name,RestaurantStreetAddressC=streetAddress,RestaurantAddressLocalityC=addressLocality,RestaurantAddressRegionC=addressRegion,CuisineC=CuisineDesc,TelephoneC=telephone,RestaurantEntityTitleC=entityTitle
+|order by=dist.calculated
+|limit=25
+|cache seconds=2419200
+}}
+}}
+                            {| class="table table-striped sortable" style="margin-top:0.2cm"
+                            |-
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantNameC}} | Restaurant | There are no C grade restaurants in this neighborhood}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantNameC}} | Cuisine |}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantNameC}} | Telephone |}}
+                            ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:RestaurantNameC}} | Location |}}
+                            |-{{#for_external_table:<nowiki/>
+                            {{!}}-
+                            {{!}} [[Resource/Restaurant/{{{RestaurantEntityTitleC}}} | {{{RestaurantNameC}}}]]
+                            {{!}} {{{CuisineC}}}
+                            {{!}} {{{TelephoneC}}}
+                            {{!}} {{{RestaurantStreetAddressC}}}, {{{RestaurantAddressLocalityC}}}, {{{RestaurantAddressRegionC}}}
+                            }}
+                            |}
+                        </div><!-- .shortcode_tab_item_body -->
+                    </div><!-- .all_body_cont -->
+                </div><!-- .shortcode_tabs -->
+            </div><!-- .module_cont -->
+        </div><!-- .row-fluid -->
+    </div><!-- .contentarea -->
+</div><!-- .container -->

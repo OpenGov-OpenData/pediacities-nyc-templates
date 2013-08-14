@@ -1,0 +1,732 @@
+__NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_groups}}}}} {{#arraydefine:postalCodeArray|{{{postalCode}}}}}
+<div class="">
+    <div class="container">
+        <div class="content_block right-sidebar">
+            <div class="fl-container span9">
+                <div class="">
+                    <div class="contentarea">
+                        <div class="row-fluid">
+                            <div class="span12">
+=Community Stats for [[Resource/Neighborhood/{{{neighborhood}}} | {{{neighborhood}}}]]=
+                                <div class="">{{NeighborhoodMap
+|neighborhood={{{neighborhood|}}}
+|zoom=-1
+|height=400
+}} {{#get_db_data:db=mongo-prod
+|from=nyc_2010_census_by_neighborhood
+|find query={"neighborhood" : "{{{neighborhood}}}" }
+|limit=1
+|cache seconds=14515200
+|data=population=total_population,households=total_households
+}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div id="tabNum" style="display:none;">{{#urlget:tab}}</div>
+                                <div class="shortcode_tabs">
+                                    <div class="all_heads_cont">
+                                        <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Population</div>
+                                        <div class="shortcode_tab_item_title it2 head2" data-open="body2">Housing Stats</div>
+                                        <div class="shortcode_tab_item_title it3 head3" data-open="body3">Datasets</div>
+                                    </div>
+                                    <div class="all_body_cont">
+                                        <div class="shortcode_tab_item_body body1 it1">
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{#if: {{#external_value:population}} | {{#ifexpr: {{#external_value:population}} > 25 |
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Population by Race / Ethnicity
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:40%;" {{!}} Race                
+                                                    ! style="background-position: left;padding-left: 21px;width:30%;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:30%;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} '''Total Population''':
+                                                    {{!}}{{!}} {{{total_population}}}
+                                                    {{!}}{{!}} 100%  
+                                                    {{!}}-
+                                                    {{!}} '''White''':
+                                                    {{!}}{{!}} {{{white_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{white_population}}} / {{{total_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} <div title="Black or African American">'''Black''':</div>
+                                                    {{!}}{{!}} {{{black_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{black_population}}} / {{{total_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} <div title="Asian Indian, Chinese, Filipino, Japanese, Korean, Vietnamese, Other Asian">'''Asian''':</div>
+                                                    {{!}}{{!}} {{{asian_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{asian_population}}} / {{{total_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Hispanic or Latino''':
+                                                    {{!}}{{!}} {{{hispanic_or_latino_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{hispanic_or_latino_population}}} / {{{total_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} <div title="American Indian and Alaska Native">'''Native American''':</div>
+                                                    {{!}}{{!}} {{{american_indian_and_alaska_native_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{american_indian_and_alaska_native_population}}} / {{{total_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} <div title="Native Hawaiian, Guamanian or Chamorro, Samoan, Other Pacific Islander">'''Pacific Islander''':</div>
+                                                    {{!}}{{!}} {{{pacific_islander_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{pacific_islander_population}}} / {{{total_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Other Race''':
+                                                    {{!}}{{!}} {{{other_race_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{other_race_population}}} / {{{total_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Two or More Races''':
+                                                    {{!}}{{!}} {{{two_or_more_race_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{two_or_more_race_population}}} / {{{total_population}}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:PopulationDemographics |Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |WhitePopulation={{{white_population}}}
+                                                    |BlackPopulation={{{black_population}}}
+                                                    |AsianPopulation={{{asian_population}}}
+                                                    |HispanicPopulation={{{hispanic_or_latino_population}}}
+                                                    |NativeAmericanPopulation={{{american_indian_and_alaska_native_population}}}
+                                                    |PacificIslanderPopulation={{{pacific_islander_population}}}
+                                                    |OtherPopulation={{{other_race_population}}}
+                                                    |TwoOrMoreRacesPopulation={{{two_or_more_race_population}}}
+                                                    }} {{#subobject:White|Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |DemographicType=White Population
+                                                    |DemographicPopulation={{{white_population}}}
+                                                    }} {{#subobject:Black |Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |DemographicType=Black Population
+                                                    |DemographicPopulation={{{black_population}}}
+                                                    }} {{#subobject:Asian |Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |DemographicType=Asian Population
+                                                    |DemographicPopulation={{{asian_population}}}
+                                                    }} {{#subobject:Hispanic |Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |DemographicType=Hispanic or Latino Population
+                                                    |DemographicPopulation={{{hispanic_or_latino_population}}}
+                                                    }} {{#subobject:Native |Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |DemographicType=American Indian and Alaska Native Population
+                                                    |DemographicPopulation={{{american_indian_and_alaska_native_population}}}
+                                                    }} {{#subobject:Pacific |Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |DemographicType=Pacific Islander Population
+                                                    |DemographicPopulation={{{pacific_islander_population}}}
+                                                    }} {{#subobject:Other |Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |DemographicType=Other Race Population
+                                                    |DemographicPopulation={{{other_race_population}}}
+                                                    }} {{#subobject:Two |Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |DemographicType=Two Or More Races Population
+                                                    |DemographicPopulation={{{two_or_more_race_population}}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+{{#ask:[[DemographicType::+]] [[Neighborhood::{{{neighborhood}}}]]
+|mainlabel=-
+|? DemographicType
+|? DemographicPopulation
+|sort=DemographicType
+|order=descending
+|format=googlepie
+|height=500
+|width=500
+|legendposition=b
+|background=ececec
+|chartcolor=463E1F,AA0033,80C65A,FF9911,FFFF42,3399CC,49188F
+|margins=10,0,0,0
+|title=Population by Race
+|title_font_size=24
+|charttype=p
+}}
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    !  colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Population by Gender  
+                                                    {{!}}-           
+                                                    ! style="background-position: left;padding-left: 21px;width:40%;" {{!}} Gender                        
+                                                    ! style="background-position: left;padding-left: 21px;width:30%;" {{!}} Number 
+                                                    ! style="background-position: left;padding-left: 21px;width:30%;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}}'''Total Population''':
+                                                    {{!}}{{!}} {{{total_population}}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''Female''': 
+                                                    {{!}}{{!}} {{{female_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{female_population}}} / {{{total_population}}}) round3) * 100}}%
+                                                    {{!}}-
+                                                    {{!}}'''Male''': 
+                                                    {{!}}{{!}} {{{male_population}}}
+                                                    {{!}}{{!}} {{#expr: (({{{male_population}}} / {{{total_population}}}) round3) * 100}}%
+                                                    {{!}}} {{#subobject:Male|Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |GenderType=Male
+                                                    |GenderPopulation={{{male_population}}}
+                                                    }} {{#subobject:Female|Neighborhood={{{neighborhood}}}
+                                                    |Population={{{total_population}}}
+                                                    |GenderType=Female
+                                                    |GenderPopulation={{{female_population}}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+                                                    <div class="row-fluid">
+                                                        <div class="span6 module_iconboxes">
+                                                            <div class="shortcode_iconbox">
+                                                                {{{!}}
+                                                                {{!}}-
+                                                                {{!}} style="width: 30%;" {{!}} 
+                                                                <div style="margin-top:0%; width:100%" align="center"> [[File:FemalePink_95.png{{!}} link=]]</div>
+                                                                <div style="font-size: 320%; font-weight:900; color:#D8256E; margin:10% 3% 0 0; width:100%" align="center">{{#expr: (({{{female_population}}} / {{{total_population}}}) round3) * 100}}%</div>
+                                                                <div style="font-size: 160%; font-weight:900; color:#D8256E; margin:10% 3% 0 0; width:100%" align="center">Female</div>
+                                                                {{!}}}                
+                                                            </div>
+                                                        </div><!--.module_cont -->
+                                                        <div class="span6 module_iconboxes">
+                                                            <div class="shortcode_iconbox">
+                                                                {{{!}}
+                                                                {{!}}-
+                                                                {{!}} style="width:30%;" {{!}} 
+                                                                <div style="margin-top:0%; width:100%" align="center">[[File:MaleBlue_95.png{{!}} link=]] </div>
+                                                                <div style="font-size: 320%; font-weight:900; color:#4290bd; margin:10% 3% 0 0; width:100%" align="center">{{#expr: (({{{male_population}}} / {{{total_population}}}) round3) * 100}}%</div>
+                                                                <div style="font-size: 160%; font-weight:900; color:#4290bd; margin:10% 3% 0 0; width:100%" align="center">Male</div>
+                                                                {{!}}}      
+                                                            </div>
+                                                        </div><!--.module_cont -->
+                                                    </div><!-- .row-fluid -->
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    !  colspan="4" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Population by Age and Gender  
+                                                    {{!}}-           
+                                                    ! style="background-position: left;padding-left: 21px;width:34%;padding-right:0px;" {{!}} Age
+                                                    ! style="background-position: left;padding-left: 21px;width:22%;padding-right:1px;" {{!}} Female
+                                                    ! style="background-position: left;padding-left: 21px;width:22%;padding-right:1px;" {{!}} Male
+                                                    {{!}}-
+                                                    {{!}} <div style="white-space:nowrap;">'''Under 5 years''':</div>
+                                                    {{!}}{{!}} {{{female_under_5}}}
+                                                    {{!}}{{!}} {{{male_under_5}}}
+                                                    {{!}}-
+                                                    {{!}} '''05 to 09 years''': 
+                                                    {{!}}{{!}} {{{female_5_to_9}}}
+                                                    {{!}}{{!}} {{{male_5_to_9}}}
+                                                    {{!}}-
+                                                    {{!}} '''10 to 14 years''': 
+                                                    {{!}}{{!}} {{{female_10_to_14}}}
+                                                    {{!}}{{!}} {{{male_10_to_14}}}
+                                                    {{!}}-
+                                                    {{!}} '''15 to 19 years''': 
+                                                    {{!}}{{!}} {{#expr: {{{female_15_to_17}}} + {{{female_18_and_19}}} }}
+                                                    {{!}}{{!}} {{#expr: {{{male_15_to_17}}} + {{{male_18_and_19}}} }}
+                                                    {{!}}-
+                                                    {{!}} '''20 to 24 years''': 
+                                                    {{!}}{{!}} {{#expr: {{{female_20}}} + {{{female_20}}} + {{{female_22_to_24}}} }}
+                                                    {{!}}{{!}} {{#expr: {{{male_20}}} + {{{male_20}}} + {{{male_22_to_24}}} }}
+                                                    {{!}}-
+                                                    {{!}} '''25 to 29 years''': 
+                                                    {{!}}{{!}} {{{female_25_to_29}}}
+                                                    {{!}}{{!}} {{{male_25_to_29}}}
+                                                    {{!}}-
+                                                    {{!}} '''30 to 34 years''': 
+                                                    {{!}}{{!}} {{{female_30_to_34}}}
+                                                    {{!}}{{!}} {{{male_30_to_34}}}
+                                                    {{!}}-
+                                                    {{!}} '''35 to 39 years''': 
+                                                    {{!}}{{!}} {{{female_35_to_39}}}
+                                                    {{!}}{{!}} {{{male_35_to_39}}}
+                                                    {{!}}-
+                                                    {{!}} '''40 to 44 years''': 
+                                                    {{!}}{{!}} {{{female_40_to_44}}}
+                                                    {{!}}{{!}} {{{male_40_to_44}}}
+                                                    {{!}}-
+                                                    {{!}} '''45 to 49 years''': 
+                                                    {{!}}{{!}} {{{female_45_to_49}}}
+                                                    {{!}}{{!}} {{{male_45_to_49}}}
+                                                    {{!}}-
+                                                    {{!}} '''50 to 54 years''': 
+                                                    {{!}}{{!}} {{{female_50_to_54}}}
+                                                    {{!}}{{!}} {{{male_50_to_54}}}
+                                                    {{!}}-
+                                                    {{!}} '''55 to 59 years''': 
+                                                    {{!}}{{!}} {{{female_55_to_59}}}
+                                                    {{!}}{{!}} {{{male_55_to_59}}}
+                                                    {{!}}-
+                                                    {{!}} '''60 to 64 years''': 
+                                                    {{!}}{{!}} {{#expr: {{{female_60_and_61}}} + {{{female_62_to_64}}} }}
+                                                    {{!}}{{!}} {{#expr: {{{male_60_and_61}}} + {{{male_62_to_64}}} }}
+                                                    {{!}}-
+                                                    {{!}} '''65 to 69 years''': 
+                                                    {{!}}{{!}} {{#expr: {{{female_65_and_66}}} + {{{female_67_to_69}}} }}
+                                                    {{!}}{{!}} {{#expr: {{{male_65_and_66}}} + {{{male_67_to_69}}} }}
+                                                    {{!}}-
+                                                    {{!}} '''70 to 74 years''': 
+                                                    {{!}}{{!}} {{{female_70_to_74}}}
+                                                    {{!}}{{!}} {{{male_70_to_74}}}
+                                                    {{!}}-
+                                                    {{!}} '''75 to 79 years''': 
+                                                    {{!}}{{!}} {{{female_75_to_79}}}
+                                                    {{!}}{{!}} {{{male_75_to_79}}}
+                                                    {{!}}-
+                                                    {{!}} '''80 to 84 years''': 
+                                                    {{!}}{{!}} {{{female_80_to_84}}}
+                                                    {{!}}{{!}} {{{male_80_to_84}}}
+                                                    {{!}}-
+                                                    {{!}} '''Over 85 years''': 
+                                                    {{!}}{{!}} {{{female_85_and_over}}}
+                                                    {{!}}{{!}} {{{male_85_and_over}}}
+                                                    {{!}}} {{#subobject: FemaleUnder5years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=00 to 04 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_under_5}}}
+                                                    }} {{#subobject: MaleUnder5years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=00 to 04 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_under_5}}}
+                                                    }} {{#subobject: Female5to9years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=05 to 09 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_5_to_9}}}
+                                                    }} {{#subobject: Male5to9years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=05 to 09 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_5_to_9}}}
+                                                    }} {{#subobject: Female10to14years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=10 to 14 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_10_to_14}}}
+                                                    }} {{#subobject: Male10to14years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=10 to 14 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_10_to_14}}}
+                                                    }} {{#subobject: Female15to19years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=15 to 19 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#expr: {{{female_15_to_17}}} + {{{female_18_and_19}}} }}
+                                                    }} {{#subobject: Male15to19years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=15 to 19 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#expr: {{{male_15_to_17}}} + {{{male_18_and_19}}} }}
+                                                    }} {{#subobject: Female20to24years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=20 to 24 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#expr: {{{female_20}}} + {{{female_20}}} + {{{female_22_to_24}}} }}
+                                                    }} {{#subobject: Male20to24years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=20 to 24 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#expr: {{{male_20}}} + {{{male_20}}} + {{{male_22_to_24}}} }}
+                                                    }} {{#subobject: Female25to29years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=25 to 29 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_25_to_29}}}
+                                                    }} {{#subobject: Male25to29years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=25 to 29 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_25_to_29}}}
+                                                    }} {{#subobject: Female30to34years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=30 to 34 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_30_to_34}}}
+                                                    }} {{#subobject: Male30to34years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=30 to 34 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_30_to_34}}}
+                                                    }} {{#subobject: Female35to39years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=35 to 39 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_35_to_39}}}
+                                                    }} {{#subobject: Male35to39years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=35 to 39 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_35_to_39}}}
+                                                    }} {{#subobject: Female40to44years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=40 to 44 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_40_to_44}}}
+                                                    }} {{#subobject: Male40to44years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=40 to 44 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_40_to_44}}}
+                                                    }} {{#subobject: Female45to49years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=45 to 49 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_45_to_49}}}
+                                                    }} {{#subobject: Male45to49years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=45 to 49 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_45_to_49}}}
+                                                    }} {{#subobject: Female50to54years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=50 to 54 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_50_to_54}}}
+                                                    }} {{#subobject: Male50to54years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=50 to 54 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_50_to_54}}}
+                                                    }} {{#subobject: Female55to59years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=55 to 59 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_55_to_59}}}
+                                                    }} {{#subobject: Male55to59years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=55 to 59 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_55_to_59}}}
+                                                    }} {{#subobject: Female60to64years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=60 to 64 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#expr: {{{female_60_and_61}}} + {{{female_62_to_64}}} }}
+                                                    }} {{#subobject: Male60to64years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=60 to 64 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#expr: {{{male_60_and_61}}} + {{{male_62_to_64}}} }}
+                                                    }} {{#subobject: Female65to69years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=65 to 69 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#expr: {{{female_65_and_66}}} + {{{female_67_to_69}}} }}
+                                                    }} {{#subobject: Male65to69years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=65 to 69 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#expr: {{{male_65_and_66}}} + {{{male_67_to_69}}} }}
+                                                    }} {{#subobject: Female70to74years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=70 to 74 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_70_to_74}}}
+                                                    }} {{#subobject: Male70to74years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=70 to 74 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_70_to_74}}}
+                                                    }} {{#subobject: Female75to79years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=75 to 79 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_75_to_79}}}
+                                                    }} {{#subobject: Male75to79years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=75 to 79 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_75_to_79}}}
+                                                    }} {{#subobject: Female80to84years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=80 to 84 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_80_to_84}}}
+                                                    }} {{#subobject: Male80to84years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=80 to 84 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_80_to_84}}}
+                                                    }} {{#subobject: FemaleOver85years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=Over 85 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{{female_85_and_over}}}
+                                                    }} {{#subobject: MaleOver85years |Neighborhood={{{neighborhood}}}
+                                                    |AgeGroup=Over 85 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{{male_85_and_over}}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+                                                    <div class="row-fluid;" style="margin-top:9%;">
+                                                        <div class="span6">
+{{#ask:[[AgeGroup::+]] [[GenderType::Female]] [[Neighborhood::{{{neighborhood}}}]] 
+|mainlabel=-
+|? AgeGroup
+|? AgePopulation
+|sort=AgeGroup
+|order=descending
+|format=googlebar
+|legendposition=t
+|background=ECECEC
+|chartdirection=bhs
+|legend= Female Population
+|bargroupspacing=0
+|barwidth=30
+|barspacing=16
+|barcolor=D8256E
+|chartgrid=20,0,20,4
+|axisposition=y
+|axislabelfontsize=13
+}}
+                                                        </div>
+                                                        <div class="span6">
+{{#ask:[[AgeGroup::+]] [[GenderType::Male]] [[Neighborhood::{{{neighborhood}}}]] 
+|mainlabel=-
+|? AgeGroup
+|? AgePopulation
+|sort=AgeGroup
+|order=descending
+|format=googlebar
+|legendposition=t
+|background=ECECEC
+|chartdirection=bhs
+|legend=Male Population
+|bargroupspacing=0
+|barwidth=30
+|barspacing=16
+|barcolor=4290BD
+|chartgrid=20,0,20,4
+|axisposition=y
+|axislabelfontsize=13
+}}
+                                                        </div>
+                                                    </div>
+                                                    |<div style="padding-left: 21px;"><p>'''There are no population demographics for this area.'''</p></div>}}|<div style="padding-left: 21px;"><p>'''There are no population demographics for this area.'''</p></div>}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body2 it2">
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{#if: {{#external_value:households}} | {{#ifexpr: {{#external_value:households}} > 0 |
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Household Relationships
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Relation
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:3px;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} '''Total Households''':
+                                                    {{!}}{{!}} {{{total_households}}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''Husband-Wife Households''':
+                                                    {{!}}{{!}} {{{family_households_husband_wife}}}
+                                                    {{!}}{{!}} {{#expr: (({{{family_households_husband_wife}}} / {{{total_households}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''One Parent Households''':
+                                                    {{!}}{{!}} {{{family_households_other}}}
+                                                    {{!}}{{!}} {{#expr: (({{{family_households_other}}} / {{{total_households}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Nonfamily Households''':
+                                                    {{!}}{{!}} {{{nonfamily_households_not_living_alone}}}
+                                                    {{!}}{{!}} {{#expr: (({{{nonfamily_households_not_living_alone}}} / {{{total_households}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Single Households''':
+                                                    {{!}}{{!}} {{{nonfamily_households_living_alone}}}
+                                                    {{!}}{{!}} {{#expr: (({{{nonfamily_households_living_alone}}} / {{{total_households}}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:husbandwife|Neighborhood={{{neighborhood}}}
+                                                    |TotalHouseholds={{{total_households}}}
+                                                    |HouseholdType=Husband-Wife Households
+                                                    |HouseholdNumber={{{family_households_husband_wife}}}
+                                                    }} {{#subobject:oneparent|Neighborhood={{{neighborhood}}}
+                                                    |TotalHouseholds={{{total_households}}}
+                                                    |HouseholdType=One Parent Households
+                                                    |HouseholdNumber={{{family_households_other}}}
+                                                    }} {{#subobject:nonfamily|Neighborhood={{{neighborhood}}}
+                                                    |TotalHouseholds={{{total_households}}}
+                                                    |HouseholdType=Nonfamily Households
+                                                    |HouseholdNumber={{{nonfamily_households_not_living_alone}}}
+                                                    }} {{#subobject:livingalone|Neighborhood={{{neighborhood}}}
+                                                    |TotalHouseholds={{{total_households}}}
+                                                    |HouseholdType=Single Households
+                                                    |HouseholdNumber={{{nonfamily_households_living_alone}}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+                                                    <div style="text-align: center;">'''Average Household Size: {{#expr: ({{{occupied_housing_population}}} / {{{occupied_housing_units}}}) round2 }}'''</div>
+{{#ask:[[HouseholdType::+]] [[Neighborhood::{{{neighborhood}}}]]
+|mainlabel=-
+|? HouseholdType
+|? HouseholdNumber
+|sort=HouseholdType
+|order=descending
+|format=googlepie
+|height=400
+|width=400
+|legendposition=b
+|background=ececec
+|chartcolor=463E1F,AA0033,80C65A,FF9911,FFFF42,3399CC,49188F
+|margins=10,0,0,0
+|title=Household Relationships
+|title_font_size=24
+|charttype=p
+}}
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Housing Occupancy
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Type
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:3px;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} ''' Total Housing Units''':
+                                                    {{!}}{{!}} {{{total_housing_units}}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''Occupied Housing Units''':
+                                                    {{!}}{{!}} {{{occupied_housing_units}}}
+                                                    {{!}}{{!}} {{#expr: (({{{occupied_housing_units}}} / {{{total_housing_units}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Vacant Housing Units''':
+                                                    {{!}}{{!}} {{{vacant_housing_units}}}
+                                                    {{!}}{{!}} {{#expr: (({{{vacant_housing_units}}} / {{{total_housing_units}}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:occupiedhousing|Neighborhood={{{neighborhood}}}
+                                                    |TotalHousingUnits={{{total_households}}}
+                                                    |HousingType=Occupied Housing
+                                                    |HousingNumber={{{occupied_housing_units}}}
+                                                    }} {{#subobject:vacanthousing|Neighborhood={{{neighborhood}}}
+                                                    |TotalHousingUnits={{{total_households}}}
+                                                    |HousingType=Vacant Housing
+                                                    |HousingNumber={{{vacant_housing_units}}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+{{#ask:[[HousingType::+]] [[Neighborhood::{{{neighborhood}}}]]
+|mainlabel=-
+|? HousingType
+|? HousingNumber
+|sort=HousingType
+|order=descending
+|format=googlebar
+|legendposition=t
+|width=400
+|background=ECECEC
+|chartdirection=bhs
+|legend=Housing Occupancy
+|bargroupspacing=0
+|barwidth=36
+|barspacing=16
+|barcolor=008000
+|chartgrid=20,0,20,4
+|axisposition=y
+|axislabelfontsize=13
+}}
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Housing Tenure
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Type
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:3px;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} ''' Total Occupied Housing''':
+                                                    {{!}}{{!}} {{{occupied_housing_units}}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''Owner With Mortgage/Loan''':
+                                                    {{!}}{{!}} {{{occupied_units_owned_with_mortgage_or_loan}}}
+                                                    {{!}}{{!}} {{#expr: (({{{occupied_units_owned_with_mortgage_or_loan}}} / {{{occupied_housing_units}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Owner Owned Free and Clear''':
+                                                    {{!}}{{!}} {{{occupied_units_owned_free_and_clear}}}
+                                                    {{!}}{{!}} {{#expr: (({{{occupied_units_owned_free_and_clear}}} / {{{occupied_housing_units}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Renter Occupied''':
+                                                    {{!}}{{!}} {{{occupied_units_renter}}}
+                                                    {{!}}{{!}} {{#expr: (({{{occupied_units_renter}}} / {{{occupied_housing_units}}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:owneroccupiedwithmortgage|Neighborhood={{{neighborhood}}}
+                                                    |TotalOccupiedHousing={{{occupied_housing_units}}}
+                                                    |OccupiedHousingType=Owner With Mortgage/Loan
+                                                    |OccupiedHousingNumber={{{occupied_units_owned_with_mortgage_or_loan}}}
+                                                    }} {{#subobject:owneroccupiedwithoutmortgage|Neighborhood={{{neighborhood}}}
+                                                    |TotalOccupiedHousing={{{occupied_housing_units}}}
+                                                    |OccupiedHousingType=Owner Free and Clear
+                                                    |OccupiedHousingNumber={{{occupied_units_owned_free_and_clear}}}
+                                                    }} {{#subobject:renteroccupiedhousing|Neighborhood={{{neighborhood}}}
+                                                    |TotalOccupiedHousing={{{occupied_housing_units}}}
+                                                    |OccupiedHousingType=Renter Occupied
+                                                    |OccupiedHousingNumber={{{occupied_units_renter}}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+{{#ask:[[OccupiedHousingType::+]] [[Neighborhood::{{{neighborhood}}}]]
+|mainlabel=-
+|? OccupiedHousingType
+|? OccupiedHousingNumber
+|sort=OccupiedHousingType
+|order=descending
+|format=googlebar
+|legendposition=t
+|width=400
+|background=ECECEC
+|chartdirection=bhs
+|legend=Housing Tenure
+|bargroupspacing=0
+|barwidth=36
+|barspacing=16
+|barcolor=008000
+|chartgrid=20,0,20,4
+|axisposition=y
+|axislabelfontsize=13
+}}
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Household Size
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Size
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Number
+                                                    {{!}}-
+                                                    {{!}} '''1 Person''':
+                                                    {{!}}{{!}} {{{household_size_1}}}
+                                                    {{!}}-
+                                                    {{!}} '''2 People''':
+                                                    {{!}}{{!}} {{{household_size_2}}}
+                                                    {{!}}-
+                                                    {{!}} '''3 People''':
+                                                    {{!}}{{!}} {{{household_size_3}}}
+                                                    {{!}}-
+                                                    {{!}} '''4 People''':
+                                                    {{!}}{{!}} {{{household_size_4}}}
+                                                    {{!}}-
+                                                    {{!}} '''5 People''':
+                                                    {{!}}{{!}} {{{household_size_5}}}
+                                                    {{!}}-
+                                                    {{!}} '''6 People''':
+                                                    {{!}}{{!}} {{{household_size_6}}}
+                                                    {{!}}-
+                                                    {{!}} '''7 or More People''':
+                                                    {{!}}{{!}} {{{household_size_7_or_more}}}
+                                                    {{!}}}
+                                                </div>
+                                                <div class="span6">
+                                                    |<div style="padding-left: 21px;"><p>'''There are no housing demographics for this area.'''</p></div>}}|<div style="padding-left: 21px;"><p>'''There are no housing demographics for this area.'''</p></div>}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body3 it3">
+                                            {| class="table table-striped"
+                                            ! style="width:80%" align="left" | Dataset
+                                            ! Online API
+                                            |-
+                                            | [http://nycdata.pediacities.com/dataset/2010-census-block-groups-data 2010 Census Data by Block Groups]<br/>{{#if: {{#external_value:population}} | '''This neighborhood used {{#ifeq: {{#arraysize:blockGroupArray}}|1|this|these}} 2010 Census Block Group{{#ifeq: {{#arraysize:blockGroupArray}}|1||s}}''': {{#arrayprint:blockGroupArray| |@@@@|@@@@|print=pretty}} |}}
+                                            | [http://nycdata.pediacities.com/dataset/2010-census-block-groups-data/resource/dd737863-bf3f-469b-b469-a98446cf8050 API Preview]
+                                            |}                     	 
+                                        </div>
+                                    </div><!-- .all_body_cont -->
+                                </div><!-- .shortcode_tabs -->                       	 
+                            </div><!-- .module_cont -->
+                        </div><!-- .row-fluid -->
+                    </div><!-- .contentarea -->
+                </div>
+                <div class="clear"><!-- ClearFix --></div>
+            </div><!-- .fl-container -->
+            <div class="right-sidebar-block span3">
+{{NeighborhoodSideBar
+| neighborhood = {{{neighborhood|}}}
+| borough = {{{borough|}}}
+| postalCode = {{{postalCode|}}}
+| latitude = {{{latitude|}}}
+| longitude = {{{longitude|}}}
+| neighborhoodEntityTitle = {{{entityTitle|}}}
+}}
+            </div><!-- .right-sidebar -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div>
+    </div><!-- .container -->
+</div><!-- .content_wrapper -->
+[[Category:CommunityStats]] 
+{{#seo:
+|title=Community Stats for {{{neighborhood}}}
+|titlemode=replace
+|description=Community Stats for {{{neighborhood}}} has information about Population Demographics.
+}}
+</includeonly>

@@ -1,0 +1,3 @@
+{{!}}-
+{{!}} {{#replace:{{#replace:{{#regex:{{{templateDescription}}} | /src="([^"]*).jpg"/ }}|src="|}}|"|}}
+{{!}} <div style="line-height:200%;">[{{{templateLink}}}<nowiki />'''{{{templateTitle}}}''']<br/>{{#replace:{{#replace:{{#regex:{{{templateDescription}}} | /<p>(.+?)<\/p>/ }}|<p>|}}|</p>|}}<br/>{{#time: l, F j, Y |{{#sub:{{{templateLink}}}|32|4}}-{{#sub:{{{templateLink}}}|36|2}}-{{#sub:{{{templateLink}}}|38|2}} }}</div>

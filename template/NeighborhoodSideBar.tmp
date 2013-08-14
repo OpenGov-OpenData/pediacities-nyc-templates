@@ -1,0 +1,187 @@
+<noinclude>This is the "NeighborhoodSideBar" template.
+It should be called in the following format: 
+<pre>{{NeighborhoodSideBar}}</pre>Edit the page to see the template text.
+</noinclude>{{Flickr
+| latitude={{{latitude}}}
+| longitude ={{{longitude}}}
+}}
+<includeonly>{{#arraydefine:postalCodeArray|{{{postalCode}}}}}
+<div class="row-fluid">
+<div class="span12 module_cont module_toggle">
+    <div class="needDataBtn">
+        <div style="padding-top:3px" align="center">[[Special:Contact|What data do you need?]]</div>
+    </div>
+
+    <h4 class="sidebar_header">Explore by Topic</h4>
+    <div class="sidepanel widget_nav_menu">
+        <ul class="menu sf-js-enabled sf-shadow">
+            <li class="menu-item">
+                [http://{{SERVERNAME}}/Resource/CommunityStats/{{{neighborhoodEntityTitle}}} Community Stats]
+            </li>
+            <li class="menu-item">
+                [http://{{SERVERNAME}}/NeighborhoodJobs?neighborhood={{urlencode:{{{neighborhood}}}}}&postalCode={{#arrayindex:postalCodeArray|0}} Jobs]
+            </li>
+            <li class="menu-item">
+                [http://{{SERVERNAME}}/NeighborhoodRestaurants?neighborhood={{urlencode:{{{neighborhood}}}}}&longitude={{{longitude}}}&latitude={{{latitude}}} Restaurants]
+            </li>
+        </ul>
+    </div>
+
+
+    <h4 class="sidebar_header">Explore by ZIP Code</h4>
+    <div class="sidepanel widget_nav_menu">
+        <ul class="menu sf-js-enabled sf-shadow">
+            {{#vardefine: i | 0 }}{{#while:
+            |{{#ifexpr: {{#var: i }} < {{#arraysize:postalCodeArray}} and {{#var: i }} < 5 | true }}
+            |<nowiki/>
+            <li class="menu-item menu-item-object-page level1">[[Resource/PostalCode/{{#ifeq:{{#arrayindex:postalCodeArray|{{#var: i}}}}|83|00083|{{#arrayindex:postalCodeArray|{{#var: i}}}}}}|{{#arrayindex:postalCodeArray|{{#var: i}}}}]]</li>
+            {{#vardefine: i | {{#expr: {{#var: i}} + 1 }} }}
+            }}
+            {{#ifexpr: {{#arraysize:postalCodeArray}} > 5 |
+            <li class="menu-item">[[Resource/PostalCode/{{#ifeq:{{#arrayindex:postalCodeArray|{{#var: i}}}}|83|00083|{{#arrayindex:postalCodeArray|{{#var: i}}}}}}|More...]]
+            <ul class="sub-menu" style="display: none; visibility: hidden;">
+            {{#while:
+            |{{#ifexpr: {{#var: i }} < {{#arraysize:postalCodeArray}} | true }}
+            |<nowiki/>
+            <li class="menu-item">[[Resource/PostalCode/{{#ifeq:{{#arrayindex:postalCodeArray|{{#var: i}}}}|83|00083|{{#arrayindex:postalCodeArray|{{#var: i}}}}}}|{{#arrayindex:postalCodeArray|{{#var: i}}}}]]</li>
+            {{#vardefine: i | {{#expr: {{#var: i}} + 1 }} }}
+            }}
+            </ul><span class="menu_marker"></span></li>
+            |}}
+        </ul>
+    </div>
+<br/>
+{{#if:{{{borough}}} | {{#get_web_data:url={{#ifeq:{{{borough}}}|Manhattan|{{#switch: {{{neighborhood}}}
+|Chelsea=http://www.dnainfo.com/new-york/manhattan/chelsea-hells-kitchen.rss
+|Hell's Kitchen=http://www.dnainfo.com/new-york/manhattan/chelsea-hells-kitchen.rss
+|Greenwich Village=http://www.dnainfo.com/new-york/manhattan/greenwich-village-soho.rss
+|SoHo=http://www.dnainfo.com/new-york/manhattan/greenwich-village-soho.rss
+|Murray Hill=http://www.dnainfo.com/new-york/manhattan/murray-hill-gramercy-midtown-east.rss
+|Gramercy=http://www.dnainfo.com/new-york/manhattan/murray-hill-gramercy-midtown-east.rss
+|Stuyvesant Town=http://www.dnainfo.com/new-york/manhattan/murray-hill-gramercy-midtown-east.rss
+|Washington Heights=http://www.dnainfo.com/new-york/manhattan/washington-heights-inwood.rss
+|Inwood=http://www.dnainfo.com/new-york/manhattan/washington-heights-inwood.rss
+|Harlem=http://www.dnainfo.com/new-york/manhattan/harlem.rss
+|East Harlem=http://www.dnainfo.com/new-york/manhattan/harlem.rss
+|Upper East Side=http://www.dnainfo.com/new-york/manhattan/upper-east-side-roosevelt-island.rss
+|Roosevelt Island=http://www.dnainfo.com/new-york/manhattan/upper-east-side-roosevelt-island.rss
+|East Village=http://www.dnainfo.com/new-york/manhattan/east-village-lower-east-side.rss
+|Lower East Side=http://www.dnainfo.com/new-york/manhattan/east-village-lower-east-side.rss
+|Midtown=http://www.dnainfo.com/new-york/manhattan/midtown-theater-district.rss
+|Theatre District=http://www.dnainfo.com/new-york/manhattan/midtown-theater-district.rss
+|Upper West Side=http://www.dnainfo.com/new-york/manhattan/upper-west-side-morningside-heights.rss
+|Morningside Heights=http://www.dnainfo.com/new-york/manhattan/upper-west-side-morningside-heights.rss
+|Battery Park City=http://www.dnainfo.com/new-york/manhattan/downtown.rss
+|Chinatown=http://www.dnainfo.com/new-york/manhattan/downtown.rss
+|Civic Center=http://www.dnainfo.com/new-york/manhattan/downtown.rss
+|Financial District=http://www.dnainfo.com/new-york/manhattan/downtown.rss
+|Little Italy=http://www.dnainfo.com/new-york/manhattan/downtown.rss
+|Nolita=http://www.dnainfo.com/new-york/manhattan/downtown.rss
+|Two Bridges=http://www.dnainfo.com/new-york/manhattan/downtown.rss
+|West Village=http://www.dnainfo.com/new-york/manhattan/downtown.rss
+|http://www.dnainfo.com/new-york/manhattan.rss}}
+|}}{{#ifeq:{{{borough}}}|Brooklyn|{{#switch: {{{neighborhood}}}
+|Bedford-Stuyvesant=http://www.dnainfo.com/new-york/brooklyn/bedford-stuyvesant.rss
+|Cobble Hill=http://www.dnainfo.com/new-york/brooklyn/cobble-hill-carroll-gardens-red-hook.rss
+|Red Hook=http://www.dnainfo.com/new-york/brooklyn/cobble-hill-carroll-gardens-red-hook.rss
+|Boerum Hill=http://www.dnainfo.com/new-york/brooklyn/cobble-hill-carroll-gardens-red-hook.rss
+|Crown Heights=http://www.dnainfo.com/new-york/brooklyn/crown-heights-prospect-heights.rss
+|Prospect Heights=http://www.dnainfo.com/new-york/brooklyn/crown-heights-prospect-heights.rss
+|Prospect Park=http://www.dnainfo.com/new-york/brooklyn/crown-heights-prospect-heights.rss
+|Prospect-Lefferts Gardens=http://www.dnainfo.com/new-york/brooklyn/crown-heights-prospect-heights.rss
+|Fort Greene=http://www.dnainfo.com/new-york/brooklyn/fort-greene-dumbo.rss
+|DUMBO=http://www.dnainfo.com/new-york/brooklyn/fort-greene-dumbo.rss
+|Park Slope=http://www.dnainfo.com/new-york/brooklyn/park-slope-windsor-terrace-gowanus.rss
+|Windsor Terrace=http://www.dnainfo.com/new-york/brooklyn/park-slope-windsor-terrace-gowanus.rss
+|Gowanus=http://www.dnainfo.com/new-york/brooklyn/park-slope-windsor-terrace-gowanus.rss
+|Williamsburg=http://www.dnainfo.com/new-york/brooklyn/williamsburg-greenpoint-bushwick.rss
+|Greenpoint=http://www.dnainfo.com/new-york/brooklyn/williamsburg-greenpoint-bushwick.rss
+|Bushwick=http://www.dnainfo.com/new-york/brooklyn/williamsburg-greenpoint-bushwick.rss
+|http://www.dnainfo.com/new-york/brooklyn.rss}}
+|}}{{#ifeq:{{{borough}}}|Bronx|{{#switch: {{{neighborhood}}}
+|Fordham=http://www.dnainfo.com/new-york/bronx/fordham-tremont.rss
+|Tremont=http://www.dnainfo.com/new-york/bronx/fordham-tremont.rss
+|Pelham Bay=http://www.dnainfo.com/new-york/bronx/pelham-parkway-baychester.rss
+|Pelham Bay Park=http://www.dnainfo.com/new-york/bronx/pelham-parkway-baychester.rss
+|Baychester=http://www.dnainfo.com/new-york/bronx/pelham-parkway-baychester.rss
+|Parkchester=http://www.dnainfo.com/new-york/bronx/morris-park-parkchester.rss
+|Riverdale=http://www.dnainfo.com/new-york/bronx/riverdale-kingsbridge.rss
+|Kingsbridge=http://www.dnainfo.com/new-york/bronx/riverdale-kingsbridge.rss
+|Throgs Neck=http://www.dnainfo.com/new-york/bronx/throgs-neck-country-club.rss
+|Country Club=http://www.dnainfo.com/new-york/bronx/throgs-neck-country-club.rss
+|Norwood=http://www.dnainfo.com/new-york/bronx/norwood-bedford-park.rss
+|Soundview=http://www.dnainfo.com/new-york/bronx/soundview-castle-hill.rss
+|Castle Hill=http://www.dnainfo.com/new-york/bronx/soundview-castle-hill.rss
+|Woodlawn=http://www.dnainfo.com/new-york/bronx/woodlawn-wakefield.rss
+|Wakefield=http://www.dnainfo.com/new-york/bronx/woodlawn-wakefield.rss
+|Clason Point=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Concourse=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Concourse Village=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Highbridge=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Hunts Point=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Longwood=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Melrose=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Morrisania=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Mott Haven=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Mount Eden=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Mount Hope=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|Port Morris=http://www.dnainfo.com/new-york/bronx/south-bronx.rss
+|http://www.dnainfo.com/new-york/bronx.rss}}
+|}}{{#ifeq:{{{borough}}}|Queens|{{#switch: {{{neighborhood}}}
+|Astoria=http://www.dnainfo.com/new-york/queens/astoria-long-island-city.rss
+|Long Island City=http://www.dnainfo.com/new-york/queens/astoria-long-island-city.rss
+|Forest Hills=http://www.dnainfo.com/new-york/queens/forest-hills-rego-park-jamaica.rss
+|Rego Park=http://www.dnainfo.com/new-york/queens/forest-hills-rego-park-jamaica.rss
+|Jamaica Hills=http://www.dnainfo.com/new-york/queens/forest-hills-rego-park-jamaica.rss
+|Jamaica=http://www.dnainfo.com/new-york/queens/jamaica-hollis.rss
+|Hollis=http://www.dnainfo.com/new-york/queens/jamaica-hollis.rss
+|Springfield Gardens=http://www.dnainfo.com/new-york/queens/south-jamaica-springfield-gardens-rosedale.rss
+|Rosedale=http://www.dnainfo.com/new-york/queens/south-jamaica-springfield-gardens-rosedale.rss
+|Bayside=http://www.dnainfo.com/new-york/queens/bayside-douglaston.rss
+|Douglaston=http://www.dnainfo.com/new-york/queens/bayside-douglaston.rss
+|Fresh Meadows=http://www.dnainfo.com/new-york/queens/fresh-meadows-jamaica-estates.rss
+|Jamaica Estates=http://www.dnainfo.com/new-york/queens/fresh-meadows-jamaica-estates.rss
+|Maspeth=http://www.dnainfo.com/new-york/queens/maspeth-middle-village-ridgewood.rss
+|Middle Village=http://www.dnainfo.com/new-york/queens/maspeth-middle-village-ridgewood.rss
+|Ridgewood=http://www.dnainfo.com/new-york/queens/maspeth-middle-village-ridgewood.rss
+|Rockaway Beach=http://www.dnainfo.com/new-york/queens/rockaways.rss
+|Rockaway Park=http://www.dnainfo.com/new-york/queens/rockaways.rss
+|Flushing=http://www.dnainfo.com/new-york/queens/flushing-whitestone.rss
+|Whitestone=http://www.dnainfo.com/new-york/queens/flushing-whitestone.rss
+|Howard Beach=http://www.dnainfo.com/new-york/queens/howard-beach-richmond-hill.rss
+|Richmond Hill=http://www.dnainfo.com/new-york/queens/howard-beach-richmond-hill.rss
+|Jackson Heights=http://www.dnainfo.com/new-york/queens/jackson-heights-elmhurst.rss
+|Elmhurst=http://www.dnainfo.com/new-york/queens/jackson-heights-elmhurst.rss
+|East Elmhurst=http://www.dnainfo.com/new-york/queens/jackson-heights-elmhurst.rss
+|Queens Village=http://www.dnainfo.com/new-york/queens/queens-village-hollis-st-albans.rss
+|St. Albans=http://www.dnainfo.com/new-york/queens/queens-village-hollis-st-albans.rss
+|Cambria Heights=http://www.dnainfo.com/new-york/queens/queens-village-hollis-st-albans.rss
+|http://www.dnainfo.com/new-york/queens.rss}}
+|}}{{#ifeq:{{{borough}}}|Staten Island|http://www.dnainfo.com/new-york/staten-island.rss|}}
+|format=XML
+|use xpath
+|cache seconds=43200
+|data=newstitle=/rss/channel/item/title,newslink=/rss/channel/item/link,newsdescription=/rss/channel/item/description
+}}
+{{#vardefine:TitleVar|{{#for_external_table:{{{newstitle}}};;}} }}{{#arraydefine:TitleArray|{{#var:TitleVar}}|;;}}{{#vardefine:LinkVar|{{#for_external_table:{{{newslink}}};;}} }}{{#arraydefine:LinkArray|{{#var:LinkVar}}|;;}}{{#vardefine:DescriptionVar|{{#for_external_table:{{{newsdescription}}};;}} }}{{#arraydefine:DescriptionArray|{{#var:DescriptionVar}}|;;}}
+    <h4 class="sidebar_header">Recent News</h4>
+    <div class="sidepanel widget_posts" style="border-bottom:0">
+        <ul class="recent_posts" style="margin-left:0em">
+            <li>
+                <div class="span4 img_wrapper" align="left">{{#replace:{{#replace:{{#regex:{{#arrayindex:DescriptionArray|0}} | /src="([^"]*).jpg"/ }}|src="|}}|"|}}</div>
+                <div class="span7"><div style="padding-bottom:5px">{{#time: F j, Y |{{#sub:{{#arrayindex:LinkArray|0}}|32|4}}-{{#sub:{{#arrayindex:LinkArray|0}}|36|2}}-{{#sub:{{#arrayindex:LinkArray|0}}|38|2}} }}</div>{{#arrayindex:TitleArray|0}}<br/>[{{#arrayindex:LinkArray|0}}<nowiki />Read more...]</div>
+            </li>
+            <li>
+                <div class="span4 img_wrapper" align="left">{{#replace:{{#replace:{{#regex:{{#arrayindex:DescriptionArray|1}} | /src="([^"]*).jpg"/ }}|src="|}}|"|}}</div>
+                <div class="span7"><div style="padding-bottom:5px">{{#time: F j, Y |{{#sub:{{#arrayindex:LinkArray|1}}|32|4}}-{{#sub:{{#arrayindex:LinkArray|1}}|36|2}}-{{#sub:{{#arrayindex:LinkArray|1}}|38|2}} }}</div>{{#arrayindex:TitleArray|1}}<br/>[{{#arrayindex:LinkArray|1}}<nowiki />Read more...]</div>
+            </li>
+            <li>
+                <div class="span4 img_wrapper" align="left">{{#replace:{{#replace:{{#regex:{{#arrayindex:DescriptionArray|2}} | /src="([^"]*).jpg"/ }}|src="|}}|"|}}</div>
+                <div class="span7"><div style="padding-bottom:5px">{{#time: F j, Y |{{#sub:{{#arrayindex:LinkArray|2}}|32|4}}-{{#sub:{{#arrayindex:LinkArray|2}}|36|2}}-{{#sub:{{#arrayindex:LinkArray|2}}|38|2}} }}</div>{{#arrayindex:TitleArray|2}}<br/>[{{#arrayindex:LinkArray|2}}<nowiki />Read more...]</div>
+            </li>
+        </ul>
+    </div>
+|}}
+</div><!-- .module_cont -->
+</div><!-- .row-fluid -->
+</includeonly>

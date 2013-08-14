@@ -1,0 +1,477 @@
+__NOTOC__ __NOEDITSECTION__<includeonly>
+<div class="container">
+    <div class="content_block right-sidebar">
+        <div class="fl-container span9">
+            <div class="contentarea">
+                <div class="row-fluid">
+                    <div class="span12">
+= {{{streetAddress}}}, {{{borough}}} =
+{{EntityMap|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 module_cont module_tabs">
+                        <div class="shortcode_tabs">
+                            <div class="all_heads_cont">
+                                <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Overview</div>
+                                <div class="shortcode_tab_item_title it2 head2" data-open="body2">PLUTO Info</div>
+                                <div class="shortcode_tab_item_title it3 head3" data-open="body3">More Info</div>
+                                <div class="shortcode_tab_item_title it4 head4" data-open="body4">Datasets</div>
+                            </div>
+                            <div class="all_body_cont">
+                                <div class="shortcode_tab_item_body body1 it1">
+                                    <div class="span6">
+                                        {| class="table table-striped"
+                                        |-
+                                        | '''Owner:'''  [[BuildingOwner::{{{OWNER}}}| ]] ||   [[Special:SearchByProperty/BuildingOwner/{{#replace:{{{OWNER}}}||-20}}|{{{OWNER}}}]]
+                                        |-
+                                        | '''Square Footage:''' || {{{GR_SQFT|}}} {{#if: {{{GR_SQFT|}}} | sq ft | }} 
+                                        |-
+                                        | '''Year Built:'''  [[BuildingYearBuilt::{{{YRB}}}| ]] ||   [[Special:SearchByProperty/BuildingYearBuilt/{{#replace:{{{YRB}}}||-20}}|{{{YRB}}}]]
+                                        |-
+                                        | '''Floor Count:'''  [[BuildingFloorCount::{{{STORY}}}| ]] ||   [[Special:SearchByProperty/BuildingFloorCount/{{#replace:{{{STORY}}}||-20}}|{{{STORY}}}]]
+                                        |-
+                                        | '''Total Units:'''  || {{{TOT_UNIT|}}}
+                                        |-
+                                        | '''Residential Units:''' || {{{RES_UNIT|}}}
+                                        |}
+                                    </div>
+                                    <div class="span6">
+                                        {| class="table table-striped"
+                                        |-
+                                        | '''Assessed Value, Total:''' || {{#if: {{{CURAVT_A|}}} |$|}}{{{CURAVT_A|}}}
+                                        |-
+                                        | '''Assessed Value, Land:'''|| {{#if: {{{CURAVL_A|}}} |$|}}{{{CURAVL_A|}}}
+                                        |-
+                                        | '''Market Value, Total:''' || {{#if: {{{NEW_FV_T|}}} |$|}}{{{NEW_FV_T|}}}
+                                        |-
+                                        | '''Market Value, Land:'''|| {{#if: {{{NEW_FV_L|}}} |$|}}{{{NEW_FV_L|}}}
+                                        |-
+                                        | '''Zoning:'''  [[BuildingZoning::{{{ZONING|}}}| ]]  || [[Special:SearchByProperty/BuildingZoning/{{#replace:{{{ZONING}}}||-20}}|{{{ZONING}}}]]
+                                        |}
+                                    </div>
+                                </div>
+                                <div class="shortcode_tab_item_body body2 it2">
+                                    <div class="span6"> {{#get_db_data:db=mongo-prod
+                                        |from=pluto_data
+                                        |find query={"BBL": "{{{BBLE}}}" }
+                                        |limit=1
+                                        |cache seconds=2419200
+                                        |data=Borough=Borough,BoroCode=BoroCode,Block=Block,Lot=Lot,CD=CD,CT2010=CT2010,CB2010=CB2010,SchoolDist=SchoolDist,Council=Council,ZipCode=ZipCode,FireComp=FireComp,PolicePrct=PolicePrct,Address=Address,ZoneDist1=ZoneDist1,ZoneDist2=ZoneDist2,ZoneDist3=ZoneDist3,ZoneDist4=ZoneDist4,Overlay1=Overlay1,Overlay2=Overlay2,SPDist1=SPDist1,SPDist2=SPDist2,LtdHeight=LtdHeight,AllZoning1=AllZoning1,AllZoning2=AllZoning2,SplitZone=SplitZone,BldgClass=BldgClass,LandUse=LandUse,Easements=Easements,OwnerType=OwnerType,OwnerName=OwnerName,LotArea=LotArea,BldgArea=BldgArea,ComArea=ComArea,ResArea=ResArea,OfficeArea=OfficeArea,RetailArea=RetailArea,GarageArea=GarageArea,StrgeArea=StrgeArea,FactryArea=FactryArea,OtherArea=OtherArea,AreaSource=AreaSource,NumBldgs=NumBldgs,NumFloors=NumFloors,UnitsRes=UnitsRes,UnitsTotal=UnitsTotal,LotFront=LotFront,LotDepth=LotDepth,BldgFront=BldgFront,BldgDepth=BldgDepth,Ext=Ext,ProxCode=ProxCode,IrrLotCode=IrrLotCode,LotType=LotType,BsmtCode=BsmtCode,AssessLand=AssessLand,AssessTot=AssessTot,ExemptLand=ExemptLand,ExemptTot=ExemptTot,YearBuilt=YearBuilt,BuiltCode=BuiltCode,YearAlter1=YearAlter1,YearAlter2=YearAlter2,HistDist=HistDist,Landmark=Landmark,BuiltFAR=BuiltFAR,ResidFAR=ResidFAR,CommFAR=CommFAR,FacilFAR=FacilFAR,CondoNo=CondoNo,Tract2010=Tract2010,XCoord=XCoord,YCoord=YCoord,ZoneMap=ZoneMap,ZMCode=ZMCode,Sanborn=Sanborn,TaxMap=TaxMap,EDesigNum=EDesigNum,APPBBL=APPBBL,APPDate=APPDate,PLUTOMapID=PLUTOMapID,Version=Version
+                                        }}
+                                        {{#if: {{#external_value:Borough}} |
+                                        {{{!}} class="table table-striped"
+                                        {{!}}-
+                                        ! style="width:42%;" {{!}}'''Version Number:'''
+                                        {{!}}{{!}} {{#external_value:Version}}
+                                        {{!}}-
+                                        {{!}}'''BBL:''' {{!}}{{!}} {{{BBLE}}}
+                                        {{!}}-
+                                        {{!}}'''Borough:''' {{!}}{{!}} {{#external_value:Borough}}  ([[Resource/Borough/{{#switch:{{#external_value:Borough}}|BX=Bronx|BK=Brooklyn|MN=Manhattan|QN=Queens|SI=Staten Island}}|{{#switch:{{#external_value:Borough}}|BX=Bronx|BK=Brooklyn|MN=Manhattan|QN=Queens|SI=Staten Island}}]])
+                                        {{!}}-
+                                        {{!}}'''Borough Code:''' {{!}}{{!}} {{#external_value:BoroCode}}
+                                        {{!}}-
+                                        {{!}}'''Tax Block:''' {{!}}{{!}} {{#external_value:Block}}
+                                        {{!}}-
+                                        {{!}}'''Tax Lot:''' {{!}}{{!}} {{#external_value:Lot}}
+                                        {{!}}-
+                                        {{!}}'''Community District:''' {{!}}{{!}} [[Resource/CommunityDistrict/{{#external_value:CD}}|{{#external_value:CD}}]]
+                                        {{!}}-
+                                        {{!}}'''Census Tract:''' {{!}}{{!}} {{#external_value:CT2010}}
+                                        {{!}}-
+                                        {{!}}'''Census Block:''' {{!}}{{!}} {{#external_value:CB2010}}
+                                        {{!}}-
+                                        {{!}}'''School District:''' {{!}}{{!}} {{#external_value:SchoolDist}}
+                                        {{!}}-
+                                        {{!}}'''City Council District:''' {{!}}{{!}} [[Resource/CityCouncil/{{#external_value:Council}}|{{#external_value:Council}}]]
+                                        {{!}}-
+                                        {{!}}'''ZIP Code:''' {{!}}{{!}} [[Resource/PostalCode/{{#external_value:ZipCode}}|{{#external_value:ZipCode}}]]
+                                        {{!}}-
+                                        {{!}}'''Fire Company:''' {{!}}{{!}} {{#external_value:FireComp}}
+                                        {{!}}-
+                                        {{!}}'''Police Precinct:''' {{!}}{{!}} [[Resource/PolicePrecinct/{{#external_value:PolicePrct}}|{{#external_value:PolicePrct}}]]
+                                        {{!}}-
+                                        {{!}}'''Address:''' {{!}}{{!}} {{#external_value:Address}}
+                                        {{!}}-
+                                        {{!}}'''Zoning District 1:''' {{!}}{{!}} {{#external_value:ZoneDist1}}
+                                        {{!}}-
+                                        {{!}}'''Zoning District 2:''' {{!}}{{!}} {{#external_value:ZoneDist2}}
+                                        {{!}}-
+                                        {{!}}'''Zoning District 3:''' {{!}}{{!}} {{#external_value:ZoneDist3}}
+                                        {{!}}-
+                                        {{!}}'''Zoning District 4:''' {{!}}{{!}} {{#external_value:ZoneDist4}}
+                                        {{!}}-
+                                        {{!}}'''Commercial Overlay 1:''' {{!}}{{!}} {{#external_value:Overlay1}}
+                                        {{!}}-
+                                        {{!}}'''Commercial Overlay 2:''' {{!}}{{!}} {{#external_value:Overlay2}}
+                                        {{!}}-
+                                        {{!}}'''Special Purpose District 1:''' {{!}}{{!}} {{#external_value:SPDist1}}
+                                        {{!}}-
+                                        {{!}}'''Special Purpose District 2:''' {{!}}{{!}} {{#external_value:SPDist2}}
+                                        {{!}}-
+                                        {{!}}'''Limited Height District:''' {{!}}{{!}} {{#external_value:LtdHeight}}
+                                        {{!}}-
+                                        {{!}}'''All Components 1:''' {{!}}{{!}} {{#external_value:AllZoning1}}
+                                        {{!}}-
+                                        {{!}}'''All Components 2:''' {{!}}{{!}} {{#external_value:AllZoning2}}
+                                        {{!}}-
+                                        {{!}}'''Split Boundary Indicator:''' {{!}}{{!}} {{#external_value:SplitZone}}  ({{#switch:{{#external_value:SplitZone}} | Y=Yes, a Split Lot | N=No, not a Split Lot | Unknown}})
+                                        {{!}}-
+                                        {{!}}'''Building Class:'''  {{!}}{{!}} {{#external_value:BldgClass}}  ({{#switch:{{#external_value:BldgClass}}
+| A0=One Family Dwellings: Cape Cod | A1=One Family Dwellings: Two Stories Detached ~ Small or Moderate Size, With or Without Attic | A2=One Family Dwellings: One Story ~ Permanent Living Quarters | A3=One Family Dwellings: Large Suburban Residence | A4=One Family Dwellings: City Residence | A5=One Family Dwellings: Attached or Semi-Detached | A6=One Family Dwellings: Summer Cottages/Mobile Homes/Trailers | A7=One Family Dwellings: Mansion Type | A8=One Family Dwellings: Bungalow Colony/Land Coop Owned | A9=One Family Dwellings: Miscellaneous ~ Old Buildings, Attached & Semi-Detached Frame Houses, etc.
+| B1=Two Family Dwellings: Brick | B2=Two Family Dwellings: Frame | B3=Two Family Dwellings: Converted ~ From One Family | B9=Two Family Dwellings: Miscellaneous ~ City Type, Old, etc.
+| C0=Walk Up Apartments: Three Families | C1=Walk Up Apartments: Over Six Families Without Stores | C2=Walk Up Apartments: Five to Six Families | C3=Walk Up Apartments: Four Families | C4=Walk Up Apartments: Old Law Tenements | C5=Walk Up Apartments: Converted Dwelling or Rooming House | C6=Walk Up Apartments: Cooperative ~ Other Than Condominiums | C7=Walk Up Apartments: Over Six Families With Stores | C8=Walk Up Apartments: Co-Op Conversion From Loft/Warehouse | C9=Walk Up Apartments: Garden Apartments/Mobile Home Park/Trailer Park
+| D0=Elevator Apartments: Co-op Conversion From Loft/Warehouse | D1=Elevator Apartments: Semi-fireproof ~ Without Stores | D2=Elevator Apartments: Artists in Residence | D3=Elevator Apartments: Fireproof ~ Standard Construction Without Stores | D4=Elevator Apartments: Cooperatives ~ Other Than Condominiums | D5=Elevator Apartments: Converted | D6=Elevator Apartments: Fireproof - With Stores | D7=Elevator Apartments: Semi-Fireproof With Stores | D8=Elevator Apartments: Luxury Type | D9=Elevator Apartments: Miscellaneous
+| E1=Warehouses: Fireproof | E3=Warehouses: Semi-Fireproof | E4=Warehouses: Frame, Metal | E6=Warehouses: Governmental Warehouses | E7=Warehouses: Warehouse, Self Storage | E9=Warehouses: Miscellaneous
+| F1=Factory and Industrial Buildings: Heavy Manufacturing ~ Fireproof | F2=Factory and Industrial Buildings: Special Construction ~ Printing Plant, etc., Fireproof | F4=Factory and Industrial Buildings: Semi-Fireproof | F5=Factory and Industrial Buildings: Light Manufacturing | F8=Factory and Industrial Buildings: Tank Farms | F9=Factory and Industrial Buildings: Miscellaneous
+| G0=Garages and Gasoline Stations: Residential Tax Class 1 Garage | G1=Garages and Gasoline Stations: Garage - Two or More Stories | G2=Garages and Gasoline Stations: Garage - One Story ~ Semi-Fireproof or Fireproof | G3=Garages and Gasoline Stations: Garage and Gas Station Combined | G4=Garages and Gasoline Stations: Gas Station - With Enclosed Lubrication Plant or Workshop | G5=Garages and Gasoline Stations: Gas Station - Without Enclosed Lubrication Plant or Workshop | G6=Garages and Gasoline Stations: Licensed Parking Lot | G7=Garages and Gasoline Stations: Unlicensed Parking Lot | G8=Garages and Gasoline Stations: Garage With Showroom | G9=Garages and Gasoline Stations: Miscellaneous
+| H1=Hotels: Luxury Type - Built Prior to 1960 | H2=Hotels: Luxury Type - Built After 1960 | H3=Hotels: Transient Occupancy-Midtown Mn Area | H4=Hotels: Motels | H5=Hotels: Private Club, Luxury Type | H6=Hotels: Apartment Hotels | H7=Hotels: Apartment Hotels-Co-op Owned | H8=Hotels: Dormitories | H9=Hotels: Miscellaneous
+| I1=Hospitals and Health: Hospitals, Sanitariums, Mental Institutions | I2=Hospitals and Health: Infirmary | I3=Hospitals and Health: Dispensary | I4=Hospitals and Health: Staff Facilities | I5=Hospitals and Health: Health Center, Child Center, Clinic | I6=Hospitals and Health: Nursing Home | I7=Hospitals and Health: Adult Care Facility | I9=Hospitals and Health: Miscellaneous
+| J1=Theatres: Art Type ~ Seating Capacity Under 400 Seats | J2=Theatres: Art Type ~ Seating Capacity Over 400 Seats | J3=Theatres: Motion Picture Theatre With Balcony | J4=Theatres: Legitimate Theatres ~ Theatre Sole Use of Building | J5=Theatres: Theatre as Part of Building of Other Use | J6=Theatres: T.V. Studios | J7=Theatres: Off-Broadway Type | J8=Theatres: Multi-Motion Picture Theatre | J9=Theatres: Miscellaneous
+| K1=Store Buildings: One Story Store Building | K2=Store Buildings: Two Story or Store and Office | K3=Store Buildings: Department Stores, Multi-Story | K4=Store Buildings: Stores, Apartments Above | K5=Store Buildings: Diners, Franchised Type Stand | K6=Store Buildings: Shopping Centers With Parking Facilities | K7=Store Buildings: Funeral Home | K9=Store Buildings: Miscellaneous
+| L1=Loft Buildings: Over Eight Stores ~ Mid-Manhattan Type With or Without Stores | L2=Loft Buildings: Fireproof - Loft and Storage Type ~ Without Retail Stores | L3=Loft Buildings: Semi-Fireproof | L8=Loft Buildings: With Retail Stores ~ Other Than Type 1 | L9=Loft Buildings: Miscellaneous
+| M1=Churches, Synagogues, Etc: Church, Synagogue, Chapel | M2=Churches, Synagogues, Etc: Mission House (Non-Residential) | M3=Churches, Synagogues, Etc: Parsonage, Rectory | M4=Churches, Synagogues, Etc: Convents | M9=Churches, Synagogues, Etc: Miscellaneous
+| N1=Asylums and Homes: Asylums | N2=Asylums and Homes: Homes for Indigent Children, Aged, Homeless | N3=Asylums and Homes: Orphanages | N4=Asylums and Homes: Juvenile Detention Houses | N9=Asylums and Homes: Miscellaneous
+| O1=Office Buildings: Fireproof - Up to Nine Stories | O2=Office Buildings: Ten Stories & Over ~ Side Street Type | O3=Office Buildings: Ten Stories & Over ~ Main Avenue Type | O4=Office Buildings: Tower Type | O5=Office Buildings: Semi-Fireproof | O6=Office Buildings: Bank Building ~ Designed Exclusively for Banking | O7=Office Buildings: Professional Buildings | O8=Office Buildings: With Residential Apartments | O9=Office Buildings: Miscellaneous
+| P1=Places of Public Assembly: Concert Halls | P2=Places of Public Assembly: Lodge Rooms | P3=Places of Public Assembly: YWCA,YMCA,YWHA,YMHA,PAL | P4=Places of Public Assembly: Beach Club | P5=Places of Public Assembly: Community Center | P6=Places of Public Assembly: Amusement Places, Bathhouses, Boat Houses | P7=Places of Public Assembly: Museum | P8=Places of Public Assembly: Library | P9=Places of Public Assembly: Miscellaneous Including Riding Academies and Stables
+| Q0=Outdoor Recreation Facilities: Open Space | Q1=Outdoor Recreation Facilities: Parks | Q2=Outdoor Recreation Facilities: Playgrounds | Q3=Outdoor Recreation Facilities: Outdoor Pools | Q4=Outdoor Recreation Facilities: Beaches | Q5=Outdoor Recreation Facilities: Golf Courses | Q6=Outdoor Recreation Facilities: Stadium, Race Tracks, Baseball Fields | Q7=Outdoor Recreation Facilities: Tennis Courts | Q8=Outdoor Recreation Facilities: Marinas/Yacht Clubs | Q9=Outdoor Recreation Facilities: Miscellaneous
+| R0=Condominiums: Condo Billing Lot | R1=Condominiums: 2-10 Unit Residential Bldg, Residential Unit | R2=Condominiums: Walk-up, Residential Unit | R3=Condominiums: 1-3 Story, Residential Unit | R4=Condominiums: Apartment/Elevated, Residential Unit | R5=Condominiums: Miscellaneous Commercial | R6=Condominiums: 1-3 Units, Residential Unit | R7=Condominiums: 1-3 Units, Commercial Unit | R8=Condominiums: 2-10 Unit Residential Bldg, Commercial Unit | R9=Condominiums: Condop | RA=Condominiums: Cultural, Medical, Educational, etc | RB=Condominiums: Office Buildings | RC=Condominiums: Commercial Building ~ Mixed Commercial Condo Building Classification Codes | RD=Condominiums: Residential Building ~ Mixed Residential Condo Building Classification Codes | RG=Condominiums: Indoor Parking | RH=Condominiums: Hotel/Boatel | RI=Condominiums: Mixed Warehouse/Factory/Industrial & Commercial | RK=Condominiums: Store Buildings – Retail | RM=Condominiums: Mixed Residential & Commercial Building ~ Mixed Residential & Commercial | RR=Condominiums: Condominium Rental | RS=Condominiums: Non-Business Storage Space | RW=Condominiums: Warehouse/Factory/Industrial | RX=Condominiums: Mixed Residential, Commercial & Industrial | RZ=Condominiums: Mixed Residential & Warehouse
+| S0=Residence - Multiple Use: Primarily One Family with Two Stores or Offices | S1=Residence - Multiple Use: Primarily One Family With Store or Office | S2=Residence - Multiple Use: Primarily Two Family With Store or Office | S3=Residence - Multiple Use: Primarily Three Family With Store or Office | S4=Residence - Multiple Use: Primarily Four Family With Store or Office | S5=Residence - Multiple Use: Primarily Five to Six Family With Store or Office | S9=Residence - Multiple Use: Primarily One to Six Families with Stores or Offices
+| T1=Transportation Facilities: Airports, Air Fields, Terminals | T2=Transportation Facilities: Piers, Docks, Bulkheads | T9=Transportation Facilities: Miscellaneous
+| U0=Utility Bureau Properties: Utility Company Land and Buildings | U1=Utility Bureau Properties: Bridges, Tunnels, Highways | U2=Utility Bureau Properties: Electric Utilities, Gas | U3=Utility Bureau Properties: Ceiling R. R. | U4=Utility Bureau Properties: Telephone Utilities | U5=Utility Bureau Properties: Communications Facilities ~ Other Than Telephone | U6=Utility Bureau Properties: Railroads, Private Ownership | U7=Utility Bureau Properties: Transportation, Public Ownership | U8=Utility Bureau Properties: Revocable Consents | U9=Utility Bureau Properties: Miscellaneous ~ Including Private Improvements in City Land and in Public Places
+| V0=Vacant Land: Zoned Residential, Except Not Manhattan Below 110 St | V1=Vacant Land: Not Zoned Residential or Manhattan Below 110 St | V2=Vacant Land: Not Zoned Residential, but Adjacent to Tax Class 1 Dwelling | V3=Vacant Land: Zoned Primarily Residential, Except Not Manhattan Below 110 St | V4=Vacant Land: Police or Fire Department | V5=Vacant Land: School Site or Yard | V6=Vacant Land: Library, Hospitals or Museums | V7=Vacant Land: Port Authority of NY and NJ | V8=Vacant Land: State & U.S. | V9=Vacant Land: Miscellaneous ~ Department of Real Estate and Other Public Places
+| W1=Educational Structures: Public Elementary Junior and Senior High Schools | W2=Educational Structures: Parochial Schools, Yeshivas | W3=Educational Structures: Schools or Academies | W4=Educational Structures: Training Schools | W5=Educational Structures: City University | W6=Educational Structures: Other Colleges and Universities | W7=Educational Structures: Theological Seminaries | W8=Educational Structures: Other Private Schools | W9=Educational Structures: Miscellaneous
+| Y1=Selected Government Installations: Fire Department | Y2=Selected Government Installations: Police Department | Y3=Selected Government Installations: Prisons, Jails, Houses of Detention | Y4=Selected Government Installations: Military and Naval | Y5=Selected Government Installations: Department of Real Estate | Y6=Selected Government Installations: Department of Sanitation | Y7=Selected Government Installations: Department of Ports and Terminals | Y8=Selected Government Installations: Department of Public Works | Y9=Selected Government Installations: Department of Environmental Protection
+| Z0=Miscellaneous: Tennis Court, Pool, Shed, etc. Used in Conjunction with Tax Class 1 | Z1=Miscellaneous: Court House | Z2=Miscellaneous: Public Parking Areas | Z3=Miscellaneous: Post Office | Z4=Miscellaneous: Foreign Governments | Z5=Miscellaneous: United Nations | Z6=Miscellaneous: Land under Water | Z7=Miscellaneous: Easements | Z8=Miscellaneous: Cemeteries | Z9=Miscellaneous: Other
+| }})
+                                        {{!}}-
+                                        {{!}}'''Land Use Category:'''  {{!}}{{!}} {{#external_value:LandUse}}  ({{#switch:{{#external_value:LandUse}} | 01=One & Two Family Buildings | 02=Multi-Family Walk-Up Buildings | 03=Multi-Family Elevator Buildings | 04=Mixed Residential & Commercial Buildings | 05=Commercial & Office Buildings | 06=Industrial & Manufacturing Buildings | 07=Transportation & Utility | 08=Public Facilities & Institutions | 09=Open Space & Outdoor Recreation | 10=Parking Facilities | 11=Vacant Land | }})
+                                        {{!}}-
+                                        {{!}}'''Number of Easements:'''  {{!}}{{!}} {{#external_value:Easements}}
+                                        {{!}}-
+                                        {{!}}'''Type of Ownership Code:'''  {{!}}{{!}} {{#external_value:OwnerType}}  ({{#switch:{{#external_value:OwnerType}} | C=City Ownership | M=Mixed City & Private Ownership | O=Other – Public Authority, State or Federal Ownership | P=Private Ownership – Either the tax lot has started an “in rem” action or it was once city owned | X=Mixed – Excludes property with a C, M, O, or P ownership code. Fully tax exempt property that could be owned by the city, state, or federal government; a public authority; or a private institution | Unknown ~ Usually Private Ownership}})
+                                        {{!}}-
+                                        {{!}}'''Owner Name:'''  {{!}}{{!}} {{#external_value:OwnerName}}
+                                        {{!}}-
+                                        {{!}}'''Lot Area:'''  {{!}}{{!}} {{#external_value:LotArea}} sq ft
+                                        {{!}}-
+                                        {{!}}'''Building Total Floor Area:'''  {{!}}{{!}} {{#external_value:BldgArea}} {{#ifeq: {{#external_value:BldgArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Commercial Floor Area:'''  {{!}}{{!}} {{#external_value:ComArea}} {{#ifeq: {{#external_value:ComArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Residential Floor Area:'''  {{!}}{{!}} {{#external_value:ResArea}} {{#ifeq: {{#external_value:ResArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Office Floor Area:'''  {{!}}{{!}} {{#external_value:OfficeArea}} {{#ifeq: {{#external_value:OfficeArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Retail Floor Area:'''  {{!}}{{!}} {{#external_value:RetailArea}} {{#ifeq: {{#external_value:RetailArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Garage Floor Area:'''  {{!}}{{!}} {{#external_value:GarageArea}} {{#ifeq: {{#external_value:GarageArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Storage Floor Area:'''  {{!}}{{!}} {{#external_value:StrgeArea}} {{#ifeq: {{#external_value:StrgeArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Factory Floor Area:'''  {{!}}{{!}} {{#external_value:FactryArea}} {{#ifeq: {{#external_value:FactryArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Other Floor Area:'''  {{!}}{{!}} {{#external_value:OtherArea}} {{#ifeq: {{#external_value:OtherArea}}|0||sq ft}}
+                                        {{!}}-
+                                        {{!}}'''Area Source Code:'''  {{!}}{{!}} {{#external_value:AreaSource}}  ({{#switch:{{#external_value:AreaSource}} | 0=Not Available | 1=Department of Finance's Major Property File | 2=Department of Finance's RPAD File | 3=One or more Building Dimensions are non-numeric. Total Building Floor Area is 0. | 4=Building Class is 'V' and Number of Buildings is 0. Total Building Floor Area is 0. | 5=Total Building Floor Area is calculated from RPAD Building Dimensions and Number of Stories for largest building only. | 6=Unknown | 7=Department of Finance’s Mass Appraisal System | 9=User Defined | }})
+                                        {{!}}}
+                                    </div>
+                                    <div class="span6">
+                                        {{{!}} class="table table-striped"
+                                        {{!}}-
+                                        ! style="width:42%;" {{!}}'''Number of Buildings:'''
+                                        {{!}}{{!}} {{#external_value:NumBldgs}}
+                                        {{!}}-
+                                        {{!}}'''Number of Floors:'''  {{!}}{{!}} {{#external_value:NumFloors}}
+                                        {{!}}-
+                                        {{!}}'''Residential Units:'''  {{!}}{{!}} {{#external_value:UnitsRes}}
+                                        {{!}}-
+                                        {{!}}'''Residential and Non-Residential Units:'''  {{!}}{{!}} {{#external_value:UnitsTotal}}
+                                        {{!}}-
+                                        {{!}}'''Lot Frontage:'''  {{!}}{{!}} {{#external_value:LotFront}} {{#ifeq: {{#external_value:LotFront}}|0||ft}}
+                                        {{!}}-
+                                        {{!}}'''Lot Depth:'''  {{!}}{{!}} {{#external_value:LotDepth}} {{#ifeq: {{#external_value:LotDepth}}|0||ft}}
+                                        {{!}}-
+                                        {{!}}'''Building Frontage:'''  {{!}}{{!}} {{#external_value:BldgFront}} {{#ifeq: {{#external_value:BldgFront}}|0||ft}}
+                                        {{!}}-
+                                        {{!}}'''Building Depth:'''  {{!}}{{!}} {{#external_value:BldgDepth}} {{#ifeq: {{#external_value:BldgDepth}}|0||ft}}
+                                        {{!}}-
+                                        {{!}}'''Extension Code:'''  {{!}}{{!}} {{#external_value:Ext}} {{#switch:{{#external_value:Ext}} | E=(Extension) | G=(Garage) | EG=(Extension & Garage) | }}
+                                        {{!}}-
+                                        {{!}}'''Proximity Code:'''  {{!}}{{!}} {{#external_value:ProxCode}} ({{#switch:{{#external_value:ProxCode}} | 0=Not Available | 1=Detached | 2=Semi-Attached | 3=Attached | }})
+                                        {{!}}-
+                                        {{!}}'''Irregular Lot Code:'''  {{!}}{{!}} {{#external_value:IrrLotCode}} ({{#switch:{{#external_value:IrrLotCode}} | Y=Yes, an Irregularly Shaped Lot | N=No, not an Irregularly Shaped Lot | Unknown}})
+                                        {{!}}-
+                                        {{!}}'''Lot Type:'''  {{!}}{{!}} {{#external_value:LotType}} ({{#switch:{{#external_value:LotType}} | 0=Mixed or Unknown | 1=Block Assemblage - A tax lot which encompasses an entire block | 2=Waterfront - A tax lot bordering on a body of water. Waterfront lots may contain a small amount of submerged land. | 3=Corner - A tax lot bordering on two intersecting streets | 4=Through - A tax lot which connects two streets and fronts on both streets. | 5=Inside - A tax lot which is not an assemblage, waterfront, corner, through, interior, island, alley or submerged lot | 6=Interior Lot - A tax lot that has no street frontage | 7=Island Lot - A tax lot that is entirely surrounded by water | 8=Alley Lot - A tax lot that is too narrow to accommodate a building. The lot is usually 12 feet or less in width. | 9=Submerged Land Lot - A tax lot that is totally or almost completely submerged | }})
+                                        {{!}}-
+                                        {{!}}'''Basement Type/Grade:'''  {{!}}{{!}} {{#external_value:BsmtCode}} ({{#switch:{{#external_value:BsmtCode}} | 0=None/No Basement | 1=Full Basement that is Above Grade | 2=Full Basement that is Below Grade | 3=Partial Basement that is Above Grade | 4=Partial Basement that is Below Grade | 5=Unknown | }})
+                                        {{!}}-
+                                        {{!}}'''Land Assessed Value:'''  {{!}}{{!}} ${{#external_value:AssessLand}}
+                                        {{!}}-
+                                        {{!}}'''Total Assessed Value:'''  {{!}}{{!}} ${{#external_value:AssessTot}}
+                                        {{!}}-
+                                        {{!}}'''Land Exempt Value:'''  {{!}}{{!}} ${{#external_value:ExemptLand}}
+                                        {{!}}-
+                                        {{!}}'''Total Exempt Value:'''  {{!}}{{!}} ${{#external_value:ExemptTot}}
+                                        {{!}}-
+                                        {{!}}'''Year Built:'''  {{!}}{{!}} {{#external_value:YearBuilt}}
+                                        {{!}}-
+                                        {{!}}'''Year Built Code:'''  {{!}}{{!}} {{#external_value:BuiltCode}} ({{#switch:{{#external_value:BuiltCode}} | E=Estimate | Year Built is not an Estimate}})
+                                        {{!}}-
+                                        {{!}}'''Year Altered 1:'''  {{!}}{{!}} {{#external_value:YearAlter1}}
+                                        {{!}}-
+                                        {{!}}'''Year Altered 2:'''  {{!}}{{!}} {{#external_value:YearAlter2}}
+                                        {{!}}-
+                                        {{!}}'''Historic District Name:'''  {{!}}{{!}} {{#external_value:HistDist}}
+                                        {{!}}-
+                                        {{!}}'''Landmark Name:'''  {{!}}{{!}} {{#external_value:Landmark}}
+                                        {{!}}-
+                                        {{!}}'''Built Floor Area Ratio - FAR:'''  {{!}}{{!}} {{#external_value:BuiltFAR}}
+                                        {{!}}-
+                                        {{!}}'''Maximum Allowable Residential FAR:'''  {{!}}{{!}} {{#external_value:ResidFAR}}
+                                        {{!}}-
+                                        {{!}}'''Maximum Allowable Commercial FAR:'''  {{!}}{{!}} {{#external_value:CommFAR}}
+                                        {{!}}-
+                                        {{!}}'''Maximum Allowable Facility FAR:'''  {{!}}{{!}} {{#external_value:FacilFAR}}
+                                        {{!}}-
+                                        {{!}}'''Condominium Number:'''  {{!}}{{!}} {{#external_value:CondoNo}}
+                                        {{!}}-
+                                        {{!}}'''Census Tract 2:'''  {{!}}{{!}} {{#external_value:Tract2010}}
+                                        {{!}}-
+                                        {{!}}'''X Coordinate:'''  {{!}}{{!}} {{#external_value:XCoord}}
+                                        {{!}}-
+                                        {{!}}'''Y Coordinate:'''  {{!}}{{!}} {{#external_value:YCoord}}
+                                        {{!}}-
+                                        {{!}}'''Zoning Map #:'''  {{!}}{{!}} {{#external_value:ZoneMap}}
+                                        {{!}}-
+                                        {{!}}'''Zoning Map Code:'''  {{!}}{{!}} {{#external_value:ZMCode}}
+                                        {{!}}-
+                                        {{!}}'''Sanborn Map #:'''  {{!}}{{!}} {{#external_value:Sanborn}}
+                                        {{!}}-
+                                        {{!}}'''Tax Map #:'''  {{!}}{{!}} {{#external_value:TaxMap}}
+                                        {{!}}-
+                                        {{!}}'''E-designation Number:'''  {{!}}{{!}} {{#external_value:EDesigNum}}
+                                        {{!}}-
+                                        {{!}}'''Apportionment BBL:'''  {{!}}{{!}} {{#external_value:APPBBL}}
+                                        {{!}}-
+                                        {{!}}'''Apportionment Date:'''  {{!}}{{!}} {{#external_value:APPDate}}
+                                        {{!}}-
+                                        {{!}}'''PLUTO - Base Map Indicator:'''  {{!}}{{!}} {{#external_value:PLUTOMapID}} ({{#switch:{{#external_value:PLUTOMapID}} | 1=In PLUTO Data File and DOF Modified DTM Tax Block and Lot Clipped to the Shoreline File. | 2=In PLUTO Data File Only. | 3=In DOF Modified DTM Tax Block and Lot Clipped to the Shoreline File but NOT in PLUTO. | 4=In PLUTO Data File and in DOF Modified DTM File but NOT in DOF Modified DTM Tax Block and Lot Clipped to the Shoreline File, therefore the tax lot is totally under water. | 5=In DOF Modified DTM but NOT in PLUTO, therefore the tax lot is totally under water. | }})
+                                        {{!}}}
+                                        |<div style="padding-left: 21px;"><p>'''There is no PLUTO information for this place.'''</p></div>}}
+                                    </div>
+                                </div>
+                                <div class="shortcode_tab_item_body body3 it3">
+                                    <div class="span6">
+                                        {| class="table table-striped"
+                                        |-
+                                        |''' BBLE Number:''' || {{{BBLE}}}
+                                        |-
+                                        |''' Boro ID:''' || {{{BORO}}}
+                                        |-
+                                        |''' Block:''' || {{{BLOCK}}}
+                                        |-
+                                        |''' Lot:''' || {{{LOT}}}
+                                        |-
+                                        |''' Ease:''' || {{{EASE|}}}
+                                        |-
+                                        |''' Sec. Vol.:''' || {{{SECVOL|}}}
+                                        |-
+                                        |''' District :''' || {{{DISTRICT}}}
+                                        |-
+                                        |''' Year:'''  || {{{YEAR4|}}}
+                                        |-
+                                        |''' Current year's total market value of the land:''' || {{#if: {{{CUR_FV_L|}}} |$|}}{{{CUR_FV_L|}}}
+                                        |-
+                                        |''' Current year's total market value:''' || {{#if: {{{CUR_FV_T|}}} |$|}}{{{CUR_FV_T|}}}
+                                        |-
+                                        |''' New total market value of property:''' || {{#if: {{{NEW_FV_T|}}} |$|}}{{{NEW_FV_T|}}}
+                                        |-
+                                        |''' New market value of the land:''' || {{#if: {{{NEW_FV_L|}}} |$|}}{{{NEW_FV_L|}}}
+                                        |-
+                                        |''' Change Date:''' || {{{FV_CHGDT|}}}
+                                        |-
+                                        |''' Current transitional assessed land value:''' || {{#if: {{{CURAVL|}}} |$|}}{{{CURAVL|}}}
+                                        |-
+                                        |''' Current transitional assessed total value:''' || {{#if: {{{CURAVT|}}} |$|}}{{{CURAVT|}}}
+                                        |-
+                                        |''' Current transitional exempt land value:''' || {{#if: {{{CUREXL|}}} |$|}}{{{CUREXL|}}}
+                                        |-
+                                        |''' Current transitional exempt total value:''' || {{#if: {{{CUREXT|}}} |$|}}{{{CUREXT|}}}
+                                        |-
+                                        |''' Current actual assessed land value:''' || {{#if: {{{CURAVL_A|}}} |$|}}{{{CURAVL_A|}}}
+                                        |-
+                                        |''' Current actual assessed total value:''' || {{#if: {{{CURAVT_A|}}} |$|}}{{{CURAVT_A|}}}
+                                        |-
+                                        |''' Current actual exempt land value:''' || {{#if: {{{CUREXL_A|}}} |$|}}{{{CUREXL_A|}}}
+                                        |-
+                                        |''' Current actual exempt total value:''' || {{#if: {{{CUREXT_A|}}} |$|}}{{{CUREXT_A|}}}
+                                        |-
+                                        |''' Date of the last money change:''' || {{{FCHGDT|}}}
+                                        |-
+                                        |''' Final transitional assessed land value:''' || {{#if: {{{FN_AVL|}}} |$|}}{{{FN_AVL|}}}
+                                        |-
+                                        |''' Final transitional assessed total value:''' || {{#if: {{{FN_AVT|}}} |$|}}{{{FN_AVT|}}}
+                                        |-
+                                        |''' Final transitional exempt land value:''' || {{#if: {{{FN_EXL|}}} |$|}}{{{FN_EXL|}}}
+                                        |-
+                                        |''' Final transitional exempt total value:''' || {{#if: {{{FN_EXT|}}} |$|}}{{{FN_EXT|}}}
+                                        |-
+                                        |''' Final actual assessed land value:''' || {{#if: {{{FN_AVL_A|}}} |$|}}{{{FN_AVL_A|}}}
+                                        |-
+                                        |''' Final actual assessed total value:''' || {{#if: {{{FN_AVT_A|}}} |$|}}{{{FN_AVT_A|}}}
+                                        |-
+                                        |''' Final actual exempt land value:''' || {{#if: {{{FN_EXL_A|}}} |$|}}{{{FN_EXL_A|}}}
+                                        |-
+                                        |''' Final actual exempt total value:''' || {{#if: {{{FN_EXT_A|}}} |$|}}{{{FN_EXT_A|}}}
+                                        |-
+                                        |''' Tax class code:'''  [[BuildingTaxClassCode::{{{TXCL|}}} | ]]  || [[Special:SearchByProperty/BuildingTaxClassCode/{{#replace:{{{TXCL}}}||-20}}|{{{TXCL}}}]]
+                                        |-
+                                        |''' Building class:''' || {{{BLDGCL|}}}
+                                        |-
+                                        |''' Exempt class used for fully exempt properties only:''' || {{{EXMTCL|}}}
+                                        |-
+                                        |''' Owner:'''  || [[Special:SearchByProperty/BuildingOwner/{{#replace:{{{OWNER}}}||-20}}|{{{OWNER}}}]]
+                                        |-
+                                        |''' Lowest house number:''' || {{{HNUM_LO|}}}
+                                        |-
+                                        |''' Highest house number:''' || {{{HNUM_HI|}}}
+                                        |-
+                                        |''' Street Name:''' [[BuildingStreet::{{{STR_NAME|}}} | ]] || [[Special:SearchByProperty/BuildingStreet/{{#replace:{{{STR_NAME}}}||-20}}|{{{STR_NAME}}}]]
+                                        |-
+                                        | '''ZIP Code:''' [[PostalCode::{{{postalCode|}}}| ]] || [[Resource/PostalCode/{{{postalCode}}} | {{{postalCode}}}]]
+                                        |-
+                                        |''' Total number of units in the building:''' || {{{TOT_UNIT|}}}
+                                        |-
+                                        |''' Number of residential units in building:''' || {{{RES_UNIT|}}}
+                                        |-
+                                        |''' Lot frontage in feet:''' || {{{LFRT_DEC|}}} {{#if: {{{LFRT_DEC|}}} |ft|}}
+                                        |-
+                                        |''' Lot depth in feet:''' || {{{LDEP_DEC|}}} {{#if: {{{LDEP_DEC|}}} |ft|}}
+                                        |-
+                                        |''' Lot Acre in size:''' || {{#ifeq: {{{L_ACRE|}}}|None|0|{{{L_ACRE|}}}}} ac
+                                        |-
+                                        |''' Irregularly shaped:''' || {{{IRREG|}}}
+                                        |-
+                                        |} 
+                                    </div>
+                                    <div class="span6">
+                                        {| class="table table-striped"
+                                        |-
+                                        | '''Building frontage in feet:''' || {{{BFRT_DEC|}}} {{#if: {{{BFRT_DEC|}}} |ft|}}
+                                        |-
+                                        | '''Building depth in feet:''' || {{{BDEP_DEC|}}} {{#if: {{{BDEP_DEC|}}} |ft|}}
+                                        |-
+                                        | ''''V' if the building is irregularly shaped:''' || {{{BLD_VAR|}}}
+                                        |-
+                                        | '''Extention:''' || {{{EXT|}}}
+                                        |-
+                                        | '''Number of Stories:'''  ||   [[Special:SearchByProperty/BuildingFloorCount/{{#replace:{{{STORY}}}||-20}}|{{{STORY}}}]]
+                                        |-
+                                        | '''Number of buildings on the property:''' || {{{BLDGS|}}}
+                                        |-
+                                        | '''Code to indicate a corner:''' || {{{CORNER|}}}
+                                        |-
+                                        | '''Total land area:''' || {{{LND_AREA|}}}
+                                        |-
+                                        | '''Gross square footage:''' || {{{GR_SQFT|}}} {{#if: {{{GR_SQFT|}}} |sq ft|}}
+                                        |-
+                                        | '''Zoning codes:''' [[BuildingZoning::{{{ZONING|}}}| ]]  || [[Special:SearchByProperty/BuildingZoning/{{#replace:{{{ZONING}}}||-20}}|{{{ZONING}}}]]
+                                        |-
+                                        | '''Year the building was built:'''  ||   [[Special:SearchByProperty/BuildingYearBuilt/{{#replace:{{{YRB}}}||-20}}|{{{YRB}}}]]
+                                        |-
+                                        | ''''E' if year built is an estimate:''' || {{{YRB_FLAG|}}}
+                                        |-
+                                        | '''If built over several years:''' || {{{YRB_RNG|}}}
+                                        |-
+                                        | '''If building was altered:''' || {{{YRA1|}}}
+                                        |-
+                                        | '''If alteration took more than 1 year:''' || {{{YRA1_RNG|}}}
+                                        |-
+                                        | '''If building class was altered twice:''' || {{{YRA2|}}}
+                                        |-
+                                        | '''If 2nd alteration took more than 1 year:''' || {{{YRA2_RNG|}}}
+                                        |-
+                                        | '''Community planning board number:''' || {{{CP_DIST|}}}
+                                        |-
+                                        | '''Condo identification number:''' || {{{CONDO_NM|}}}
+                                        |-
+                                        | ''''C' if commercial unit, 'R' if residential unit:''' || {{{CONDO_S1|}}}
+                                        |-
+                                        | '''Suffix1 sequence number:''' || {{{CONDO_S2|}}}
+                                        |-
+                                        | '''Land percent of common interest in the entire condo:''' || {{#if: {{{COMINT_L|}}} |%|}}{{{COMINT_L|}}}
+                                        |-
+                                        | '''Building percent of common interest in the entire condo:''' || {{#if: {{{COMINT_B|}}} |%|}}{{{COMINT_B|}}}
+                                        |-
+                                        | '''Apartment number:''' || {{{APTNO|}}}
+                                        |-
+                                        | '''Apportionment block:''' || {{{AP_BLOCK|}}}
+                                        |-
+                                        | '''Apportionment lot:''' || {{{AP_LOT|}}}
+                                        |-
+                                        | '''Apportionment easement code:''' || {{{AP_EASE|}}}
+                                        |-
+                                        | '''Apportionment date:''' || {{{AP_DATE|}}}
+                                        |-
+                                        | '''Protest code:''' || {{{PROTEST|}}}
+                                        |-
+                                        | '''CO-OP ID:''' || {{{COOP_NUM|}}}
+                                        |-
+                                        | '''Exemption indicator flags:''' || {{{EX_INDS|}}}
+                                        |-
+                                        | '''Number of exemptions:''' || {{{EX_COUNT|}}}
+                                        |-
+                                        | '''Exempt property restored date:''' || {{{EX_CHGDT|}}}
+                                        |-
+                                        | '''Date of last descriptive change:''' || {{{DCHGDT|}}}
+                                        |-
+                                        | '''Date of summary data change:''' || {{{SM_CHGDT|}}}
+                                        |-
+                                        | '''Address:'''  [[StreetAddress::{{{streetAddress}}}|]] [[Borough::{{{borough}}}|]]  || {{{streetAddress}}}, {{{borough}}} {{{postalCode}}}
+                                        |-
+                                        <!--                                                        
+                                        | '''Neighborhood:''' || {{{Neighborhood}}}                                                  
+                                        |-
+                                        -->
+                                        | '''Latitude:''' || {{{latitude|}}}
+                                        |-
+                                        | '''Longitude:''' || {{{longitude|}}}
+                                        |-
+                                        | '''Coordinates:'''  || {{{latitude}}},{{{longitude}}}<!--{{coord|{{{latitude}}}|{{{longitude}}}}}-->
+                                        |-
+                                        |}
+                                    </div>
+                                </div>
+                                <div class="shortcode_tab_item_body body4 it4">
+                                    <div class="span12">
+                                        {| class="table table-striped"
+                                        |-
+                                        |}
+                                    </div>
+                                </div>
+                            </div><!-- .all_body_cont -->
+                        </div><!-- .shortcode_tabs -->
+                    </div><!-- .module_cont -->
+                </div><!-- .row-fluid -->
+            </div><!-- .contentarea -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div><!-- .fl-container -->
+        <div class="right-sidebar-block span3">
+{{PostalCodeSideBar
+| postalCode = {{{postalCode|}}}
+| latitude={{{latitude}}}
+| longitude={{{longitude}}}
+}}
+        </div><!-- .right-sidebar -->
+        <div class="clear"><!-- ClearFix --></div>
+    </div><!-- .content_wrapper -->
+</div><!-- .container -->
+[[Category:Building]]
+{{#widget:Jsonld|context={{{@context}}}|id={{{@id}}}|type={{{@type}}}|name={{{streetAddress}}}|latitude={{{latitude}}}|longitude={{{longitude}}}}}
+{{#seo:
+|title= {{{streetAddress}}}, {{{borough}}} 
+|titlemode=replace
+|description={{{streetAddress}}} is a property in {{{borough}}}, NY {{{postalCode}}}
+}}
+</includeonly>

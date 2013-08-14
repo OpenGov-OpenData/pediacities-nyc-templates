@@ -1,0 +1,896 @@
+__NOTOC__ __NOEDITSECTION__<includeonly>
+<div class="">
+    <div class="container">
+        <div class="content_block right-sidebar">
+            <div class="fl-container span9">
+                <div class="">
+                    <div class="contentarea">
+                        <div class="row-fluid">
+                            <div class="span12"> {{#get_db_data:db=mongo-prod
+|from=police_precincts_with_postalCodes
+|find query={"postalCode": "{{{postalCode}}}" }                            
+|limit=1
+|data=precinct=precinct
+}}{{#arraydefine:varprecinct|{{#external_value:precinct}}}}
+= Community Stats for [[Resource/PostalCode/{{{postalCode}}} | {{{postalCode}}}]]  ZIP Code =
+                                <div class="">
+<!--
+{{PrecinctsMap
+|postalCode={{{postalCode}}}
+|precinct={{#arrayprint:varprecinct|0}}
+|latitude={{{latitude|}}}
+|longitude={{{longitude|}}}
+|zoom=-1
+|height=500px
+}}
+-->
+{{#get_db_data:db=mongo-prod
+|from=nyc_zip_code_tabulation_areas
+|data=geometry=geometry
+|find query={"properties.postalCode": "{{{postalCode|10001}}}" }
+|limit=1}}
+{{#display_map: 
+|polygons={{#external_value:geometry}}
+}}{{#clear_external_data:}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div id="tabNum" style="display:none;">{{#urlget:tab}}</div>
+                                <div class="shortcode_tabs">
+                                    <div class="all_heads_cont">
+                                        <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Overview</div>
+                                        <div class="shortcode_tab_item_title it2 head2" data-open="body2">Population</div>
+                                        <div class="shortcode_tab_item_title it3 head3" data-open="body3">Housing Stats</div>
+                                        <div class="shortcode_tab_item_title it4 head4" data-open="body4">311 Complaints</div>
+                                        <div class="shortcode_tab_item_title it5 head5" data-open="body5">Crime Stats</div>
+                                        <div class="shortcode_tab_item_title it6 head6" data-open="body6">Dataset</div>
+                                    </div>
+                                    <div class="all_body_cont">
+                                        <div class="shortcode_tab_item_body body1 it1">
+                                            <div class="span6">
+                                                {| class="table table-striped" 
+                                                | || || <div title="Ranked out of all 242 NYC ZIP Codes">'''Ranking'''</div>
+                                                |-
+                                                |'''Total Population''':  [[TotalPopulation::{{{Population}}}|]]  || {{{Population}}} || {{Ranking | ranking={{{PopulationRanking|}}}}}
+                                                |-
+                                                |'''Area Code''': || {{{AreaCode}}} ||
+                                                |-
+                                                |'''Land Area''': [[LandArea::{{{LandArea}}}|]]  || {{{LandArea}}} sq mi || {{Ranking | ranking={{{LandAreaRanking|}}}}}
+                                                |-
+                                                |'''Elevation''': [[Elevation::{{{Elevation}}}|]]   || {{{Elevation}}} || {{Ranking | ranking={{{ElevationRanking|}}}}}
+                                                |-
+                                                |'''State''': || {{{StateFullName}}} ({{{addressRegion}}}) ||
+                                                |-
+                                                |'''State FIPS Code''': || {{{StateFIPS}}} ||
+                                                |-
+                                                |'''County''': || {{{county}}} ||
+                                                |-
+                                                |'''County FIPS Code''': || {{{CountyFIPS}}} ||
+                                                |-
+                                                |'''City''': || {{{CityAliasMixedCase}}} ||
+                                                |-
+                                                |'''Congressional District''': || {{{CongressionalDistrict}}} ||
+                                                |-
+                                                |}
+                                            </div>
+                                            <div class="span6">
+                                                {| class="table table-striped"
+                                                | || || <div title="Ranked out of all 242 NYC ZIP Codes">'''Ranking'''</div>
+                                                |-
+                                                |'''Median Age''': [[MedianAge::{{{MedianAge}}}|]] || {{{MedianAge}}} || {{Ranking | ranking={{{MedianAgeRanking|}}}}}
+                                                |-
+                                                |'''Total Number of Households''': [[HouseholdsPerZipCode::{{{HouseholdsPerZipCode}}}|]]  || {{{HouseholdsPerZipCode}}} || {{Ranking | ranking={{{HouseholdsPerZipCodeRanking|}}}}}
+                                                |-
+                                                |'''Persons Per Household''': || {{{PersonsPerHousehold}}} || {{Ranking | ranking={{{PersonsPerHouseholdRanking|}}}}}
+                                                |-
+                                                |'''Income Per Household''': || ${{{IncomePerHousehold|}}} || {{Ranking | ranking={{{IncomePerHouseholdRanking|}}}}}
+                                                |-
+                                                |'''Average House Value''': [[AverageHouseValue::{{{AverageHouseValue}}}|]] || ${{{AverageHouseValue}}} || {{Ranking | ranking={{{AverageHouseValueRanking|}}}}}
+                                                |-
+                                                |'''Number of Businesses''': || {{{NumberOfBusinesses}}} || {{Ranking | ranking={{{NumberOfBusinessesRanking|}}}}}
+                                                |-
+                                                |'''Number of Employees''': || {{{NumberOfEmployees}}} || {{Ranking | ranking={{{NumberOfEmployeesRanking|}}}}}
+                                                |-
+                                                |}
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body2 it2">
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{#get_db_data:
+                                                    db=mongo-prod
+                                                    |from=nyc_2010_census_by_postal_code
+                                                    |find query={"postalCode": "{{{postalCode}}}" }
+                                                    |limit=1
+                                                    |cache seconds=14515200
+                                                    |data=total_population=total_population,white=not_hispanic_or_latino-white_alone,black=not_hispanic_or_latino-black_or_african_american_alone,asian=not_hispanic_or_latino-asian_alone,hispanic=total_hispanic_or_latino_population,nativeAmerican=not_hispanic_or_latino-american_indian_and_alaska_native_alone,pacificIslander=not_hispanic_or_latino-native_hawaiian_and_other_pacific_islander_alone,otherRace=not_hispanic_or_latino-some_other_race_alone,twoOrMoreRaces=not_hispanic_or_latino-two_or_more_races,male=total_male_population,female=total_female_population
+                                                    }}
+                                                    {{#if: {{#external_value:total_population}} |
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Population by Race / Ethnicity
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:40%;" {{!}} Race                
+                                                    ! style="background-position: left;padding-left: 21px;width:30%;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:30%;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} '''Total Population''':
+                                                    {{!}}{{!}} {{#external_value:total_population}}
+                                                    {{!}}{{!}} 100%  
+                                                    {{!}}-
+                                                    {{!}} '''White''':
+                                                    {{!}}{{!}} {{#external_value:white}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:white}} / {{#external_value:total_population}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} <div title="Black or African American">'''Black''':</div>
+                                                    {{!}}{{!}} {{#external_value:black}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:black}} / {{#external_value:total_population}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} <div title="Asian Indian, Chinese, Filipino, Japanese, Korean, Vietnamese, Other Asian">'''Asian''':</div>
+                                                    {{!}}{{!}} {{#external_value:asian}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:asian}} / {{#external_value:total_population}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Hispanic or Latino''':
+                                                    {{!}}{{!}} {{#external_value:hispanic}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:hispanic}} / {{#external_value:total_population}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} <div title="American Indian and Alaska Native">'''Native American''':</div>
+                                                    {{!}}{{!}} {{#external_value:nativeAmerican}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:nativeAmerican}} / {{#external_value:total_population}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} <div title="Native Hawaiian, Guamanian or Chamorro, Samoan, Other Pacific Islander">'''Pacific Islander''':</div>
+                                                    {{!}}{{!}} {{#external_value:pacificIslander}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:pacificIslander}} / {{#external_value:total_population}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Other Race''':
+                                                    {{!}}{{!}} {{#external_value:otherRace}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:otherRace}} / {{#external_value:total_population}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Two or More Races''':
+                                                    {{!}}{{!}} {{#external_value:twoOrMoreRaces}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:twoOrMoreRaces}} / {{#external_value:total_population}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:PopulationDemographics |PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |WhitePopulation={{#external_value:white}}
+                                                    |BlackPopulation={{#external_value:black}}
+                                                    |AsianPopulation={{#external_value:asian}}
+                                                    |HispanicPopulation={{#external_value:hispanic}}
+                                                    |NativeAmericanPopulation={{#external_value:nativeAmerican}}
+                                                    |PacificIslanderPopulation={{#external_value:pacificIslander}}
+                                                    |OtherPopulation={{#external_value:otherRace}}
+                                                    |TwoOrMoreRacesPopulation={{#external_value:twoOrMoreRaces}}
+                                                    }} {{#subobject:White|PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |DemographicType=White Population
+                                                    |DemographicPopulation={{#external_value:white}}
+                                                    }} {{#subobject:Black |PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |DemographicType=Black Population
+                                                    |DemographicPopulation={{#external_value:black}}
+                                                    }} {{#subobject:Asian |PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |DemographicType=Asian Population
+                                                    |DemographicPopulation={{#external_value:asian}}
+                                                    }} {{#subobject:Hispanic |PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |DemographicType=Hispanic or Latino Population
+                                                    |DemographicPopulation={{#external_value:hispanic}}
+                                                    }} {{#subobject:Native |PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |DemographicType=American Indian and Alaska Native Population
+                                                    |DemographicPopulation={{#external_value:nativeAmerican}}
+                                                    }} {{#subobject:Pacific |PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |DemographicType=Pacific Islander Population
+                                                    |DemographicPopulation={{#external_value:pacificIslander}}
+                                                    }} {{#subobject:Other |PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |DemographicType=Other Race Population
+                                                    |DemographicPopulation={{#external_value:otherRace}}
+                                                    }} {{#subobject:Two |PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |DemographicType=Two Or More Races Population
+                                                    |DemographicPopulation={{#external_value:twoOrMoreRaces}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+{{#ask:[[DemographicType::+]] [[PostalCode::{{{postalCode}}}]]
+|mainlabel=-
+|? DemographicType
+|? DemographicPopulation
+|sort=DemographicType
+|order=descending
+|format=googlepie
+|height=500
+|width=500
+|legendposition=b
+|background=ececec
+|chartcolor=463E1F,AA0033,80C65A,FF9900,FFFF88,3399CC,49188F
+|margins=10,0,0,0
+|title=Population by Race
+|title_font_size=24
+|charttype=p
+}}
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    !  colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Population by Gender  
+                                                    {{!}}-           
+                                                    ! style="background-position: left;padding-left: 21px;width:40%;" {{!}} Gender                        
+                                                    ! style="background-position: left;padding-left: 21px;width:30%;" {{!}} Number 
+                                                    ! style="background-position: left;padding-left: 21px;width:30%;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}}'''Total Population''':
+                                                    {{!}}{{!}} {{#external_value:total_population}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''Female''': 
+                                                    {{!}}{{!}} {{#external_value:female}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:female}} / {{#external_value:total_population}}) round3) * 100}}%
+                                                    {{!}}-
+                                                    {{!}}'''Male''': 
+                                                    {{!}}{{!}} {{#external_value:male}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:male}} / {{#external_value:total_population}}) round3) * 100}}%
+                                                    {{!}}} {{#subobject:Male|PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |GenderType=Male
+                                                    |GenderPopulation={{#external_value:male}}
+                                                    }} {{#subobject:Female|PostalCode={{{postalCode}}}
+                                                    |Population={{#external_value:total_population}}
+                                                    |GenderType=Female
+                                                    |GenderPopulation={{#external_value:female}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+                                                    <div class="row-fluid">
+                                                        <div class="span6 module_iconboxes">
+                                                            <div class="shortcode_iconbox">
+                                                                {{{!}}
+                                                                {{!}}-
+                                                                {{!}} style="width: 30%;" {{!}} 
+                                                                <div style="margin-top:0%; width:100%" align="center"> [[File:FemalePink_95.png{{!}} link=]]</div>
+                                                                <div style="font-size: 320%; font-weight:900; color:#D8256E; margin:10% 3% 0 0; width:100%" align="center">{{#expr: (({{#external_value:female}} / {{#external_value:total_population}}) round3) * 100}}%</div>
+                                                                <div style="font-size: 160%; font-weight:900; color:#D8256E; margin:10% 3% 0 0; width:100%" align="center">Female</div>
+                                                                {{!}}}                
+                                                            </div>
+                                                        </div><!--.module_cont -->
+                                                        <div class="span6 module_iconboxes">
+                                                            <div class="shortcode_iconbox">
+                                                                {{{!}}
+                                                                {{!}}-
+                                                                {{!}} style="width:30%;" {{!}} 
+                                                                <div style="margin-top:0%; width:100%" align="center">[[File:MaleBlue_95.png{{!}} link=]] </div>
+                                                                <div style="font-size: 320%; font-weight:900; color:#4290bd; margin:10% 3% 0 0; width:100%" align="center">{{#expr: (({{#external_value:male}} / {{#external_value:total_population}}) round3) * 100}}%</div>
+                                                                <div style="font-size: 160%; font-weight:900; color:#4290bd; margin:10% 3% 0 0; width:100%" align="center">Male</div>
+                                                                {{!}}}      
+                                                            </div>
+                                                        </div><!--.module_cont -->
+                                                    </div><!-- .row-fluid -->
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{#get_db_data:
+                                                    db=mongo-prod
+                                                    |from=nyc_2010_census_by_postal_code
+                                                    |find query={"postalCode": "{{{postalCode}}}" }
+                                                    |limit=1
+                                                    |cache seconds=14515200
+                                                    |data=medianage=total_population_median_age,malemedianage=male_median_age,femalemedianage=female_median_age,popunder5=total_population_under_5,pop5to9=total_population_5_to_9,pop10to14=total_population_10_to_14,pop15to19=total_population_15_to_19,pop20to24=total_population_20_to_24,pop25to29=total_population_25_to_29,pop30to34=total_population_30_to_34,pop35to39=total_population_35_to_39,pop40to44=total_population_40_to_44,pop45to49=total_population_45_to_49,pop50to54=total_population_50_to_54,pop55to59=total_population_55_to_59,pop60to64=total_population_60_to_64,pop65to69=total_population_65_to_69,pop70to74=total_population_70_to_74,pop75to79=total_population_75_to_79,pop80to84=total_population_80_to_84,popover85=total_population_85_and_over,maleunder5=male_population_under_5,male5to9=male_population_5_to_9,male10to14=male_population_10_to_14,male15to19=male_population_15_to_19,male20to24=male_population_20_to_24,male25to29=male_population_25_to_29,male30to34=male_population_30_to_34,male35to39=male_population_35_to_39,male40to44=male_population_40_to_44,male45to49=male_population_45_to_49,male50to54=male_population_50_to_54,male55to59=male_population_55_to_59,male60to64=male_population_60_to_64,male65to69=male_population_65_to_69,male70to74=male_population_70_to_74,male75to79=male_population_75_to_79,male80to84=male_population_80_to_84,maleover85=male_population_85_and_over,femaleunder5=female_population_under_5,female5to9=female_population_5_to_9,female10to14=female_population_10_to_14,female15to19=female_population_15_to_19,female20to24=female_population_20_to_24,female25to29=female_population_25_to_29,female30to34=female_population_30_to_34,female35to39=female_population_35_to_39,female40to44=female_population_40_to_44,female45to49=female_population_45_to_49,female50to54=female_population_50_to_54,female55to59=female_population_55_to_59,female60to64=female_population_60_to_64,female65to69=female_population_65_to_69,female70to74=female_population_70_to_74,female75to79=female_population_75_to_79,female80to84=female_population_80_to_84,femaleover85=female_population_85_and_over
+                                                    }}
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    !  colspan="4" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Population by Age and Gender  
+                                                    {{!}}-           
+                                                    ! style="background-position: left;padding-left: 21px;width:34%;padding-right:0px;" {{!}} Age
+                                                    ! style="background-position: left;padding-left: 21px;width:22%;padding-right:1px;" {{!}} Total
+                                                    ! style="background-position: left;padding-left: 21px;width:22%;padding-right:1px;" {{!}} Female
+                                                    ! style="background-position: left;padding-left: 21px;width:22%;padding-right:1px;" {{!}} Male
+                                                    {{!}}-
+                                                    {{!}} <div style="white-space:nowrap;">'''Under 5 years''':</div>
+                                                    {{!}}{{!}} {{#external_value:popunder5}}
+                                                    {{!}}{{!}} {{#external_value:femaleunder5}}
+                                                    {{!}}{{!}} {{#external_value:maleunder5}}
+                                                    {{!}}-
+                                                    {{!}} '''05 to 09 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop5to9}}
+                                                    {{!}}{{!}} {{#external_value:female5to9}}
+                                                    {{!}}{{!}} {{#external_value:male5to9}}
+                                                    {{!}}-
+                                                    {{!}} '''10 to 14 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop10to14}}
+                                                    {{!}}{{!}} {{#external_value:female10to14}}
+                                                    {{!}}{{!}} {{#external_value:male10to14}}
+                                                    {{!}}-
+                                                    {{!}} '''15 to 19 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop15to19}}
+                                                    {{!}}{{!}} {{#external_value:female15to19}}
+                                                    {{!}}{{!}} {{#external_value:male15to19}}
+                                                    {{!}}-
+                                                    {{!}} '''20 to 24 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop20to24}}
+                                                    {{!}}{{!}} {{#external_value:female20to24}}
+                                                    {{!}}{{!}} {{#external_value:male20to24}}
+                                                    {{!}}-
+                                                    {{!}} '''25 to 29 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop25to29}}
+                                                    {{!}}{{!}} {{#external_value:female25to29}}
+                                                    {{!}}{{!}} {{#external_value:male25to29}}
+                                                    {{!}}-
+                                                    {{!}} '''30 to 34 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop30to34}}
+                                                    {{!}}{{!}} {{#external_value:female30to34}}
+                                                    {{!}}{{!}} {{#external_value:male30to34}}
+                                                    {{!}}-
+                                                    {{!}} '''35 to 39 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop35to39}}
+                                                    {{!}}{{!}} {{#external_value:female35to39}}
+                                                    {{!}}{{!}} {{#external_value:male35to39}}
+                                                    {{!}}-
+                                                    {{!}} '''40 to 44 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop40to44}}
+                                                    {{!}}{{!}} {{#external_value:female40to44}}
+                                                    {{!}}{{!}} {{#external_value:male40to44}}
+                                                    {{!}}-
+                                                    {{!}} '''45 to 49 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop45to49}}
+                                                    {{!}}{{!}} {{#external_value:female45to49}}
+                                                    {{!}}{{!}} {{#external_value:male45to49}}
+                                                    {{!}}-
+                                                    {{!}} '''50 to 54 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop50to54}}
+                                                    {{!}}{{!}} {{#external_value:female50to54}}
+                                                    {{!}}{{!}} {{#external_value:male50to54}}
+                                                    {{!}}-
+                                                    {{!}} '''55 to 59 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop55to59}}
+                                                    {{!}}{{!}} {{#external_value:female55to59}}
+                                                    {{!}}{{!}} {{#external_value:male55to59}}
+                                                    {{!}}-
+                                                    {{!}} '''60 to 64 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop60to64}}
+                                                    {{!}}{{!}} {{#external_value:female60to64}}
+                                                    {{!}}{{!}} {{#external_value:male60to64}}
+                                                    {{!}}-
+                                                    {{!}} '''65 to 69 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop65to69}}
+                                                    {{!}}{{!}} {{#external_value:female65to69}}
+                                                    {{!}}{{!}} {{#external_value:male65to69}}
+                                                    {{!}}-
+                                                    {{!}} '''70 to 74 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop70to74}}
+                                                    {{!}}{{!}} {{#external_value:female70to74}}
+                                                    {{!}}{{!}} {{#external_value:male70to74}}
+                                                    {{!}}-
+                                                    {{!}} '''75 to 79 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop75to79}}
+                                                    {{!}}{{!}} {{#external_value:female75to79}}
+                                                    {{!}}{{!}} {{#external_value:male75to79}}
+                                                    {{!}}-
+                                                    {{!}} '''80 to 84 years''': 
+                                                    {{!}}{{!}} {{#external_value:pop80to84}}
+                                                    {{!}}{{!}} {{#external_value:female80to84}}
+                                                    {{!}}{{!}} {{#external_value:male80to84}}
+                                                    {{!}}-
+                                                    {{!}} '''Over 85 years''': 
+                                                    {{!}}{{!}} {{#external_value:popover85}}
+                                                    {{!}}{{!}} {{#external_value:femaleover85}}
+                                                    {{!}}{{!}} {{#external_value:maleover85}}
+                                                    {{!}}} {{#subobject: FemaleUnder5years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=00 to 04 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:femaleunder5}}
+                                                    }} {{#subobject: MaleUnder5years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=00 to 04 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:maleunder5}}
+                                                    }} {{#subobject: Female5to9years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=05 to 09 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female5to9}}
+                                                    }} {{#subobject: Male5to9years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=05 to 09 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male5to9}}
+                                                    }} {{#subobject: Female10to14years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=10 to 14 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female10to14}}
+                                                    }} {{#subobject: Male10to14years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=10 to 14 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male10to14}}
+                                                    }} {{#subobject: Female15to19years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=15 to 19 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female15to19}}
+                                                    }} {{#subobject: Male15to19years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=15 to 19 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male15to19}}
+                                                    }} {{#subobject: Female20to24years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=20 to 24 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female20to24}}
+                                                    }} {{#subobject: Male20to24years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=20 to 24 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male20to24}}
+                                                    }} {{#subobject: Female25to29years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=25 to 29 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female25to29}}
+                                                    }} {{#subobject: Male25to29years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=25 to 29 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male25to29}}
+                                                    }} {{#subobject: Female30to34years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=30 to 34 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female30to34}}
+                                                    }} {{#subobject: Male30to34years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=30 to 34 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male30to34}}
+                                                    }} {{#subobject: Female35to39years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=35 to 39 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female35to39}}
+                                                    }} {{#subobject: Male35to39years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=35 to 39 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male35to39}}
+                                                    }} {{#subobject: Female40to44years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=40 to 44 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female40to44}}
+                                                    }} {{#subobject: Male40to44years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=40 to 44 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male40to44}}
+                                                    }} {{#subobject: Female45to49years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=45 to 49 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female45to49}}
+                                                    }} {{#subobject: Male45to49years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=45 to 49 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male45to49}}
+                                                    }} {{#subobject: Female50to54years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=50 to 54 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female50to54}}
+                                                    }} {{#subobject: Male50to54years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=50 to 54 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male50to54}}
+                                                    }} {{#subobject: Female55to59years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=55 to 59 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female55to59}}
+                                                    }} {{#subobject: Male55to59years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=55 to 59 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male55to59}}
+                                                    }} {{#subobject: Female60to64years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=60 to 64 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female60to64}}
+                                                    }} {{#subobject: Male60to64years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=60 to 64 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male60to64}}
+                                                    }} {{#subobject: Female65to69years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=65 to 69 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female65to69}}
+                                                    }} {{#subobject: Male65to69years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=65 to 69 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male65to69}}
+                                                    }} {{#subobject: Female70to74years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=70 to 74 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female70to74}}
+                                                    }} {{#subobject: Male70to74years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=70 to 74 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male70to74}}
+                                                    }} {{#subobject: Female75to79years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=75 to 79 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female75to79}}
+                                                    }} {{#subobject: Male75to79years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=75 to 79 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male75to79}}
+                                                    }} {{#subobject: Female80to84years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=80 to 84 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:female80to84}}
+                                                    }} {{#subobject: Male80to84years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=80 to 84 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:male80to84}}
+                                                    }} {{#subobject: FemaleOver85years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=Over 85 years
+                                                    |GenderType=Female
+                                                    |AgePopulation={{#external_value:femaleover85}}
+                                                    }} {{#subobject: MaleOver85years |PostalCode={{{postalCode}}}
+                                                    |AgeGroup=Over 85 years
+                                                    |GenderType=Male
+                                                    |AgePopulation={{#external_value:maleover85}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+                                                    <div style="text-align: center;">'''Median Age: {{#external_value:medianage}}'''</div>
+                                                    <div class="row-fluid;" style="margin-top:1%;">
+                                                        <div class="span6">
+                                                            <div style="text-align: center;">'''Female Median Age: {{#external_value:femalemedianage}}'''</div>
+{{#ask:[[AgeGroup::+]] [[GenderType::Female]] [[PostalCode::{{{postalCode}}}]] 
+|mainlabel=-
+|? AgeGroup
+|? AgePopulation
+|sort=AgeGroup
+|order=descending
+|format=googlebar
+|legendposition=t
+|background=ECECEC
+|chartdirection=bhs
+|legend= Female Population
+|bargroupspacing=0
+|barwidth=30
+|barspacing=16
+|barcolor=D8256E
+|chartgrid=20,0,20,4
+|axisposition=y
+|axislabelfontsize=13
+}}
+                                                        </div>
+                                                        <div class="span6">
+                                                            <div style="text-align: center;">'''Male Median Age: {{#external_value:malemedianage}}'''</div>
+{{#ask:[[AgeGroup::+]] [[GenderType::Male]] [[PostalCode::{{{postalCode}}}]] 
+|mainlabel=-
+|? AgeGroup
+|? AgePopulation
+|sort=AgeGroup
+|order=descending
+|format=googlebar
+|legendposition=t
+|background=ECECEC
+|chartdirection=bhs
+|legend=Male Population
+|bargroupspacing=0
+|barwidth=30
+|barspacing=16
+|barcolor=4290BD
+|chartgrid=20,0,20,4
+|axisposition=y
+|axislabelfontsize=13
+}}
+                                                        </div>
+                                                    </div>
+                                                    |<div style="padding-left: 21px;"><p>'''There are no population demographics for this area.'''</p></div>}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body3 it3">
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{#get_db_data:
+                                                    db=mongo-prod
+                                                    |from=nyc_2010_census_by_postal_code
+                                                    |find query={"postalCode": "{{{postalCode}}}" }
+                                                    |limit=1
+                                                    |cache seconds=14515200
+                                                    |data=total_households=total_households,husbandwife=husband-wife_family,malehouseholder=male_householder_no_wife,femalehouseholder=female_householder_no_husband,nonfamily=total_nonfamily_households,livingalone=householder_living_alone
+                                                    }}
+                                                    {{#if: {{#external_value:total_households}} |
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Household Relationships
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Relation
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:3px;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} '''Total Households''':
+                                                    {{!}}{{!}} {{#external_value:total_households}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''Husband-Wife Households''':
+                                                    {{!}}{{!}} {{#external_value:husbandwife}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:husbandwife}} / {{#external_value:total_households}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''One Parent Households''':
+                                                    {{!}}{{!}} {{#expr: {{#external_value:malehouseholder}} + {{#external_value:femalehouseholder}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{#external_value:malehouseholder}} + {{#external_value:femalehouseholder}}) / {{#external_value:total_households}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Nonfamily Households''':
+                                                    {{!}}{{!}} {{#expr: {{#external_value:nonfamily}} - {{#external_value:livingalone}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{#external_value:nonfamily}} - {{#external_value:livingalone}}) / {{#external_value:total_households}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Single Households''':
+                                                    {{!}}{{!}} {{#external_value:livingalone}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:livingalone}} / {{#external_value:total_households}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:husbandwife|PostalCode={{{postalCode}}}
+                                                    |TotalHouseholds={{#external_value:total_households}}
+                                                    |HouseholdType=Husband-Wife Households
+                                                    |HouseholdNumber={{#external_value:husbandwife}}
+                                                    }} {{#subobject:oneparent|PostalCode={{{postalCode}}}
+                                                    |TotalHouseholds={{#external_value:total_households}}
+                                                    |HouseholdType=One Parent Households
+                                                    |HouseholdNumber={{#expr: {{#external_value:malehouseholder}} + {{#external_value:femalehouseholder}} }}
+                                                    }} {{#subobject:nonfamily|PostalCode={{{postalCode}}}
+                                                    |TotalHouseholds={{#external_value:total_households}}
+                                                    |HouseholdType=Nonfamily Households
+                                                    |HouseholdNumber={{#expr: {{#external_value:nonfamily}} - {{#external_value:livingalone}} }}
+                                                    }} {{#subobject:livingalone|PostalCode={{{postalCode}}}
+                                                    |TotalHouseholds={{#external_value:total_households}}
+                                                    |HouseholdType=Single Households
+                                                    |HouseholdNumber={{#external_value:livingalone}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+{{#ask:[[HouseholdType::+]] [[PostalCode::{{{postalCode}}}]]
+|mainlabel=-
+|? HouseholdType
+|? HouseholdNumber
+|sort=HouseholdType
+|order=descending
+|format=googlepie
+|height=400
+|width=400
+|legendposition=b
+|background=ececec
+|chartcolor=463E1F,AA0033,80C65A,FF9900,FFFF88,3399CC,49188F
+|margins=10,0,0,0
+|title=Household Relationships
+|title_font_size=24
+|charttype=p
+}}
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{#get_db_data:
+                                                    db=mongo-prod
+                                                    |from=nyc_2010_census_by_postal_code
+                                                    |find query={"postalCode": "{{{postalCode}}}" }
+                                                    |limit=1
+                                                    |cache seconds=14515200
+                                                    |data=totalhousingunits=total_housing_units,occupiedhousing=occupied_housing_units,vacanthousing=vacant_housing_units,totaloccupiedhousing=total_occupied_housing_units,owneroccupiedhousing=owner-occupied_housing_units,renteroccupiedhousing=renter-occupied_housing_units
+                                                    }}
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Housing Occupancy
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Type
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:3px;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} ''' Total Housing Units''':
+                                                    {{!}}{{!}} {{#external_value:totalhousingunits}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''Occupied Housing Units''':
+                                                    {{!}}{{!}} {{#external_value:occupiedhousing}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:occupiedhousing}} / {{#external_value:totalhousingunits}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} [[Resource/RealEstate/{{{postalCode}}} | '''Vacant Housing Units''']]:
+                                                    {{!}}{{!}} {{#external_value:vacanthousing}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:vacanthousing}} / {{#external_value:totalhousingunits}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:occupiedhousing|PostalCode={{{postalCode}}}
+                                                    |TotalHousingUnits={{#external_value:total_households}}
+                                                    |HousingType=Occupied Housing
+                                                    |HousingNumber={{#external_value:occupiedhousing}}
+                                                    }} {{#subobject:vacanthousing|PostalCode={{{postalCode}}}
+                                                    |TotalHousingUnits={{#external_value:total_households}}
+                                                    |HousingType=Vacant Housing
+                                                    |HousingNumber={{#external_value:vacanthousing}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+{{#ask:[[HousingType::+]] [[PostalCode::{{{postalCode}}}]]
+|mainlabel=-
+|? HousingType
+|? HousingNumber
+|sort=HousingType
+|order=descending
+|format=googlebar
+|legendposition=t
+|width=400
+|background=ECECEC
+|chartdirection=bhs
+|legend=Housing Occupancy
+|bargroupspacing=0
+|barwidth=36
+|barspacing=16
+|barcolor=008000
+|chartgrid=20,0,20,4
+|axisposition=y
+|axislabelfontsize=13
+}}
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Housing Tenure
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Type
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:3px;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} ''' Total Occupied Housing''':
+                                                    {{!}}{{!}} {{#external_value:totaloccupiedhousing}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''Owner Occupied''':
+                                                    {{!}}{{!}} {{#external_value:owneroccupiedhousing}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:owneroccupiedhousing}} / {{#external_value:totaloccupiedhousing}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Renter Occupied''':
+                                                    {{!}}{{!}} {{#external_value:renteroccupiedhousing}}
+                                                    {{!}}{{!}} {{#expr: (({{#external_value:renteroccupiedhousing}} / {{#external_value:totaloccupiedhousing}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:owneroccupiedhousing|PostalCode={{{postalCode}}}
+                                                    |TotalOccupiedHousing={{#external_value:totaloccupiedhousing}}
+                                                    |OccupiedHousingType=Owner Occupied
+                                                    |OccupiedHousingNumber={{#external_value:owneroccupiedhousing}}
+                                                    }} {{#subobject:renteroccupiedhousing|PostalCode={{{postalCode}}}
+                                                    |TotalOccupiedHousing={{#external_value:totaloccupiedhousing}}
+                                                    |OccupiedHousingType=Renter Occupied
+                                                    |OccupiedHousingNumber={{#external_value:renteroccupiedhousing}}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+{{#ask:[[OccupiedHousingType::+]] [[PostalCode::{{{postalCode}}}]]
+|mainlabel=-
+|? OccupiedHousingType
+|? OccupiedHousingNumber
+|sort=OccupiedHousingType
+|order=descending
+|format=googlebar
+|legendposition=t
+|width=400
+|background=ECECEC
+|chartdirection=bhs
+|legend=Housing Tenure
+|bargroupspacing=0
+|barwidth=36
+|barspacing=16
+|barcolor=008000
+|chartgrid=20,0,20,4
+|axisposition=y
+|axislabelfontsize=13
+}}
+                                                    |<div style="padding-left: 21px;"><p>'''There are no housing demographics for this area.'''</p></div>}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body4 it4">
+                                            <div class="span12">
+                                                {{#get_db_data:db=mongo-prod
+                                                |from=nyc_311_aggregations_merged
+                                                |find query={"postalCode": "{{{postalCode}}}" }
+                                                |order by=total2013 DESC         
+                                                |limit=10
+                                                |data=complaint=complaintType,total13=total2013,total12=total2012,total11=total2011,total10=total2010
+                                                }}
+                                                {| class="table table-striped sortable" style="margin-top:0cm"
+                                                |-
+                                                !  class="unsortable" style="background-color:#999999; color:#FFFFFF;background-position: left;padding-left: 21px;" | Top 311 Complaints
+                                                !  class="unsortable" style="background-color:#999999" |
+                                                ! colspan="3"  class="unsortable" style="background-color:#999999; color:#FFFFFF;" | Number of Complaints by Year
+                                                |-
+                                                ! style="background-position: left;padding-left: 21px;width:28%;" | Complaint Type
+                                                ! style="background-position: left;padding-left: 21px;width:18%;" | 2013
+                                                ! style="background-position: left;padding-left: 21px;width:18%;" | 2012 
+                                                ! style="background-position: left;padding-left: 21px;width:18%;" | 2011 
+                                                ! style="background-position: left;padding-left: 21px;width:18%;" | 2010 
+                                                |-{{#for_external_table:<nowiki/>
+                                                {{!}}-
+                                                {{!}} {{{complaint}}}
+                                                {{!}} {{{total13}}}
+                                                {{!}} {{{total12}}}
+                                                {{!}} {{{total11}}}
+                                                {{!}} {{{total10}}}
+                                                <!--{{#store_external_table:is ComplaintAggregation in
+                                                |PostalCode={{{postalCode}}}
+                                                |Complaint={{{complaint}}}
+                                                |TotalComplaint2013={{{total13}}}
+                                                |TotalComplaint2012={{{total12}}}
+                                                |TotalComplaint2011={{{total11}}}
+                                                |TotalComplaint2010={{{total10}}}
+                                                }}-->
+                                                }}
+                                                |}
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body5 it5">
+                                            <div class="span12">
+                                                {{#get_db_data:db=mongo-prod
+                                                |from=nyc_crime_data_by_precinct_aggregations
+                                                |find query={"precinct": "{{#arrayprint:varprecinct|0}}" }
+                                                |order by=total2013 DESC
+                                                |data=crime=crimeType,crimetotal13=total2013,crimetotal12=total2012,crimetotal11=total2011,crimetotal10=total2010
+                                                }}
+                                                {| class="table table-striped sortable" style="margin-top:0cm"
+                                                |-
+                                                ! colspan="2" class="unsortable" style="background-color:#999999; color:#FFFFFF;background-position: left;padding-left: 21px;" | Crime Statistics for Police Precinct # {{#arrayprint:varprecinct|0}}
+                                                ! colspan="3"  class="unsortable" style="background-color:#999999; color:#FFFFFF;" | Number of Felonies by Year
+                                                |-
+                                                ! style="background-position: left;padding-left: 21px;width:28%;" | Crime Type
+                                                ! style="background-position: left;padding-left: 21px;width:18%;" | 2013
+                                                ! style="background-position: left;padding-left: 21px;width:18%;" | 2012 
+                                                ! style="background-position: left;padding-left: 21px;width:18%;" | 2011 
+                                                ! style="background-position: left;padding-left: 21px;width:18%;" | 2010 
+                                                |-{{#for_external_table:<nowiki/>
+                                                {{!}}-
+                                                {{!}} {{{crime}}}
+                                                {{!}} {{{crimetotal13}}}
+                                                {{!}} {{{crimetotal12}}} 
+                                                {{!}} {{{crimetotal11}}}
+                                                {{!}} {{{crimetotal10}}}
+                                                <!--{{#store_external_table:is CrimeAggregation in
+                                                |PostalCode={{{postalCode}}}
+                                                |Complaint={{{crime}}}
+                                                |TotalCrime2013={{{crimetotal13}}}
+                                                |TotalCrime2012={{{crimetotal12}}}
+                                                |TotalCrime2011={{{crimetotal11}}}
+                                                |TotalCrime2010={{{crimetotal10}}}
+                                                }}-->
+                                                }}
+                                                |}
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body6 it6">
+                                            {| class="table table-striped"
+                                            ! align="left" | Dataset
+                                            ! Online API
+                                            |-
+                                            | [[DatasetName::NYC Demographics by Zip Code| ]]  [http://nycdata.pediacities.com/dataset/nyc-demographics-by-zip-code NYC Demographics by Zip Code]
+                                            | [http://nycdata.pediacities.com/dataset/nyc-demographics-by-zip-code/resource/20ce1d4d-8ec1-438e-a970-eb9f81a4e3e3 API Preview]
+                                            |-
+                                            | [[DatasetName::NYC Crime Data by Precinct| ]] [http://nycdata.pediacities.com/dataset/nyc-crime-data-by-precinct NYC Crime Data by Precinct]
+                                            | [http://nycdata.pediacities.com/dataset/nyc-crime-data-by-precinct/resource/655d3999-ce55-47a5-8ece-78c74bbd0251 API Preview]
+                                            |-
+                                            | [[DatasetName::311 Service Requests 2013 - Aggregations| ]] [http://nycdata.pediacities.com/dataset/311-service-requests-2013-aggregations 311 Complaints in 2013]
+                                            | [http://nycdata.pediacities.com/dataset/311-service-requests-2013-aggregations/resource/a0acaaa5-d727-404a-94b8-4f809f3b1709 API Preview]
+                                            |-
+                                            | [[DatasetName::311 Service Requests 2012 - Aggregations| ]]  [http://nycdata.pediacities.com/dataset/311-service-requests-2012-aggregations 311 Complaints in 2012]
+                                            | [http://nycdata.pediacities.com/dataset/311-service-requests-2012-aggregations/resource/99b59a33-da0b-4641-9205-1b7f5085276c API Preview]
+                                            |-
+                                            | [[DatasetName::311 Service Requests 2011 - Aggregations| ]]  [http://nycdata.pediacities.com/dataset/311-service-requests-2011-aggregations 311 Complaints in 2011]
+                                            | [http://nycdata.pediacities.com/dataset/311-service-requests-2011-aggregations/resource/44986d07-462d-42d1-8a52-b08af9635bbf API Preview]
+                                            |-
+                                            | [[DatasetName::311 Service Requests 2010 - Aggregations| ]]  [http://nycdata.pediacities.com/dataset/311-service-requests-2010-aggregations 311 Complaints in 2010]
+                                            | [http://nycdata.pediacities.com/dataset/311-service-requests-2010-aggregations/resource/3c3a3c0d-14c8-4ff2-b603-68c8dcf88e8e API Preview]
+                                            |}                     	 
+                                        </div>
+                                    </div><!-- .all_body_cont -->
+                                </div><!-- .shortcode_tabs -->                       	 
+                            </div><!-- .module_cont -->
+                        </div><!-- .row-fluid -->
+                    </div><!-- .contentarea -->
+                </div>
+                <div class="clear"><!-- ClearFix --></div>
+            </div><!-- .fl-container -->
+            <div class="right-sidebar-block span3">
+{{PostalCodeSideBar
+| postalCode = {{{postalCode|}}}
+| latitude = {{{latitude}}}
+| longitude = {{{longitude}}}
+}}
+            </div><!-- .right-sidebar -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div>
+    </div><!-- .container -->
+</div><!-- .content_wrapper -->
+[[Category:CommunityStats]] 
+{{#seo:
+|title=Community Stats for {{{postalCode}}}  ZIP Code
+|titlemode=replace
+|description=Community Stats for {{{postalCode}}} ZIP Code has the information about Population Demographics, 311 Complaints and Crime Stats.
+}}
+</includeonly>
