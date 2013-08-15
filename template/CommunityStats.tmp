@@ -547,6 +547,7 @@ __NOTOC__ __NOEDITSECTION__<includeonly>
 |chartgrid=20,0,20,4
 |axisposition=y
 |axislabelfontsize=13
+|rangeend=3000
 }}
                                                         </div>
                                                         <div class="span6">
@@ -569,6 +570,7 @@ __NOTOC__ __NOEDITSECTION__<includeonly>
 |chartgrid=20,0,20,4
 |axisposition=y
 |axislabelfontsize=13
+|rangeend=3000
 }}
                                                         </div>
                                                     </div>
@@ -710,6 +712,7 @@ __NOTOC__ __NOEDITSECTION__<includeonly>
 |chartgrid=20,0,20,4
 |axisposition=y
 |axislabelfontsize=13
+|rangeend=35000
 }}
                                                 </div>
                                             </div>
@@ -763,6 +766,7 @@ __NOTOC__ __NOEDITSECTION__<includeonly>
 |chartgrid=20,0,20,4
 |axisposition=y
 |axislabelfontsize=13
+|rangeend=35000
 }}
                                                     |<div style="padding-left: 21px;"><p>'''There are no housing demographics for this area.'''</p></div>}}
                                                 </div>

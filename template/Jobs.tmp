@@ -1,0 +1,145 @@
+__NOTOC__ __NOEDITSECTION__<includeonly>
+<div class="">
+    <div class="container">
+        <div class="content_block right-sidebar">
+            <div class="fl-container span9">
+                <div class="">
+                    <div class="contentarea">
+                        <div class="row-fluid">
+                            <div class="span12">
+=Jobs in  [[Resource/PostalCode/{{{postalCode}}} | {{{postalCode}}}]] ZIP Code NYC=
+                                <div class="">
+{{#get_db_data:db=mongo-prod
+|from=Zips_Simple
+|data=geometry=geometry
+|find query={"properties.postalCode": "{{{postalCode|10001}}}" }
+|limit=1}}
+{{#display_map: 
+|polygons={{#external_value:geometry}}
+}}{{#clear_external_data:}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="shortcode_tabs">
+                                    <div class="all_heads_cont">
+                                        <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">City of NY Jobs</div>
+                                        <div class="shortcode_tab_item_title it2 head2" data-open="body2">Indeed Jobs</div>
+                                        <div class="shortcode_tab_item_title it3 head3" data-open="body3">Hiring Tech Companies</div>
+                                        <div class="shortcode_tab_item_title it4 head4" data-open="body4">Job Centers</div>
+                                        <div class="shortcode_tab_item_title it5 head5" data-open="body5">Dataset</div>
+                                    </div>
+                                    <div class="all_body_cont">
+                                        <div class="shortcode_tab_item_body body1 it1">
+                                            <div class="span12">
+                                                {{#get_web_data:
+                                                url=http://data.cityofnewyork.us/resource/kpav-sd4t.json?$$app_token=SOCRATA_NYC&$where=agency!='Agency'&$order=posting_date%20desc&$limit=30
+                                                |format=JSON
+                                                |cache seconds=20160
+                                                |data=businessTitle=business_title,agency=agency,salaryRangeFrom=salary_range_from,salaryRangeTo=salary_range_to,workLocation=work_location,postingDate=posting_date}}
+                                                {| class="table table-striped" style="margin-top:0.2cm"
+                                                {{#for_external_table:<nowiki/>
+                                                {{!}}-
+                                                {{!}}'''Job Title''':  [http://www.nyc.gov/html/careers/html/search/search.shtml {{{businessTitle}}}]<br/> '''Agency''': {{{agency}}} <br/> '''Location''': {{{workLocation}}} <br/> '''Posting Date''': {{#replace:{{{postingDate}}}| 00:00:00}}<br/> '''Salary''':  ${{{salaryRangeFrom}}} - ${{{salaryRangeTo}}} <br/>
+                                                }}
+                                                |- 
+                                                |   style="text-align:center;" | [http://www.nyc.gov/html/careers/html/search/search.shtml Find More City of NY Jobs...] 
+                                                |}
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body2 it2">
+                                            <div class="span12">
+                                                {{#get_web_data:
+                                                url=http://api.indeed.com/ads/apisearch?publisher=INDEED&v=2&format=json&l={{{postalCode}}}&sort=date&radius=0&limit=10
+                                                |format=JSON
+                                                |cache seconds=20160
+                                                |data=JobTitle=jobtitle,JobDate=date,JobUrl=url,JobDescription=snippet
+                                                }}
+                                                {| class="table table-striped" style="margin-top:0.2cm"
+                                                {{#for_external_table:<nowiki/>
+                                                {{!}}-
+                                                {{!}}'''Job Title''': [{{{JobUrl}}} {{{JobTitle}}} ] <br/>'''Post Date''':{{{JobDate}}}<br/>'''Description''': {{{JobDescription}}} [{{{JobUrl}}} more...] <br/>
+                                                }} 
+                                                |}
+                                                <div style="text-align:center;"> retrieved from [[File:indeedLogo.png|link=http://www.indeed.com/jobs?&v=2&format=json&l={{{postalCode}}}&sort=date&radius=0|indeed]]</div>
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body3 it3">
+                                            <div class="span12">
+                                                {{#get_db_data:db=mongo-prod
+                                                |from=mapped_in_ny_companies
+                                                |find query={"postalCode": "{{{postalCode}}}", "Hiring":"true"}        
+                                                |order by=Hiring DESC  
+                                                |limit=20
+                                                |data=compName=legalName,compUrl=url,jobsUrl=Jobs URL,compId=@id,compStreetAddress=streetAddress,compAddressLocality=addressLocality}}
+                                                {| class="table table-striped" style="margin-top:0.2cm"
+                                                {{#for_external_table:<nowiki/>
+                                                {{!}}-
+                                                {{!}}'''Company Name''': [{{{compId}}} {{{compName}}}]<br/>'''Address''':  {{{compStreetAddress}}}, {{{compAddressLocality}}}  {{{postalCode}}} <br/>  '''Web Page''':  [{{{compUrl}}} {{{compUrl}}}] <br/>{{#if: {{{jobsUrl}}} | [{{{jobsUrl}}} Hiring!!! Apply for Job...] <br/> | }}
+                                                }} 
+                                                |}
+                                            </div>
+                                        </div>
+                                        <div class="shortcode_tab_item_body body4 it4">
+                                            <div class="span12">
+                                                {{#get_db_data:db=mongo-prod
+                                                |from=directory_of_job_centers
+                                                |find query={"postalCode": "{{{postalCode}}}" }                                                              
+                                                |limit=10
+                                                |data=jobCenterName=Facility Name,id=@id,streetAddress=streetAddress,borough=borough,addressRegion=addressRegion}}
+                                                {| class="table table-striped" style="margin-top:0.2cm"
+                                                |-
+                                                ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:jobCenterName}} |Center Name | No job centers in this area }}
+                                                ! style="background-position: left;padding-left: 21px;"  | {{#if: {{#external_value:jobCenterName}} | Address | }}
+                                                |-
+                                                {{#for_external_table:<nowiki/>
+                                                {{!}}-
+                                                {{!}} [{{{id}}} {{{jobCenterName}}}] 
+                                                {{!}} {{{streetAddress}}}, {{{borough}}}, {{{addressRegion}}}  {{{postalCode}}}
+                                                }} 
+                                                |}
+                                            </div>
+                                            <div class="shortcode_tab_item_body body5 it5">
+                                                {| class="table table-striped"
+                                                ! align="left" | Dataset
+                                                ! Online API
+                                                |-
+                                                | [[DatasetName::Mapped In NY Companies| ]] [http://nycdata.pediacities.com/dataset/mapped-in-ny-companies-1 Mapped In NY Companies]
+                                                | [http://nycdata.pediacities.com/dataset/mapped-in-ny-companies-1/resource/4c08f63f-d225-4c46-8bd2-0348422cc279 API Preview]
+                                                |-
+                                                | [[DatasetName::Directory Of Job Centers| ]] [http://nycdata.pediacities.com/dataset/directory-of-job-centers Directory Of Job Centers]
+                                                | [http://nycdata.pediacities.com/dataset/directory-of-job-centers/resource/46842738-2018-4339-aa88-4a219f03dfb2 API Preview]
+                                                |-
+                                                | colspan=2 | 
+                                                <div style="text-align:center;">  External:<br/>  [[File:nycgov.png|link=http://www.nyc.gov/html/careers/html/search/search.shtml]]    [[File:socrata.png|link=https://data.cityofnewyork.us/Business/NYC-Jobs/kpav-sd4t]] [[File:indeedLogo.png|link=http://www.indeed.com/jobs?&v=2&format=json&l={{{postalCode}}}&sort=date&radius=0|indeed]]</div>
+                                                |}
+                                            </div>
+                                        </div>
+                                    </div><!-- .all_body_cont -->
+                                </div><!-- .shortcode_tabs -->                       	 
+                            </div><!-- .module_cont -->
+                        </div><!-- .row-fluid -->
+                    </div><!-- .contentarea -->
+                </div>
+                <div class="clear"><!-- ClearFix --></div>
+            </div><!-- .fl-container -->
+            <div class="right-sidebar-block span3">
+                {{PostalCodeSideBar
+                | postalCode = {{{postalCode|}}}
+                | latitude={{{latitude}}}
+                | longitude={{{longitude}}}
+                }}
+            </div><!-- .right-sidebar -->
+            <div class="clear"><!-- ClearFix --></div>
+        </div>
+    </div><!-- .container -->
+</div><!--.content_wrapper -->
+[[Category:Jobs]] 
+{{#seo:
+|title=Jobs in {{{postalCode}}} ZIP Code NYC
+|titlemode=replace
+|description=Find Job Centers and Jobs available in {{{postalCode}}} ZIP Code in {{#replace:{{{addressLocality}}}|New York|Manhattan}}, New York City.
+}}
+</includeonly>
+
