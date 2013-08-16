@@ -1,4 +1,4 @@
-__NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_groups}}}}} {{#arraydefine:postalCodeArray|{{{postalCode}}}}}
+__NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_groups}}}}} {{#arraydefine:postalCodeArray|{{{postal_codes}}}}}
 <div class="">
     <div class="container">
         <div class="content_block right-sidebar">
@@ -8,8 +8,8 @@ __NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_
                         <div class="row-fluid">
                             <div class="span12">
 =Community Stats for [[Resource/Neighborhood/{{{neighborhood}}} | {{{neighborhood}}}]]=
-In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code{{#ifeq: {{#arraysize:postalCodeArray}}|1| |s}} {{#arrayprint:postalCodeArray| |@@@@|[[Resource/PostalCode/{{#ifeq:@@@@|83|00083|@@@@}}|@@@@]]|print=pretty}} {{NeighborhoodMap
-|neighborhood={{{neighborhood|}}}
+{{#if: {{{borough|}}} | In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code{{#ifeq: {{#arraysize:postalCodeArray}}|1| |s}} {{#arrayprint:postalCodeArray| |@@@@|[[Resource/PostalCode/@@@@|@@@@]]|print=pretty}} |}} {{NeighborhoodMap
+|neighborhood={{{neighborhood}}}
 |zoom=-1
 |height=400
 }} {{#get_db_data:db=mongo-prod
@@ -595,7 +595,7 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
 |chartgrid=20,0,20,4
 |axisposition=y
 |axislabelfontsize=13
-|rangeend=30000
+|rangeend=25000
 }}
                                                 </div>
                                             </div>
@@ -657,7 +657,7 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
 |chartgrid=20,0,20,4
 |axisposition=y
 |axislabelfontsize=13
-|rangeend=30000
+|rangeend=25000
 }}
                                                 </div>
                                             </div>
@@ -811,7 +811,7 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
 {{NeighborhoodSideBar
 | neighborhood = {{{neighborhood|}}}
 | borough = {{{borough|}}}
-| postalCode = {{{postalCode|}}}
+| postalCode = {{{postal_codes|}}}
 | latitude = {{{latitude|}}}
 | longitude = {{{longitude|}}}
 | neighborhoodEntityTitle = {{{entityTitle|}}}

@@ -1,4 +1,4 @@
-__NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:postalCodeArray|{{{postalCode}}}}}{{#arraydefine:communityDistrictArray|{{{communityDistrict}}}}}{{#arraydefine:precinctArray|{{{precinct}}}}}{{#arraydefine:councilDistrictArray|{{{councilDistrict}}}}}{{#arraydefine:assemblyDistrictArray|{{{assemblyDistrict}}}}}{{#arraydefine:stateSenateDistrictArray|{{{stateSenateDistrict}}}}}{{#arraydefine:congressionalDistrictArray|{{{congressionalDistrict}}}}}
+__NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:postalCodeArray|{{{postal_codes}}}}}{{#arraydefine:communityDistrictArray|{{{communityDistrict}}}}}{{#arraydefine:precinctArray|{{{precinct}}}}}{{#arraydefine:councilDistrictArray|{{{councilDistrict}}}}}{{#arraydefine:assemblyDistrictArray|{{{assemblyDistrict}}}}}{{#arraydefine:stateSenateDistrictArray|{{{stateSenateDistrict}}}}}{{#arraydefine:congressionalDistrictArray|{{{congressionalDistrict}}}}}
 <div class="container">
     <div class="content_block right-sidebar">
         <div class="fl-container span9">
@@ -6,7 +6,7 @@ __NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:postalCodeArray|{{{postal
                 <div class="row-fluid">
                     <div class="span12">
 =[[Neighborhood::{{{neighborhood}}}|]]{{{neighborhood}}} is a Neighborhood in NYC=
-In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code{{#ifeq: {{#arraysize:postalCodeArray}}|1| |s}} {{#arrayprint:postalCodeArray| |@@@@|[[Resource/PostalCode/{{#ifeq:@@@@|83|00083|@@@@}}|@@@@]]|print=pretty}} {{NeighborhoodMap
+In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code{{#ifeq: {{#arraysize:postalCodeArray}}|1| |s}} {{#arrayprint:postalCodeArray| |@@@@|[[Resource/PostalCode/@@@@|@@@@]]|print=pretty}} {{NeighborhoodMap
 |neighborhood={{{neighborhood|}}}
 |latitude={{{latitude|}}}
 |longitude={{{longitude|}}}
@@ -279,7 +279,7 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
 {{NeighborhoodSideBar
 | neighborhood = {{{neighborhood|}}}
 | borough = {{{borough|}}}
-| postalCode = {{{postalCode|}}}
+| postalCode = {{{postal_codes|}}}
 | latitude = {{{latitude|}}}
 | longitude = {{{longitude|}}}
 | neighborhoodEntityTitle = {{{entityTitle|}}}
@@ -295,4 +295,3 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
 |description={{{neighborhood}}} is a Neighborhood in NYC. Lookup news, events, meetups, and job positions available in {{{neighborhood}}}.
 }}
 </includeonly>
-

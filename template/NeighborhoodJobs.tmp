@@ -1,4 +1,4 @@
-__NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:postalCodeArray|{{{postalCode}}}}}
+__NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:postalCodeArray|{{{postal_codes}}}}}
 <div class="container">
     <div class="content_block right-sidebar">
         <div class="fl-container span9">
@@ -6,7 +6,7 @@ __NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:postalCodeArray|{{{postal
                 <div class="row-fluid">
                     <div class="span12">
 =Jobs in [[Resource/Neighborhood/{{{entityTitle}}}|{{{neighborhood}}}]]=
-In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code{{#ifeq: {{#arraysize:postalCodeArray}}|1| |s}} {{#arrayprint:postalCodeArray| |@@@@|[[Resource/PostalCode/{{#ifeq:@@@@|83|00083|@@@@}}|@@@@]]|print=pretty}} {{NeighborhoodMap
+In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code{{#ifeq: {{#arraysize:postalCodeArray}}|1| |s}} {{#arrayprint:postalCodeArray| |@@@@|[[Resource/PostalCode/@@@@|@@@@]]|print=pretty}} {{NeighborhoodMap
 |neighborhood={{{neighborhood}}}
 |latitude={{{latitude|}}}
 |longitude={{{longitude|}}}
@@ -116,7 +116,7 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
 {{NeighborhoodSideBar
 | neighborhood = {{{neighborhood|}}}
 | borough = {{{borough|}}}
-| postalCode = {{{postalCode|}}}
+| postalCode = {{{postal_codes|}}}
 | latitude = {{{latitude|}}}
 | longitude = {{{longitude|}}}
 | neighborhoodEntityTitle = {{{entityTitle|}}}

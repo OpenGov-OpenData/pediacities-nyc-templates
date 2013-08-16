@@ -19,7 +19,7 @@ It should be called in the following format:
                 [http://{{SERVERNAME}}/Resource/CommunityStats/{{{neighborhoodEntityTitle}}} Community Stats]
             </li>
             <li class="menu-item">
-                [http://{{SERVERNAME}}/NeighborhoodJobs?neighborhood={{urlencode:{{{neighborhood}}}}}&postalCode={{#arrayindex:postalCodeArray|0}} Jobs]
+                [http://{{SERVERNAME}}/Resource/Jobs/{{{neighborhoodEntityTitle}}} Jobs]
             </li>
             <li class="menu-item">
                 [http://{{SERVERNAME}}/NeighborhoodRestaurants?neighborhood={{urlencode:{{{neighborhood}}}}}&longitude={{{longitude}}}&latitude={{{latitude}}} Restaurants]
@@ -34,16 +34,16 @@ It should be called in the following format:
             {{#vardefine: i | 0 }}{{#while:
             |{{#ifexpr: {{#var: i }} < {{#arraysize:postalCodeArray}} and {{#var: i }} < 5 | true }}
             |<nowiki/>
-            <li class="menu-item menu-item-object-page level1">[[Resource/PostalCode/{{#ifeq:{{#arrayindex:postalCodeArray|{{#var: i}}}}|83|00083|{{#arrayindex:postalCodeArray|{{#var: i}}}}}}|{{#arrayindex:postalCodeArray|{{#var: i}}}}]]</li>
+            <li class="menu-item menu-item-object-page level1">[[Resource/PostalCode/{{#arrayindex:postalCodeArray|{{#var: i}}}}|{{#arrayindex:postalCodeArray|{{#var: i}}}}]]</li>
             {{#vardefine: i | {{#expr: {{#var: i}} + 1 }} }}
             }}
             {{#ifexpr: {{#arraysize:postalCodeArray}} > 5 |
-            <li class="menu-item">[[Resource/PostalCode/{{#ifeq:{{#arrayindex:postalCodeArray|{{#var: i}}}}|83|00083|{{#arrayindex:postalCodeArray|{{#var: i}}}}}}|More...]]
+            <li class="menu-item">[[Resource/PostalCode/{{#arrayindex:postalCodeArray|{{#var: i}}}}|More...]]
             <ul class="sub-menu" style="display: none; visibility: hidden;">
             {{#while:
             |{{#ifexpr: {{#var: i }} < {{#arraysize:postalCodeArray}} | true }}
             |<nowiki/>
-            <li class="menu-item">[[Resource/PostalCode/{{#ifeq:{{#arrayindex:postalCodeArray|{{#var: i}}}}|83|00083|{{#arrayindex:postalCodeArray|{{#var: i}}}}}}|{{#arrayindex:postalCodeArray|{{#var: i}}}}]]</li>
+            <li class="menu-item">[[Resource/PostalCode/{{#arrayindex:postalCodeArray|{{#var: i}}}}|{{#arrayindex:postalCodeArray|{{#var: i}}}}]]</li>
             {{#vardefine: i | {{#expr: {{#var: i}} + 1 }} }}
             }}
             </ul><span class="menu_marker"></span></li>
