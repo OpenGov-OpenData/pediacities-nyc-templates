@@ -28,7 +28,6 @@ __NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_
                                     <div class="all_heads_cont">
                                         <div class="shortcode_tab_item_title it1 head1 active" data-open="body1">Population</div>
                                         <div class="shortcode_tab_item_title it2 head2" data-open="body2">Housing Stats</div>
-                                        <div class="shortcode_tab_item_title it3 head3" data-open="body3">Group Quarters</div>
                                         <div class="shortcode_tab_item_title it4 head4" data-open="body4">Datasets</div>
                                     </div>
                                     <div class="all_body_cont">
@@ -225,8 +224,8 @@ __NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_
                                                     {{!}}{{!}} {{#expr: {{{male_15_to_17}}} + {{{male_18_and_19}}} }}
                                                     {{!}}-
                                                     {{!}} '''20 to 24 years''': 
-                                                    {{!}}{{!}} {{#expr: {{{female_20}}} + {{{female_20}}} + {{{female_22_to_24}}} }}
-                                                    {{!}}{{!}} {{#expr: {{{male_20}}} + {{{male_20}}} + {{{male_22_to_24}}} }}
+                                                    {{!}}{{!}} {{#expr: {{{female_20}}} + {{{female_21}}} + {{{female_22_to_24}}} }}
+                                                    {{!}}{{!}} {{#expr: {{{male_20}}} + {{{male_21}}} + {{{male_22_to_24}}} }}
                                                     {{!}}-
                                                     {{!}} '''25 to 29 years''': 
                                                     {{!}}{{!}} {{{female_25_to_29}}}
@@ -314,11 +313,11 @@ __NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_
                                                     }} {{#subobject: Female20to24years |Neighborhood={{{neighborhood}}}
                                                     |AgeGroup=20 to 24
                                                     |GenderType=Female
-                                                    |AgePopulation={{#expr: {{{female_20}}} + {{{female_20}}} + {{{female_22_to_24}}} }}
+                                                    |AgePopulation={{#expr: {{{female_20}}} + {{{female_21}}} + {{{female_22_to_24}}} }}
                                                     }} {{#subobject: Male20to24years |Neighborhood={{{neighborhood}}}
                                                     |AgeGroup=20 to 24
                                                     |GenderType=Male
-                                                    |AgePopulation={{#expr: {{{male_20}}} + {{{male_20}}} + {{{male_22_to_24}}} }}
+                                                    |AgePopulation={{#expr: {{{male_20}}} + {{{male_21}}} + {{{male_22_to_24}}} }}
                                                     }} {{#subobject: Female25to29years |Neighborhood={{{neighborhood}}}
                                                     |AgeGroup=25 to 29
                                                     |GenderType=Female
@@ -472,6 +471,96 @@ __NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_
 }}
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    {{{!}} class="table table-striped sortable" style=""
+                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Group Quarters Population
+                                                    {{!}}-                      
+                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Group Quarters Type
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:3px;" {{!}} Number
+                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Percent
+                                                    {{!}}-
+                                                    {{!}} '''Total Group Quarters Population''':
+                                                    {{!}}{{!}} {{{total_group_quarters_population}}}
+                                                    {{!}}{{!}} 100%
+                                                    {{!}}-
+                                                    {{!}} '''College/University Housing''':
+                                                    {{!}}{{!}} {{#expr: {{{male_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{male_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{male_65_and_over_noninstitutionalized_population_college_university_student_housing}}} + {{{female_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{female_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{female_65_and_over_noninstitutionalized_population_college_university_student_housing}}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{male_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{male_65_and_over_noninstitutionalized_population_college_university_student_housing}}} + {{{female_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{female_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{female_65_and_over_noninstitutionalized_population_college_university_student_housing}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Military Quarters''':
+                                                    {{!}}{{!}} {{#expr: {{{male_under_18_noninstitutionalized_population_military_quarters}}} + {{{male_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{male_65_and_over_noninstitutionalized_population_military_quarters}}} + {{{female_under_18_noninstitutionalized_population_military_quarters}}} + {{{female_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{female_65_and_over_noninstitutionalized_population_military_quarters}}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_noninstitutionalized_population_military_quarters}}} + {{{male_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{male_65_and_over_noninstitutionalized_population_military_quarters}}} + {{{female_under_18_noninstitutionalized_population_military_quarters}}} + {{{female_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{female_65_and_over_noninstitutionalized_population_military_quarters}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Nursing Facilities''':
+                                                    {{!}}{{!}} {{#expr: {{{male_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Adult Correctional Facilities''':
+                                                    {{!}}{{!}} {{#expr: {{{male_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_65_and_over_institutionalized_population_correctional_facilities_for_adults}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Juvenile Facilities''':
+                                                    {{!}}{{!}} {{#expr: {{{male_under_18_institutionalized_population_juvenile_facilities}}} + {{{male_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{male_65_and_over_institutionalized_population_juvenile_facilities}}} + {{{female_under_18_institutionalized_population_juvenile_facilities}}} + {{{female_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{female_65_and_over_institutionalized_population_juvenile_facilities}}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_institutionalized_population_juvenile_facilities}}} + {{{male_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{male_65_and_over_institutionalized_population_juvenile_facilities}}} + {{{female_under_18_institutionalized_population_juvenile_facilities}}} + {{{female_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{female_65_and_over_institutionalized_population_juvenile_facilities}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Other Institutional Facilities''':
+                                                    {{!}}{{!}} {{#expr: {{{male_under_18_institutionalized_population_other_institutional_facilities}}} + {{{male_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{male_65_and_over_institutionalized_population_other_institutional_facilities}}} + {{{female_under_18_institutionalized_population_other_institutional_facilities}}} + {{{female_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{female_65_and_over_institutionalized_population_other_institutional_facilities}}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_institutionalized_population_other_institutional_facilities}}} + {{{male_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{male_65_and_over_institutionalized_population_other_institutional_facilities}}} + {{{female_under_18_institutionalized_population_other_institutional_facilities}}} + {{{female_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{female_65_and_over_institutionalized_population_other_institutional_facilities}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
+                                                    {{!}}-
+                                                    {{!}} '''Other Non-Institutional Facilities''':
+                                                    {{!}}{{!}} {{#expr: {{{male_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} }}
+                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
+                                                    {{!}}} {{#subobject:CollegeUniversityHousing|Neighborhood={{{neighborhood}}}
+                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
+                                                    |GroupQuartersType=College/University Housing
+                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{male_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{male_65_and_over_noninstitutionalized_population_college_university_student_housing}}} + {{{female_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{female_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{female_65_and_over_noninstitutionalized_population_college_university_student_housing}}} }}
+                                                    }} {{#subobject:MilitaryQuarters|Neighborhood={{{neighborhood}}}
+                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
+                                                    |GroupQuartersType=Military Quarters
+                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_noninstitutionalized_population_military_quarters}}} + {{{male_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{male_65_and_over_noninstitutionalized_population_military_quarters}}} + {{{female_under_18_noninstitutionalized_population_military_quarters}}} + {{{female_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{female_65_and_over_noninstitutionalized_population_military_quarters}}} }}
+                                                    }} {{#subobject:NursingFacilities|Neighborhood={{{neighborhood}}}
+                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
+                                                    |GroupQuartersType=Nursing Facilities
+                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} }}
+                                                    }} {{#subobject:AdultCorrectionalFacilities|Neighborhood={{{neighborhood}}}
+                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
+                                                    |GroupQuartersType=Adult Correctional Facilities
+                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} }}
+                                                    }} {{#subobject:JuvenileFacilities|Neighborhood={{{neighborhood}}}
+                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
+                                                    |GroupQuartersType=Juvenile Facilities
+                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_institutionalized_population_juvenile_facilities}}} + {{{male_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{male_65_and_over_institutionalized_population_juvenile_facilities}}} + {{{female_under_18_institutionalized_population_juvenile_facilities}}} + {{{female_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{female_65_and_over_institutionalized_population_juvenile_facilities}}} }}
+                                                    }} {{#subobject:OtherInstitutionalFacilities|Neighborhood={{{neighborhood}}}
+                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
+                                                    |GroupQuartersType=Other Institutional Facilities
+                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_institutionalized_population_other_institutional_facilities}}} + {{{male_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{male_65_and_over_institutionalized_population_other_institutional_facilities}}} + {{{female_under_18_institutionalized_population_other_institutional_facilities}}} + {{{female_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{female_65_and_over_institutionalized_population_other_institutional_facilities}}} }}
+                                                    }} {{#subobject:OtherNonInstitutionalFacilities|Neighborhood={{{neighborhood}}}
+                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
+                                                    |GroupQuartersType=Other Non-Institutional Facilities
+                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} }}
+                                                    }}
+                                                </div>
+                                                <div class="span6">
+{{#ask:[[GroupQuartersType::+]] [[Neighborhood::{{{neighborhood}}}]]
+|mainlabel=-
+|? GroupQuartersType
+|? GroupQuartersNumber
+|sort=GroupQuartersType
+|order=descending
+|format=googlepie
+|height=400
+|width=400
+|legendposition=b
+|background=ececec
+|chartcolor=463E1F,AA0033,80C65A,FF9911,FFFF42,3399CC,49188F
+|margins=10,0,0,0
+|title=Group Quarters Population
+|title_font_size=24
+|charttype=p
+}}
                                                     |<div style="padding-left: 21px;"><p>'''There are no population demographics for this area.'''</p></div>}}|<div style="padding-left: 21px;"><p>'''There are no population demographics for this area.'''</p></div>}}
                                                 </div>
                                             </div>
@@ -696,108 +785,17 @@ __NOTOC__ __NOEDITSECTION__<includeonly>{{#arraydefine:blockGroupArray|{{{block_
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="shortcode_tab_item_body body3 it3">
-                                            <div class="row-fluid">
-                                                <div class="span6">
-                                                    {{#if: {{#external_value:groupquarters}} | {{#ifexpr: {{#external_value:groupquarters}} > 0 |
-                                                    {{{!}} class="table table-striped sortable" style=""
-                                                    ! colspan="3" class="unsortable" style="background-color:#999999; color:#FFFFFF;" {{!}} Group Quarters Population
-                                                    {{!}}-                      
-                                                    ! style="background-position: left;padding-left: 21px;width:50%;padding-right:0px;" {{!}} Group Quarters Type
-                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:3px;" {{!}} Number
-                                                    ! style="background-position: left;padding-left: 21px;width:25%;padding-right:5px;" {{!}} Percent
-                                                    {{!}}-
-                                                    {{!}} '''Total Group Quarters Population''':
-                                                    {{!}}{{!}} {{{total_group_quarters_population}}}
-                                                    {{!}}{{!}} 100%
-                                                    {{!}}-
-                                                    {{!}} '''College/University Housing''':
-                                                    {{!}}{{!}} {{#expr: {{{male_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{male_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{male_65_and_over_noninstitutionalized_population_college_university_student_housing}}} + {{{female_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{female_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{female_65_and_over_noninstitutionalized_population_college_university_student_housing}}} }}
-                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{male_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{male_65_and_over_noninstitutionalized_population_college_university_student_housing}}} + {{{female_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{female_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{female_65_and_over_noninstitutionalized_population_college_university_student_housing}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
-                                                    {{!}}-
-                                                    {{!}} '''Military Quarters''':
-                                                    {{!}}{{!}} {{#expr: {{{male_under_18_noninstitutionalized_population_military_quarters}}} + {{{male_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{male_65_and_over_noninstitutionalized_population_military_quarters}}} + {{{female_under_18_noninstitutionalized_population_military_quarters}}} + {{{female_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{female_65_and_over_noninstitutionalized_population_military_quarters}}} }}
-                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_noninstitutionalized_population_military_quarters}}} + {{{male_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{male_65_and_over_noninstitutionalized_population_military_quarters}}} + {{{female_under_18_noninstitutionalized_population_military_quarters}}} + {{{female_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{female_65_and_over_noninstitutionalized_population_military_quarters}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
-                                                    {{!}}-
-                                                    {{!}} '''Nursing Facilities''':
-                                                    {{!}}{{!}} {{#expr: {{{male_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} }}
-                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
-                                                    {{!}}-
-                                                    {{!}} '''Adult Correctional Facilities''':
-                                                    {{!}}{{!}} {{#expr: {{{male_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} }}
-                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_65_and_over_institutionalized_population_correctional_facilities_for_adults}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
-                                                    {{!}}-
-                                                    {{!}} '''Juvenile Facilities''':
-                                                    {{!}}{{!}} {{#expr: {{{male_under_18_institutionalized_population_juvenile_facilities}}} + {{{male_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{male_65_and_over_institutionalized_population_juvenile_facilities}}} + {{{female_under_18_institutionalized_population_juvenile_facilities}}} + {{{female_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{female_65_and_over_institutionalized_population_juvenile_facilities}}} }}
-                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_institutionalized_population_juvenile_facilities}}} + {{{male_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{male_65_and_over_institutionalized_population_juvenile_facilities}}} + {{{female_under_18_institutionalized_population_juvenile_facilities}}} + {{{female_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{female_65_and_over_institutionalized_population_juvenile_facilities}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
-                                                    {{!}}-
-                                                    {{!}} '''Other Institutional Facilities''':
-                                                    {{!}}{{!}} {{#expr: {{{male_under_18_institutionalized_population_other_institutional_facilities}}} + {{{male_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{male_65_and_over_institutionalized_population_other_institutional_facilities}}} + {{{female_under_18_institutionalized_population_other_institutional_facilities}}} + {{{female_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{female_65_and_over_institutionalized_population_other_institutional_facilities}}} }}
-                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_institutionalized_population_other_institutional_facilities}}} + {{{male_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{male_65_and_over_institutionalized_population_other_institutional_facilities}}} + {{{female_under_18_institutionalized_population_other_institutional_facilities}}} + {{{female_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{female_65_and_over_institutionalized_population_other_institutional_facilities}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
-                                                    {{!}}-
-                                                    {{!}} '''Other Non-Institutional Facilities''':
-                                                    {{!}}{{!}} {{#expr: {{{male_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} }}
-                                                    {{!}}{{!}} {{#expr: ((({{{male_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}}) / {{{total_group_quarters_population}}}) round4) * 100}}%
-                                                    {{!}}} {{#subobject:CollegeUniversityHousing|Neighborhood={{{neighborhood}}}
-                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
-                                                    |GroupQuartersType=College/University Housing
-                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{male_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{male_65_and_over_noninstitutionalized_population_college_university_student_housing}}} + {{{female_under_18_noninstitutionalized_population_college_university_student_housing}}} + {{{female_18_to_64_noninstitutionalized_population_college_university_student_housing}}} + {{{female_65_and_over_noninstitutionalized_population_college_university_student_housing}}} }}
-                                                    }} {{#subobject:MilitaryQuarters|Neighborhood={{{neighborhood}}}
-                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
-                                                    |GroupQuartersType=Military Quarters
-                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_noninstitutionalized_population_military_quarters}}} + {{{male_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{male_65_and_over_noninstitutionalized_population_military_quarters}}} + {{{female_under_18_noninstitutionalized_population_military_quarters}}} + {{{female_18_to_64_noninstitutionalized_population_military_quarters}}} + {{{female_65_and_over_noninstitutionalized_population_military_quarters}}} }}
-                                                    }} {{#subobject:NursingFacilities|Neighborhood={{{neighborhood}}}
-                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
-                                                    |GroupQuartersType=Nursing Facilities
-                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{male_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_under_18_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_18_to_64_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} + {{{female_65_and_over_institutionalized_population_nursing_facilities_skilled_nursing_facilities}}} }}
-                                                    }} {{#subobject:AdultCorrectionalFacilities|Neighborhood={{{neighborhood}}}
-                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
-                                                    |GroupQuartersType=Adult Correctional Facilities
-                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{male_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_under_18_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_18_to_64_institutionalized_population_correctional_facilities_for_adults}}} + {{{female_65_and_over_institutionalized_population_correctional_facilities_for_adults}}} }}
-                                                    }} {{#subobject:JuvenileFacilities|Neighborhood={{{neighborhood}}}
-                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
-                                                    |GroupQuartersType=Juvenile Facilities
-                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_institutionalized_population_juvenile_facilities}}} + {{{male_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{male_65_and_over_institutionalized_population_juvenile_facilities}}} + {{{female_under_18_institutionalized_population_juvenile_facilities}}} + {{{female_18_to_64_institutionalized_population_juvenile_facilities}}} + {{{female_65_and_over_institutionalized_population_juvenile_facilities}}} }}
-                                                    }} {{#subobject:OtherInstitutionalFacilities|Neighborhood={{{neighborhood}}}
-                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
-                                                    |GroupQuartersType=Other Institutional Facilities
-                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_institutionalized_population_other_institutional_facilities}}} + {{{male_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{male_65_and_over_institutionalized_population_other_institutional_facilities}}} + {{{female_under_18_institutionalized_population_other_institutional_facilities}}} + {{{female_18_to_64_institutionalized_population_other_institutional_facilities}}} + {{{female_65_and_over_institutionalized_population_other_institutional_facilities}}} }}
-                                                    }} {{#subobject:OtherNonInstitutionalFacilities|Neighborhood={{{neighborhood}}}
-                                                    |TotalGroupQuarters={{{total_group_quarters_population}}}
-                                                    |GroupQuartersType=Other Non-Institutional Facilities
-                                                    |GroupQuartersNumber={{#expr: {{{male_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{male_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_under_18_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_18_to_64_noninstitutionalized_population_other_noninstitutional_facilities}}} + {{{female_65_and_over_noninstitutionalized_population_other_noninstitutional_facilities}}} }}
-                                                    }}
-                                                </div>
-                                                <div class="span6">
-{{#ask:[[GroupQuartersType::+]] [[Neighborhood::{{{neighborhood}}}]]
-|mainlabel=-
-|? GroupQuartersType
-|? GroupQuartersNumber
-|sort=GroupQuartersType
-|order=descending
-|format=googlepie
-|height=400
-|width=400
-|legendposition=b
-|background=ececec
-|chartcolor=463E1F,AA0033,80C65A,FF9911,FFFF42,3399CC,49188F
-|margins=10,0,0,0
-|title=Group Quarters Population
-|title_font_size=24
-|charttype=p
-}}
-                                                    |<div style="padding-left: 21px;"><p>'''There are no group quarter demographics for this area.'''</p></div>}}|<div style="padding-left: 21px;"><p>'''There are no group quarters demographics for this area.'''</p></div>}}
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="shortcode_tab_item_body body4 it4">
                                             {| class="table table-striped"
                                             ! style="width:80%" align="left" | Dataset
                                             ! Online API
                                             |-
-                                            | [[DatasetName::2010 Census Block Groups Data| ]] [http://nycdata.pediacities.com/dataset/2010-census-block-groups-data 2010 Census Data by Block Groups]<br/>{{#if: {{#external_value:population}} | '''This neighborhood used {{#ifeq: {{#arraysize:blockGroupArray}}|1|this|these}} 2010 Census Block Group{{#ifeq: {{#arraysize:blockGroupArray}}|1||s}}''': {{#arrayprint:blockGroupArray| |@@@@|@@@@|print=pretty}} |}}
+                                            | [[DatasetName::nyc_2010_census_by_neighborhood| ]] [http://nycdata.pediacities.com/dataset/2010-census-data-by-neighborhood 2010 Census Data by Neighborhood]
+                                            | [http://nycdata.pediacities.com/dataset/2010-census-data-by-neighborhood/resource/bbea0f7c-698a-455b-8a14-9b10a512273f API Preview]
+                                            |-
+                                            | [[DatasetName::census_block_groups_2010_data| ]] [http://nycdata.pediacities.com/dataset/2010-census-block-groups-data 2010 Census Data by Block Groups]<br/>{{#if: {{#external_value:population}} | '''This neighborhood used {{#ifeq: {{#arraysize:blockGroupArray}}|1|this|these}} 2010 Census Block Group{{#ifeq: {{#arraysize:blockGroupArray}}|1||s}}''': {{#arrayprint:blockGroupArray| |@@@@|@@@@|print=pretty}} |}}
                                             | [http://nycdata.pediacities.com/dataset/2010-census-block-groups-data/resource/dd737863-bf3f-469b-b469-a98446cf8050 API Preview]
-                                            |}                     	 
+                                            |}
                                         </div>
                                     </div><!-- .all_body_cont -->
                                 </div><!-- .shortcode_tabs -->                       	 
