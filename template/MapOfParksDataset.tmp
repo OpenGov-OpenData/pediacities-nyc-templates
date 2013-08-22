@@ -37,7 +37,7 @@ __NOTOC__ __NOEDITSECTION__<includeonly>
                                     |-
                                     | '''Location''' || {{#if: {{{streetAddress|}}} | {{{streetAddress|}}},|}} {{#if: {{{streetAddress/address2|}}} | {{{streetAddress/address2|}}},|}} {{#if: {{{addressLocality|}}} | {{{addressLocality|}}},|}} {{#if: {{{addressRegion|}}} | {{{addressRegion|}}} | NY }} {{#if: {{{postalCode|}}} | {{{postalCode|}}} |}}
                                     |-
-                                    | '''Coordinates''' || {{Coord|{{{latitude}}}|{{{longitude}}},type:landmark_region:US-NY,name={{{name}}} }}
+                                    | '''Coordinates''' || {{Coord|{{{latitude}}}|{{{longitude}}}}}
                                     |}
                                 </div>
                                 <div class="shortcode_tab_item_body body2 it2">
@@ -66,6 +66,11 @@ __NOTOC__ __NOEDITSECTION__<includeonly>
                             </div><!-- .all_body_cont -->
                         </div><!-- .shortcode_tabs -->                       	 
                     </div><!-- .module_cont -->
+{{#widget:FacebookComment
+|appID=FBAPPID
+|url={{fullurl:{{PAGENAME}}}}
+|num=5
+}}
                 </div><!-- .row-fluid -->
             </div><!-- .contentarea -->
             <div class="clear"><!-- ClearFix --></div>
@@ -88,4 +93,3 @@ __NOTOC__ __NOEDITSECTION__<includeonly>
 |description={{{name}}} is a park located at {{#if: {{{streetAddress}}} | {{{streetAddress}}},|}} {{#if: {{{addressLocality}}} | {{{addressLocality}}},|}} {{#if: {{{addressRegion}}} | {{{addressRegion}}} | NY }} {{#if: {{{postalCode|}}} | {{{postalCode}}} |}}
 }}
 </includeonly>
-

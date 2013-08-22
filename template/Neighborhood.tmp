@@ -271,6 +271,11 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
                             </div><!-- .all_body_cont -->
                         </div><!-- .shortcode_tabs -->                       	 
                     </div><!-- .module_cont -->
+{{#widget:FacebookComment
+|appID=FBAPPID
+|url={{fullurl:{{PAGENAME}}}}
+|num=5
+}}
                 </div><!-- .row-fluid -->
             </div><!-- .contentarea -->
             <div class="clear"><!-- ClearFix --></div>

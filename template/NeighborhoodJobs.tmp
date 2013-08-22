@@ -60,7 +60,7 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
 |aggregate= [ {
                     "$geoNear": {
                                     "near": [ {{{longitude}}}, {{{latitude}}} ],
-                                    "maxDistance": 0.001,
+                                    "maxDistance": 0.000252589,
                                     "spherical": 1,
                                     "distanceMultiplier": 3959,
                                     "query": { "Hiring" : "true" },
@@ -69,7 +69,7 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
             } ]
 |data=compName=legalName,compUrl=url,jobsUrl=Jobs URL,compId=@id,compStreetAddress=streetAddress,compAddressLocality=addressLocality,compPostalCode=postalCode
 |order by=dist.calculated
-|limit=25
+|limit=10
 |cache seconds=86400}} }}
                                     {| class="table table-striped" style="margin-top:0.2cm"
                                     {{#if: {{#external_value:compName}}||! style="background-position: left;padding-left: 21px;" {{!}} Currently no tech jobs in this area}}
@@ -108,6 +108,11 @@ In the borough of [[Resource/Borough/{{{borough}}}|{{{borough}}}]] with ZIP Code
                             </div><!-- .all_body_cont -->
                         </div><!-- .shortcode_tabs -->                       	 
                     </div><!-- .module_cont -->
+{{#widget:FacebookComment
+|appID=FBAPPID
+|url={{fullurl:{{PAGENAME}}}}
+|num=5
+}}
                 </div><!-- .row-fluid -->
             </div><!-- .contentarea -->
             <div class="clear"><!-- ClearFix --></div>
